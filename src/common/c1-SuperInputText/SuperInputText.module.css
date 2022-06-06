@@ -1,0 +1,31 @@
+.container {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.superInput {
+    border: 1px solid #cecece;
+    color: #073b4c;
+    border-radius: 5px;
+}
+
+.superInput:focus {
+    outline: 1px solid #06d7a0;
+}
+
+.errorInput {
+    border: 1px solid #fc4b75;
+    border-radius: 5px;
+}
+
+.errorInput:focus {
+    outline: 1px solid #fc4b75;
+}
+
+.error {
+    position: absolute;
+    margin-left: -150px;
+    margin-top: 25px;
+    color: #fc4b75;
+}

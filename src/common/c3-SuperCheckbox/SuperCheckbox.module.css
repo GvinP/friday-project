@@ -1,0 +1,13 @@
+.checkbox {
+    position: relative;
+    bottom: -0.6em;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-image: url("off.svg");
+}
+
+.checkbox:checked {
+    appearance: none;
+    background-image: url("on.svg");
+}

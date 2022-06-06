@@ -1,0 +1,37 @@
+.button {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 10px;
+}
+
+.default {
+    background-color: #9fc8d6;
+    color: #073b4c;
+}
+
+.default:hover {
+    background-color: #118ab2;
+    color: #fff;
+}
+
+.default:active {
+    background-color: #00232f;
+    color: #fff;
+}
+
+.red {
+    background-color: #fc4b75;
+    color: #ffffff;
+}
+
+.red:hover {
+    background-color: #d94167;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+.disabled:hover {
+    background-color: #9fc8d6;
+    color: #073b4c;
+}
