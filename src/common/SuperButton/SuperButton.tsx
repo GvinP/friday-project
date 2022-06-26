@@ -1,21 +1,32 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from 'react'
 import s from './SuperButton.module.css'
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
+export type ButtonStyleType = 'primary' | 'outline_primary' | 'success' | 'outline_success'
+    | 'danger' | 'outline_danger' | 'warning' | 'outline_warning'
+    | 'dark' | 'outline_dark'
+type ButtonSizeType = 'small' | 'medium' | 'large'
+
 type SuperButtonPropsType = DefaultButtonPropsType & {
-    red?: boolean
-    disabled?: boolean
+    btnStyle?: ButtonStyleType
+    btnSize?: ButtonSizeType
+    upperCase?: boolean
 }
 
 const SuperButton: React.FC<SuperButtonPropsType> = (
     {
-        red, className, disabled,
+        className,
+        btnStyle,
+        btnSize,
+        upperCase,
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
     }
 ) => {
-    const finalClassName = `${red ? s.red : s.default} ${disabled ? s.disabled : s.default} ${className} ${s.button}`
+
+    const size = btnSize || 'small'
+    const style = `btn_${btnStyle}`
+    const finalClassName = `${s.btn} ${btnStyle ? s[style] : ''} ${s[size]} ${(upperCase && s.upperCase) || ''} ${(className && className) || ''}`
 
     return (
         <button
@@ -24,5 +35,6 @@ const SuperButton: React.FC<SuperButtonPropsType> = (
         />
     )
 }
+
 
 export default SuperButton

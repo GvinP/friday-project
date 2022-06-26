@@ -1,0 +1,9 @@
+
+.container {
+    align-items: center;
+    display: flex;
+    height: 99vh;
+    justify-content: center;
+    text-align: center;
+    width: 100vw;
+    }

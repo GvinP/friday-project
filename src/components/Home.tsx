@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Page404 = () => {
+const Home = () => {
     return (
         <div>
-            Page404
+            Profile
         </div>
     );
 };
 
-export default Page404;
+export default Home;
