@@ -15,6 +15,7 @@ import {PATH} from "../../routes/RoutesList";
 import s from "../../Navbar/Navbar.module.css";
 import style from "../../App.module.css"
 import SuperButton from "../../common/SuperButton/SuperButton";
+import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
 const Login = () => {
@@ -70,13 +71,22 @@ const Login = () => {
                             />
                             {formik.touched.email && formik.errors.email &&
                                 <div style={{color: 'red'}}>{formik.errors.email}</div>}
-                            <TextField type="password"
-                                       label="Password"
-                                       margin="normal"
-                                       {...formik.getFieldProps('password')}
+
+
+                            {/*<TextField type="password"*/}
+                            {/*           label="Password"*/}
+                            {/*           margin="normal"*/}
+                            {/*           {...formik.getFieldProps('password')}*/}
+                            {/*/>*/}
+                            <InputPassword
+                                placeholder={'Password'}
+                                           {...formik.getFieldProps('password')}
                             />
+
                             {formik.touched.password && formik.errors.password &&
                                 <div style={{color: 'red'}}>{formik.errors.password}</div>}
+
+
                             <FormControlLabel label={'Remember me'}
                                               control={<Checkbox
                                                   checked={formik.values.rememberMe}
