@@ -34,7 +34,7 @@ const NewPassword = () => {
             onChangeText={setPassword}
             placeholder={'Password'}
         />
-        <p>Create new password and we will send you further instructions to email</p>
+        <div style={{color:'gray', margin:'10px'}}>Create new password and we will send you further instructions to email</div>
         <SuperButton onClick={ () => {
             if (token) {
                 dispatch(setNewPassTC(password, token))
