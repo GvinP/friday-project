@@ -25,7 +25,13 @@ export const authAPI = {
     },
     passRecovery(data: ForgotParamType) {
         return instance.post( `auth/forgot`, data )
-    }
+    },
+    forgot(email: string, message: string) {
+        return instance.post<ResponseType>("auth/forgot", {email, message});
+    },
+    setNewPassword(password: string, resetPasswordToken: string) {
+        return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken});
+    },
 }
 
 export type LoginParamsType = {
