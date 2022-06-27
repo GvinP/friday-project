@@ -14,6 +14,7 @@
     position: relative;
     text-align: center;
     width: 413px;
+    min-height: 450px;
 }
 
 @media (max-width: 413px) {

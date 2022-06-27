@@ -3,7 +3,7 @@ import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AuthActions, authReducer} from "./reducers/auth-reducer";
 import registrationReducer, {RegistrationActionsTypes} from "./reducers/registration-reducer";
-import newPasswordReducer, {NewPasswordActionsTypes} from "./reducers/newPassword-reducer";
+import newPasswordReducer, {NewPasswordActions} from "./reducers/newPassword-reducer";
 import passwordRecoveryReducer, {PasswordRecoveryActionsTypes} from "./reducers/passwordRecovery-reducer";
 import appReducer, {AppActions} from "./reducers/app-reducer";
 import profileReducer, {ProfileActionsTypes} from "./reducers/profile-reducer";
@@ -27,7 +27,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export type AppDispatch = ThunkDispatch<RootState, unknown, StoreActions>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
-type StoreActions = AppActions | AuthActions | NewPasswordActionsTypes
+type StoreActions = AppActions | AuthActions | NewPasswordActions
     | PasswordRecoveryActionsTypes | RegistrationActionsTypes | ProfileActionsTypes
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, RootState, unknown, A>
