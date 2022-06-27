@@ -29,12 +29,12 @@
 
 /* Primary */
 .btn_primary {
-    background-color: #025fff;
-    border-color: #025fff;
-    color: #fff;
+    background-color: #cdd7e6;
+    border-color: #ced9eb;
+    color: #104663;
 }
 .btn_primary:hover {
-    background-color: #004cce;
+    background-color: #104663;
 }
 .btn_outline_primary {
     border-color: #025fff;

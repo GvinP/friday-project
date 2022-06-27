@@ -49,7 +49,7 @@ export function Navbar() {
                             <NavLink to={PATH.profile} className={setActive}>Profile</NavLink>
                         </div>
                     </>}
-                {user_ID && <SuperButton onClick={logoutHandler}>Logout
+                {user_ID && <SuperButton btnStyle={'primary'} onClick={logoutHandler}>Logout
                 </SuperButton>}
             </nav>
         </header>
