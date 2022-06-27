@@ -13,6 +13,7 @@ import {loginTC} from "../../bll/reducers/auth-reducer";
 import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../routes/RoutesList";
 import s from "../../Navbar/Navbar.module.css";
+import st from './Login.module.css'
 import style from "../../App.module.css"
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
@@ -80,12 +81,15 @@ const Login = () => {
                             {/*/>*/}
                             <InputPassword
                                 placeholder={'Password'}
-                                           {...formik.getFieldProps('password')}
+                                {...formik.getFieldProps('password')}
                             />
 
                             {formik.touched.password && formik.errors.password &&
                                 <div style={{color: 'red'}}>{formik.errors.password}</div>}
-
+                            <div>
+                                <NavLink to={PATH.passwordRecovery}
+                                         className={st.forgot}>forgot password</NavLink>
+                            </div>
 
                             <FormControlLabel label={'Remember me'}
                                               control={<Checkbox

@@ -1,0 +1,7 @@
+.forgot{
+    display: flex;
+    justify-content:space-around;
+    color: rgb(110, 156, 177);
+    font-size: 14px;
+    font-weight: 600
+}
