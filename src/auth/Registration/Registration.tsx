@@ -1,96 +1,100 @@
-import React from 'react'
-// import { useFormik } from 'formic';
+import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {useFormik} from "formik";
+import style from "../../App.module.css";
+import Grid from "@mui/material/Grid";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import TextField from "@mui/material/TextField";
+import SuperButton from "../../common/SuperButton/SuperButton";
+import React from "react";
+import {registerTC} from "../../bll/reducers/registration-reducer";
+import {RegisterParamType} from "../../api/api";
+import {Navigate, NavLink} from "react-router-dom";
+import {PATH} from "../../routes/RoutesList";
+import s from "../../Navbar/Navbar.module.css";
+import FormLabel from "@mui/material/FormLabel";
+
+
 
 const Registration = () => {
-    return (
-        <div><h2>Registration</h2></div>
-    )
+    const dispatch = useAppDispatch()
+    const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister)
+    const formik = useFormik
+    ({
+        initialValues: {
+            email: "",
+            password: "",
+            confirmPassword: ""
+        },
+        onSubmit: values => {
+            dispatch(registerTC(values))
+            formik.resetForm();
+        },
+        validate: (values) => {
+            const errors: Partial<RegisterParamType> = {};
+            if (!values.email) {
+                errors.email = 'email required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+                errors.password = 'password required';
+            } else if (values.password.trim().length < 4) {
+                errors.password = 'Password should be more than 3 symbols ';
+            }
+            if (values.confirmPassword !== values.password) {
+                errors.confirmPassword = 'Passwords do not match';
+            }
+            return errors;
+        },
+    })
+
+    if (isRegister) {
+        return <Navigate to={PATH.login}/>
+    }
+
+
+    return <div className={style.smallContainer}>
+        <h1>Cards</h1>
+        <h2>Sign up</h2>
+        <Grid container justifyContent={'center'}>
+            <Grid item justifyContent={'center'}>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormControl>
+                        <FormLabel>
+                            <span>already have an account? </span>
+                            <NavLink to={PATH.login}
+                                     className={s.signUp}>Sign In</NavLink>
+                        </FormLabel>
+                        <FormGroup>
+                            <TextField label="Email"
+                                       margin="normal"
+                                       {...formik.getFieldProps('email')}
+                            />
+                            {formik.touched.email && formik.errors.email &&
+                                <div style={{color: 'red'}}>{formik.errors.email}</div>}
+                            <TextField type="password"
+                                       label="Password"
+                                       margin="normal"
+                                       {...formik.getFieldProps('password')}
+                            />
+                            {formik.touched.password && formik.errors.password &&
+                                <div style={{color: 'red'}}>{formik.errors.password}</div>}
+                            <TextField type="password"
+                                       label="Confirm password"
+                                       margin="normal"
+                                       {...formik.getFieldProps('confirmPassword')}
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword &&
+                                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
+                            <SuperButton type={'submit'}>
+                                Register
+                            </SuperButton>
+                        </FormGroup>
+                    </FormControl>
+                </form>
+            </Grid>
+        </Grid>
+    </div>
 }
-
 export default Registration
-
-
-// import React from 'react';
-// import { useFormik } from 'formik';
-//
-// const validate = values => {
-//     const errors = {};
-//
-//     if (!values.firstName) {
-//         errors.firstName = 'Required';
-//     } else if (values.firstName.length > 15) {
-//         errors.firstName = 'Must be 15 characters or less';
-//     }
-//
-//     if (!values.lastName) {
-//         errors.lastName = 'Required';
-//     } else if (values.lastName.length > 20) {
-//         errors.lastName = 'Must be 20 characters or less';
-//     }
-//
-//     if (!values.email) {
-//         errors.email = 'Required';
-//     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-//         errors.email = 'Invalid email address';
-//     }
-//
-//     return errors;
-// };
-//
-// const SignupForm = () => {
-//     const formik = useFormik({
-//         initialValues: {
-//             firstName: '',
-//             lastName: '',
-//             email: '',
-//         },
-//         validate,
-//         onSubmit: values => {
-//             alert(JSON.stringify(values, null, 2));
-//         },
-//     });
-//     return (
-//         <form onSubmit={formik.handleSubmit}>
-//             <label htmlFor="firstName">First Name</label>
-//             <input
-//                 id="firstName"
-//                 name="firstName"
-//                 type="text"
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 value={formik.values.firstName}
-//             />
-//             {formik.touched.firstName && formik.errors.firstName ? (
-//                 <div>{formik.errors.firstName}</div>
-//             ) : null}
-//
-//             <label htmlFor="lastName">Last Name</label>
-//             <input
-//                 id="lastName"
-//                 name="lastName"
-//                 type="text"
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 value={formik.values.lastName}
-//             />
-//             {formik.touched.lastName && formik.errors.lastName ? (
-//                 <div>{formik.errors.lastName}</div>
-//             ) : null}
-//
-//             <label htmlFor="email">Email Address</label>
-//             <input
-//                 id="email"
-//                 name="email"
-//                 type="email"
-//                 onChange={formik.handleChange}
-//                 onBlur={formik.handleBlur}
-//                 value={formik.values.email}
-//             />
-//             {formik.touched.email && formik.errors.email ? (
-//                 <div>{formik.errors.email}</div>
-//             ) : null}
-//
-//             <button type="submit">Submit</button>
-//         </form>
-//     );
-// };

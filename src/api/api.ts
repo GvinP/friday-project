@@ -13,11 +13,18 @@ export const authAPI = {
             .then(res => res.data)
     },
     logout() {
-        return instance.delete('auth/login')
+        return instance.delete('auth/me')
             .then(res => res.data)
-    }, me() {
-        return instance.post<UserType>(`/auth/me`, {})
+    },
+    me() {
+        return instance.post<UserType>(`auth/me`, {})
             .then(res => res.data)
+    },
+    register(data: RegisterParamType) {
+        return instance.post( `auth/register`, data)
+    },
+    passRecovery(data: ForgotParamType) {
+        return instance.post( `auth/forgot`, data )
     }
 }
 
@@ -26,6 +33,19 @@ export type LoginParamsType = {
     password: string
     rememberMe?: boolean
 }
+
+export type RegisterParamType = {
+    email: string
+    password: string
+    confirmPassword?: string
+}
+
+export type ForgotParamType = {
+    email: string
+    from?: string
+    message?: string
+}
+
 export type UserType = {
     _id: string;
     email: string;

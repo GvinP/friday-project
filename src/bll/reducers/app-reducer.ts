@@ -5,7 +5,7 @@ import {authAPI} from "../../api/api";
 
 const initialState = {
     status: 'idle' as RequestStatusType,
-    error: null as string | null,
+    appError: null as string | null,
     isInitialized: false,
 }
 
@@ -37,7 +37,7 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
             const errorMessage = error.response
                 ? error.response.data.error
                 : (error.message + ', more details in the console');
-            console.log('Error: ', errorMessage);
+            console.log('Error123: ', errorMessage);
             handleAppRequestError(error, dispatch);
         })
         .finally(() => {
