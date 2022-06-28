@@ -10,15 +10,16 @@ export const About = () => {
     const goBack = () => navigate(-1);
     return (
         <div className={style.smallContainer}>
-            <h1>About us</h1>
-            <SuperButton onClick={goBack}>Go back</SuperButton>
+            <h1>Cards</h1>
+            <h2>About us</h2>
             <ul>
                 <li className={s.item}><NavLink to="contacts"
-                                                className={({isActive}) => (isActive ? s.activeLink : "")}>Our
+                                                className={({isActive}) => (isActive ? s.activeLink : "")}>
                     Contacts</NavLink></li>
                 <li className={s.item}><NavLink to="team" className={({isActive}) => (isActive ? s.activeLink : "")}>Our
                     Team</NavLink></li>
             </ul>
+            <SuperButton onClick={goBack}>Go back</SuperButton>
             <Outlet/>
         </div>
     );

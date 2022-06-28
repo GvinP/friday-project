@@ -1,8 +1,10 @@
 .nav {
     display: flex;
-    justify-content: space-around;;
+    justify-content: space-around;
+    align-items: center;
     background-color: rgb(20, 74, 103);
     padding: 10px;
+    max-height: 18px;
 }
 
 .item a {
