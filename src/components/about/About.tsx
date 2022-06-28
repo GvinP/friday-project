@@ -1,4 +1,5 @@
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import style from "../../App.module.css";
 import s from "./Aboute.module.css";
 import React from "react";
 import SuperButton from "../../common/SuperButton/SuperButton";
@@ -8,7 +9,7 @@ export const About = () => {
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
     return (
-        <div style={{margin: "20px", color: " rgb(20, 74, 103)"}}>
+        <div className={style.smallContainer}>
             <h1>About us</h1>
             <SuperButton onClick={goBack}>Go back</SuperButton>
             <ul>

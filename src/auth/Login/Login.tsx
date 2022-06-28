@@ -19,7 +19,7 @@ import SuperButton from "../../common/SuperButton/SuperButton";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
-const Login = () => {
+export const Login = () => {
     const dispatch = useAppDispatch();
     const user_ID = useAppSelector(state => state.profile.user._id);
     const formik = useFormik
@@ -101,5 +101,5 @@ const Login = () => {
         </Grid>
     </div>;
 };
-export default Login;
+
 

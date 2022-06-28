@@ -17,7 +17,7 @@ function App() {
 
     useEffect(() => {
         dispatch(initializeAppTC());
-    }, [dispatch, isInitialized]);
+    }, []);
 
     if (!isInitialized) {
         return <Preloader/>;

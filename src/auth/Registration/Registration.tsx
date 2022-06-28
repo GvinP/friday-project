@@ -16,7 +16,7 @@ import FormLabel from "@mui/material/FormLabel";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
-const Registration = () => {
+export const Registration = () => {
     const dispatch = useAppDispatch();
     const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister);
     const formik = useFormik
@@ -97,4 +97,3 @@ const Registration = () => {
         </Grid>
     </div>;
 };
-export default Registration;

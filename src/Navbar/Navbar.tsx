@@ -14,14 +14,12 @@ export function Navbar() {
     const logoutHandler = () => {
         dispatch(logoutTC());
     };
+
     return (
         <header>
             <nav className={s.nav}>
                 {!user_ID
                     ? <>
-                        <div className={s.item}>
-                            <NavLink to={PATH.home} className={setActive}>Home</NavLink>
-                        </div>
                         <div className={s.item}>
                             <NavLink to={PATH.login} className={setActive}>Login</NavLink>
                         </div>

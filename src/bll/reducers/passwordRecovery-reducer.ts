@@ -5,10 +5,11 @@ import {handleAppRequestError} from "../../common/utils/error-utils";
 
 const initialState: ForgotParamType = {
     email: "",
-
 };
+
+
 export type InitialStateType = typeof initialState
-const passwordRecoveryReducer = (state: InitialStateType = initialState, action: PasswordRecoveryActionsTypes): InitialStateType => {
+export const passwordRecoveryReducer = (state: InitialStateType = initialState, action: PasswordRecoveryActionsTypes): InitialStateType => {
     switch (action.type) {
         case "passwordRecovery/SEND_FORGOT_PASSWORD":
             return {
@@ -23,7 +24,7 @@ const passwordRecoveryReducer = (state: InitialStateType = initialState, action:
 export type PasswordRecoveryActionsTypes =
     | ReturnType<typeof setAppErrorAC>
     | SendForgotPasswordActionType
-//написана ерунда
+
 export type SendForgotPasswordActionType = ReturnType<typeof sendForgotPasswordAC>
 
 export const sendForgotPasswordAC = (payload: InitialStateType) => ({
@@ -50,5 +51,3 @@ export const sendForgotPasswordTC = (email: string) => ((dispatch: Dispatch) => 
         });
 });
 
-
-export default passwordRecoveryReducer;

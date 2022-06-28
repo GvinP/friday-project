@@ -10,7 +10,7 @@ const initialState = {
 
 
 export type InitialStateType = typeof initialState
-const registrationReducer = (state: InitialStateType = initialState, action: RegistrationActionsTypes): InitialStateType => {
+export const registrationReducer = (state: InitialStateType = initialState, action: RegistrationActionsTypes): InitialStateType => {
     switch (action.type) {
         case "registration/REGISTER_ME":
             return {
@@ -38,15 +38,10 @@ export const registerTC = (data: RegisterParamType) => ((dispatch: Dispatch) => 
             dispatch(setAppStatusAC("succeeded"));
         })
         .catch(e => {
-            const error = e.response
-                ? e.response.data.error
-                : (e.message + ", more details in the console");
             handleAppRequestError(e, dispatch);
-            dispatch(setAppErrorAC(error));
         })
         .finally(() => {
             dispatch(setAppStatusAC("succeeded"));
         });
 });
 
-export default registrationReducer;

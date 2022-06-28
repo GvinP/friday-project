@@ -15,7 +15,7 @@ import s from "../../Navbar/Navbar.module.css";
 import st from "./PasswordRecovery.module.css";
 import FormLabel from "@mui/material/FormLabel";
 
-const PasswordRecovery = () => {
+export const PasswordRecovery = () => {
     const dispatch = useAppDispatch();
     const formik = useFormik
     ({
@@ -72,4 +72,3 @@ const PasswordRecovery = () => {
         </Grid>
     </div>;
 };
-export default PasswordRecovery;

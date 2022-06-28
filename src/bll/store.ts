@@ -2,11 +2,11 @@ import {Action, AnyAction, applyMiddleware, combineReducers, legacy_createStore 
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AuthActions, authReducer} from "./reducers/auth-reducer";
-import registrationReducer, {RegistrationActionsTypes} from "./reducers/registration-reducer";
-import newPasswordReducer, {NewPasswordActions} from "./reducers/newPassword-reducer";
-import passwordRecoveryReducer, {PasswordRecoveryActionsTypes} from "./reducers/passwordRecovery-reducer";
-import appReducer, {AppActions} from "./reducers/app-reducer";
-import profileReducer, {ProfileActionsTypes} from "./reducers/profile-reducer";
+import {RegistrationActionsTypes, registrationReducer} from "./reducers/registration-reducer";
+import {NewPasswordActions, newPasswordReducer} from "./reducers/newPassword-reducer";
+import {PasswordRecoveryActionsTypes, passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
+import {AppActions, appReducer} from "./reducers/app-reducer";
+import {ProfileActionsTypes, profileReducer} from "./reducers/profile-reducer";
 
 const rootReducer = combineReducers({
     registrationManage: combineReducers({

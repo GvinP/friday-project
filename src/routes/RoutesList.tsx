@@ -1,22 +1,21 @@
 import React from "react";
-import {Navigate, Route, Routes} from "react-router-dom";
-import Login from "../auth/Login/Login";
-import Registration from "../auth/Registration/Registration";
-import Profile from "../components/Profile";
-import PasswordRecovery from "../auth/PasswordRecovery/PasswordRecovery";
-import NewPassword from "../auth/NewPassword/NewPassword";
+import {Route, Routes} from "react-router-dom";
+import {Login} from "../auth/Login/Login";
+import {Registration} from "../auth/Registration/Registration";
+import {Profile} from "../components/Profile";
+import {PasswordRecovery} from "../auth/PasswordRecovery/PasswordRecovery";
+import {NewPassword} from "../auth/NewPassword/NewPassword";
 import {About} from "../components/about/About";
 import {Error404} from "./Error/Error404";
-import Home from "../components/Home";
-import Packs from "../components/Packs";
-import Cards from "../components/Cards";
+import {Packs} from "../components/Packs";
+import {Cards} from "../components/Cards";
 
 
 export const PATH = {
     login: "/login",
     registration: "/registration",
     profile: "/profile",
-    newPassword: "/new-password/:token",
+    newPassword: "/set-new-password/:token",
     passwordRecovery: "/password-recovery",
     componentsDemo: "/components-demo",
     error404: "/error404",
@@ -30,9 +29,8 @@ export const RoutesList = () => {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Navigate to={PATH.login} replace/>}/>
+                <Route path="/" element={<Login/>}/>
                 <Route path={PATH.login} element={<Login/>}/>
-                <Route path={PATH.home} element={<Home/>}/>
                 <Route path={PATH.registration} element={<Registration/>}/>
                 <Route path={PATH.profile} element={<Profile/>}/>
                 <Route path={PATH.passwordRecovery} element={<PasswordRecovery/>}/>
@@ -45,7 +43,6 @@ export const RoutesList = () => {
                 </Route>
                 <Route path="*" element={<Error404/>}/>
             </Routes>
-
         </div>
     );
 };

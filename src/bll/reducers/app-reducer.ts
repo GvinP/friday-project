@@ -48,4 +48,3 @@ export type AppActions =
 
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 export type InitialStateType = typeof initialState
-export default appReducer;

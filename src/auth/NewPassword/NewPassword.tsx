@@ -9,7 +9,7 @@ import {setAppErrorAC} from "../../bll/reducers/app-reducer";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
-const NewPassword = () => {
+export const NewPassword = () => {
     const dispatch = useAppDispatch();
     const [password, setPassword] = useState("");
     const success = useAppSelector(state => state.registrationManage.newPassword.success);
@@ -47,4 +47,3 @@ const NewPassword = () => {
         </div>
     </div>;
 };
-export default NewPassword;
