@@ -1,30 +1,30 @@
-import axios, {AxiosResponse} from 'axios'
+import axios, {AxiosResponse} from "axios";
 
 export const instance = axios.create({
     withCredentials: true,
-    baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    baseURL: process.env.REACT_APP_BACK_URL || "http://localhost:7542/2.0/",
     //когда работаем локально
     // baseURL:process.env.REACT_APP_BACK_URL||'https://neko-back.herokuapp.com/2.0',
     //перед деплоем на гитхаб
-})
+});
 export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse>("auth/login", data)
-            .then(res => res.data)
+            .then(res => res.data);
     },
     logout() {
-        return instance.delete('auth/me')
-            .then(res => res.data)
+        return instance.delete("auth/me")
+            .then(res => res.data);
     },
     me() {
         return instance.post<UserType>(`auth/me`, {})
-            .then(res => res.data)
+            .then(res => res.data);
     },
     register(data: RegisterParamType) {
-        return instance.post( `auth/register`, data)
+        return instance.post(`auth/register`, data);
     },
     passRecovery(data: ForgotParamType) {
-        return instance.post( `auth/forgot`, data )
+        return instance.post(`auth/forgot`, data);
     },
     forgot(email: string, message: string) {
         return instance.post<ResponseType>("auth/forgot", {email, message});
@@ -32,7 +32,7 @@ export const authAPI = {
     setNewPassword(password: string, resetPasswordToken: string) {
         return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken});
     },
-}
+};
 
 export type LoginParamsType = {
     email: string

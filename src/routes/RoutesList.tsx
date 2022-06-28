@@ -1,5 +1,5 @@
-import React from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import React from "react";
+import {Navigate, Route, Routes} from "react-router-dom";
 import Login from "../auth/Login/Login";
 import Registration from "../auth/Registration/Registration";
 import Profile from "../components/Profile";
@@ -13,24 +13,24 @@ import Cards from "../components/Cards";
 
 
 export const PATH = {
-    login: '/login',
-    registration: '/registration',
-    profile: '/profile',
-    newPassword: '/new-password/:token',
-    passwordRecovery: '/password-recovery',
-    componentsDemo: '/components-demo',
-    error404: '/error404',
-    about: '/about',
-    home: '/home',
-    packs: '/packs',
-    cards: '/cards',
-}
+    login: "/login",
+    registration: "/registration",
+    profile: "/profile",
+    newPassword: "/new-password/:token",
+    passwordRecovery: "/password-recovery",
+    componentsDemo: "/components-demo",
+    error404: "/error404",
+    about: "/about",
+    home: "/home",
+    packs: "/packs",
+    cards: "/cards",
+};
 
 export const RoutesList = () => {
     return (
         <div>
             <Routes>
-                <Route path='/' element={<Navigate to={PATH.login} replace/>}/>
+                <Route path="/" element={<Navigate to={PATH.login} replace/>}/>
                 <Route path={PATH.login} element={<Login/>}/>
                 <Route path={PATH.home} element={<Home/>}/>
                 <Route path={PATH.registration} element={<Registration/>}/>
@@ -40,10 +40,10 @@ export const RoutesList = () => {
                 <Route path={PATH.packs} element={<Packs/>}/>
                 <Route path={PATH.cards} element={<Cards/>}/>
                 <Route path={PATH.about} element={<About/>}>
-                    <Route path='contacts' element={<p>Our contact</p>}/>
-                    <Route path='team' element={<p>Our team</p>}/>
+                    <Route path="contacts" element={<p>Our contact</p>}/>
+                    <Route path="team" element={<p>Our team</p>}/>
                 </Route>
-                <Route path='*' element={<Error404/>}/>
+                <Route path="*" element={<Error404/>}/>
             </Routes>
 
         </div>

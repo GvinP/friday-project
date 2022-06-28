@@ -1,5 +1,5 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
-import s from './SuperInputText.module.css'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from "react";
+import s from "./SuperInputText.module.css";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -26,24 +26,24 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
-        && onChange(e) // то передать ему е (поскольку onChange не обязателен)
-        onChangeText && onChangeText(e.currentTarget.value)
-    }
+        && onChange(e); // то передать ему е (поскольку onChange не обязателен)
+        onChangeText && onChangeText(e.currentTarget.value);
+    };
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
         onKeyPress && onKeyPress(e);
 
         onEnter // если есть пропс onEnter
-        && e.key === 'Enter' // и если нажата кнопка Enter
-        && onEnter() // то вызвать его
-    }
+        && e.key === "Enter" // и если нажата кнопка Enter
+        && onEnter(); // то вызвать его
+    };
 
-    const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${error? s.errorInput : s.superInput}` // need to fix with (?:) and s.superInput
+    const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ""}`;
+    const finalInputClassName = `${error ? s.errorInput : s.superInput}`; // need to fix with (?:) and s.superInput
 
     return (
         <div className={s.container}>
             <input
-                type={'text'}
+                type={"text"}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
@@ -52,7 +52,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
             />
             {error && <span className={finalSpanClassName}>{error}</span>}
         </div>
-    )
-}
+    );
+};
 
-export default SuperInputText
+export default SuperInputText;

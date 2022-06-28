@@ -1,18 +1,18 @@
 const initialState: InitialStateType = {
-    testValue: ''
-}
+    testValue: ""
+};
 
 export const testReducer = (state = initialState, action: ActionType) => {
     switch (action.type) {
-        case 'SET-TEST-VALUE':
-            return {...state, testValue: action.newValue}
+        case "SET-TEST-VALUE":
+            return {...state, testValue: action.newValue};
         default:
-            return state
+            return state;
     }
-}
+};
 
 export const setTestValueAC = (newValue: string) =>
-    ({type: 'SET-TEST-VALUE', newValue} as const)
+    ({type: "SET-TEST-VALUE", newValue} as const);
 
 
 type InitialStateType = {

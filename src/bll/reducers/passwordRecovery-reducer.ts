@@ -34,7 +34,7 @@ export const sendForgotPasswordAC = (payload: InitialStateType) => ({
 // thunk
 export const sendForgotPasswordTC = (email: string) => ((dispatch: Dispatch) => {
     const from = "test-front-admin <ai73a@yandex.by>";
-    const message = `<div style="background-color: lime; padding: 15px">password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`
+    const message = `<div style="background-color: lime; padding: 15px">password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`;
 
     dispatch(setAppStatusAC("loading"));
     authAPI.passRecovery({email, from, message})

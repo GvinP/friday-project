@@ -5,8 +5,9 @@ import {Dispatch} from "redux";
 export const handleAppRequestError = (error: Error | AxiosError, dispatch: Dispatch) => {
     let errorMessage = axios.isAxiosError(error)
         ? (error.response?.data as { error: string }).error
-        : error.message + ', more details in the console';
+        : error.message + ", more details in the console";
 
-    console.log('Error: ', errorMessage);
+    console.log(errorMessage);
+
     dispatch(setAppErrorAC(errorMessage));
 };

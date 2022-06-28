@@ -15,7 +15,7 @@ const registrationReducer = (state: InitialStateType = initialState, action: Reg
         case "registration/REGISTER_ME":
             return {
                 ...action.payload
-            }
+            };
         default:
             return state;
     }
@@ -30,23 +30,23 @@ export type RegisterActionType = ReturnType<typeof registerAC>
 export const registerAC = (payload: InitialStateType) => ({type: "registration/REGISTER_ME", payload} as const);
 
 
-export const registerTC = (data:RegisterParamType ) => ((dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+export const registerTC = (data: RegisterParamType) => ((dispatch: Dispatch) => {
+    dispatch(setAppStatusAC("loading"));
     authAPI.register(data)
         .then(res => {
-            dispatch(registerAC({isRegister: true}))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(registerAC({isRegister: true}));
+            dispatch(setAppStatusAC("succeeded"));
         })
         .catch(e => {
             const error = e.response
                 ? e.response.data.error
-                : (e.message + ', more details in the console');
+                : (e.message + ", more details in the console");
             handleAppRequestError(e, dispatch);
             dispatch(setAppErrorAC(error));
         })
         .finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
-        })
-})
+            dispatch(setAppStatusAC("succeeded"));
+        });
+});
 
 export default registrationReducer;

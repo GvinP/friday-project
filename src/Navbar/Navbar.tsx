@@ -1,19 +1,19 @@
-import React from 'react'
+import React from "react";
 import {NavLink} from "react-router-dom";
-import s from "./Navbar.module.css"
+import s from "./Navbar.module.css";
 import {PATH} from "../routes/RoutesList";
 import {useAppDispatch, useAppSelector} from "../bll/store";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {logoutTC} from "../bll/reducers/auth-reducer";
 
-const setActive = (nav: { isActive: boolean }) => (nav.isActive ? s.activeLink : '')
+const setActive = (nav: { isActive: boolean }) => (nav.isActive ? s.activeLink : "");
 
 export function Navbar() {
     const user_ID = useAppSelector(state => state.profile.user._id);
     const dispatch = useAppDispatch();
     const logoutHandler = () => {
-        dispatch(logoutTC())
-    }
+        dispatch(logoutTC());
+    };
     return (
         <header>
             <nav className={s.nav}>
@@ -49,11 +49,11 @@ export function Navbar() {
                             <NavLink to={PATH.profile} className={setActive}>Profile</NavLink>
                         </div>
                     </>}
-                {user_ID && <SuperButton btnStyle={'primary'} onClick={logoutHandler}>Logout
+                {user_ID && <SuperButton btnStyle={"primary"} onClick={logoutHandler}>Logout
                 </SuperButton>}
             </nav>
         </header>
 
-    )
+    );
 }
 

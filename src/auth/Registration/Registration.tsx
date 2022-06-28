@@ -13,12 +13,12 @@ import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../routes/RoutesList";
 import s from "../../Navbar/Navbar.module.css";
 import FormLabel from "@mui/material/FormLabel";
-
+import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
 const Registration = () => {
-    const dispatch = useAppDispatch()
-    const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister)
+    const dispatch = useAppDispatch();
+    const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister);
     const formik = useFormik
     ({
         initialValues: {
@@ -27,74 +27,74 @@ const Registration = () => {
             confirmPassword: ""
         },
         onSubmit: values => {
-            dispatch(registerTC(values))
+            dispatch(registerTC(values));
             formik.resetForm();
         },
         validate: (values) => {
             const errors: Partial<RegisterParamType> = {};
             if (!values.email) {
-                errors.email = 'email required';
+                errors.email = "email required";
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
+                errors.email = "Invalid email address";
             }
             if (!values.password) {
-                errors.password = 'password required';
+                errors.password = "password required";
             } else if (values.password.trim().length < 4) {
-                errors.password = 'Password should be more than 3 symbols ';
+                errors.password = "Password should be more than 3 symbols ";
             }
             if (values.confirmPassword !== values.password) {
-                errors.confirmPassword = 'Passwords do not match';
+                errors.confirmPassword = "Passwords do not match";
             }
             return errors;
         },
-    })
+    });
 
     if (isRegister) {
-        return <Navigate to={PATH.login}/>
+        return <Navigate to={PATH.login}/>;
     }
 
 
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Sign up</h2>
-        <Grid container justifyContent={'center'}>
-            <Grid item justifyContent={'center'}>
-                <form onSubmit={formik.handleSubmit}>
-                    <FormControl>
-                        <FormLabel>
-                            <span>already have an account? </span>
-                            <NavLink to={PATH.login}
-                                     className={s.signUp}>Sign In</NavLink>
-                        </FormLabel>
-                        <FormGroup>
-                            <TextField label="Email"
-                                       margin="normal"
-                                       {...formik.getFieldProps('email')}
-                            />
-                            {formik.touched.email && formik.errors.email &&
-                                <div style={{color: 'red'}}>{formik.errors.email}</div>}
-                            <TextField type="password"
-                                       label="Password"
-                                       margin="normal"
-                                       {...formik.getFieldProps('password')}
-                            />
-                            {formik.touched.password && formik.errors.password &&
-                                <div style={{color: 'red'}}>{formik.errors.password}</div>}
-                            <TextField type="password"
-                                       label="Confirm password"
-                                       margin="normal"
-                                       {...formik.getFieldProps('confirmPassword')}
-                            />
-                            {formik.touched.confirmPassword && formik.errors.confirmPassword &&
-                                <div style={{color: 'red'}}>{formik.errors.confirmPassword}</div>}
-                            <SuperButton type={'submit'}>
-                                Register
-                            </SuperButton>
-                        </FormGroup>
-                    </FormControl>
-                </form>
+        <Grid container justifyContent={"center"}>
+            <Grid item justifyContent={"center"}>
+                <div className={style.formContainer}>
+                    <form onSubmit={formik.handleSubmit}>
+                        <FormControl>
+                            <FormLabel>
+                                <span>already have an account? </span>
+                                <NavLink to={PATH.login}
+                                         className={s.signUp}>Sign In</NavLink>
+                            </FormLabel>
+                            <FormGroup>
+                                <TextField label="Email"
+                                           margin="normal"
+                                           {...formik.getFieldProps("email")}
+                                />
+                                {formik.touched.email && formik.errors.email &&
+                                    <div style={{color: "red"}}>{formik.errors.email}</div>}
+                                <InputPassword
+                                    placeholder={"Password"}
+                                    {...formik.getFieldProps("password")}
+                                />
+                                {formik.touched.password && formik.errors.password &&
+                                    <div style={{color: "red"}}>{formik.errors.password}</div>}
+                                <InputPassword
+                                    placeholder={"Confirm password"}
+                                    {...formik.getFieldProps("confirmPassword")}
+                                />
+                                {formik.touched.confirmPassword && formik.errors.confirmPassword &&
+                                    <div style={{color: "red"}}>{formik.errors.confirmPassword}</div>}
+                                <SuperButton type={"submit"}>
+                                    Register
+                                </SuperButton>
+                            </FormGroup>
+                        </FormControl>
+                    </form>
+                </div>
             </Grid>
         </Grid>
-    </div>
-}
-export default Registration
+    </div>;
+};
+export default Registration;

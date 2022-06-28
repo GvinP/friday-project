@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {Navigate, useParams} from "react-router-dom";
 import {PATH} from "../../routes/RoutesList";
@@ -10,12 +10,12 @@ import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
 const NewPassword = () => {
-    const dispatch = useAppDispatch()
-    const [password, setPassword] = useState('');
-    const success= useAppSelector(state => state.registrationManage.newPassword.success)
-    const error= useAppSelector(state => state.registrationManage.newPassword.error)
-    const params = useParams<'token'>()
-    const token = params.token
+    const dispatch = useAppDispatch();
+    const [password, setPassword] = useState("");
+    const success = useAppSelector(state => state.registrationManage.newPassword.success);
+    const error = useAppSelector(state => state.registrationManage.newPassword.error);
+    const params = useParams<"token">();
+    const token = params.token;
     useEffect(() => {
         return () => {
             dispatch(setNewPassSuccessAC(false));
@@ -24,23 +24,27 @@ const NewPassword = () => {
     }, [dispatch]);
 
     if (success) {
-        return <Navigate to={PATH.login}/>
+        return <Navigate to={PATH.login}/>;
     }
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Create new password</h2>
-        <InputPassword
-            value={password}
-            onChangeText={setPassword}
-            placeholder={'Password'}
-        />
-        <div style={{color:'gray', margin:'10px'}}>Create new password and we will send you further instructions to email</div>
-        <SuperButton onClick={ () => {
-            if (token) {
-                dispatch(setNewPassTC(password, token))
-            }
-        }}>Create new password</SuperButton>
-        {error && <p style={{color: "red"}}>{error}</p>}
-    </div>
-}
-export default NewPassword
+        <div className={style.formContainer}>
+            <InputPassword
+                value={password}
+                onChangeText={setPassword}
+                placeholder={"Password"}
+            />
+            <div style={{color: "gray", margin: "10px"}}>Create new password and we will send you further instructions
+                to email
+            </div>
+            <SuperButton onClick={() => {
+                if (token) {
+                    dispatch(setNewPassTC(password, token));
+                }
+            }}>Create new password</SuperButton>
+            {error && <p style={{color: "red"}}>{error}</p>}
+        </div>
+    </div>;
+};
+export default NewPassword;
