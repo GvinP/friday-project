@@ -6,15 +6,15 @@ import {useAppDispatch, useAppSelector} from "../bll/store";
 import SuperButton from "../common/SuperButton/SuperButton";
 import {logoutTC} from "../bll/reducers/auth-reducer";
 
-const setActive = (nav: { isActive: boolean }) => (nav.isActive ? s.activeLink : "");
+const setActive = (nav: { isActive: boolean }) => (nav.isActive ? s.activeLink : "")
 
 export function Navbar() {
-    const user_ID = useAppSelector(state => state.profile.user._id);
+    const user_ID = useAppSelector(state => state.profile.user._id)
+    const status = useAppSelector(state => state.app.status)
     const dispatch = useAppDispatch();
     const logoutHandler = () => {
-        dispatch(logoutTC());
-    };
-
+        dispatch(logoutTC())
+    }
     return (
         <header>
             <nav className={s.nav}>
@@ -47,11 +47,10 @@ export function Navbar() {
                             <NavLink to={PATH.profile} className={setActive}>Profile</NavLink>
                         </div>
                     </>}
-                {user_ID && <SuperButton btnStyle={"primary"} onClick={logoutHandler}>Logout
+                {user_ID && <SuperButton disabled={status === 'loading'} btnStyle={"primary"} onClick={logoutHandler}>Logout
                 </SuperButton>}
             </nav>
         </header>
-
-    );
+    )
 }
 

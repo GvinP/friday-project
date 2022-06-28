@@ -1,5 +1,5 @@
 import React from "react";
-import {useAppDispatch} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {useFormik} from "formik";
 import {RegisterParamType} from "../../api/api";
 import style from "../../App.module.css";
@@ -15,8 +15,10 @@ import s from "../../Navbar/Navbar.module.css";
 import st from "./PasswordRecovery.module.css";
 import FormLabel from "@mui/material/FormLabel";
 
+
 export const PasswordRecovery = () => {
     const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.app.status);
     const formik = useFormik
     ({
         initialValues: {
@@ -61,7 +63,7 @@ export const PasswordRecovery = () => {
                                 <div className={st.text}>
                                     <p>Enter your email address and we will send you further instructions</p>
                                 </div>
-                                <SuperButton type={"submit"}>
+                                <SuperButton disabled={status === 'loading'} type={"submit"}>
                                     Send instructions
                                 </SuperButton>
                             </FormGroup>

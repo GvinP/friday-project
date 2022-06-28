@@ -12,6 +12,7 @@ import {InputPassword} from "../../common/InputPassword/InputPassword";
 export const NewPassword = () => {
     const dispatch = useAppDispatch();
     const [password, setPassword] = useState("");
+    const status = useAppSelector(state => state.app.status);
     const success = useAppSelector(state => state.registrationManage.newPassword.success);
     const error = useAppSelector(state => state.registrationManage.newPassword.error);
     const params = useParams<"token">();
@@ -38,7 +39,7 @@ export const NewPassword = () => {
             <div style={{color: "gray", margin: "10px"}}>Create new password and we will send you further instructions
                 to email
             </div>
-            <SuperButton onClick={() => {
+            <SuperButton  disabled={status === 'loading'} onClick={() => {
                 if (token) {
                     dispatch(setNewPassTC(password, token));
                 }

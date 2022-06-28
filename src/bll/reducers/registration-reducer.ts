@@ -3,11 +3,9 @@ import {authAPI, RegisterParamType} from "../../api/api";
 import {Dispatch} from "redux";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 
-
 const initialState = {
     isRegister: false
-};
-
+}
 
 export type InitialStateType = typeof initialState
 export const registrationReducer = (state: InitialStateType = initialState, action: RegistrationActionsTypes): InitialStateType => {
@@ -15,11 +13,11 @@ export const registrationReducer = (state: InitialStateType = initialState, acti
         case "registration/REGISTER_ME":
             return {
                 ...action.payload
-            };
+            }
         default:
             return state;
     }
-};
+}
 
 export type RegistrationActionsTypes =
     | ReturnType<typeof setAppErrorAC>

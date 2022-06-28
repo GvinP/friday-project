@@ -21,6 +21,7 @@ import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 export const Login = () => {
     const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.app.status);
     const user_ID = useAppSelector(state => state.profile.user._id);
     const formik = useFormik
     ({
@@ -90,7 +91,7 @@ export const Login = () => {
                                                       checked={formik.values.rememberMe}
                                                       {...formik.getFieldProps("rememberMe")}
                                                   />}/>
-                                <SuperButton>
+                                <SuperButton disabled={status === 'loading'}>
                                     Login
                                 </SuperButton>
                             </FormGroup>

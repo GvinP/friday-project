@@ -18,9 +18,9 @@ import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 export const Registration = () => {
     const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.app.status);
     const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister);
-    const formik = useFormik
-    ({
+    const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
@@ -86,7 +86,7 @@ export const Registration = () => {
                                 />
                                 {formik.touched.confirmPassword && formik.errors.confirmPassword &&
                                     <div style={{color: "red"}}>{formik.errors.confirmPassword}</div>}
-                                <SuperButton type={"submit"}>
+                                <SuperButton disabled={status === 'loading'} type={"submit"}>
                                     Register
                                 </SuperButton>
                             </FormGroup>
