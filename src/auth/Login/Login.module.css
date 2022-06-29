@@ -1,9 +1,10 @@
 .forgot{
     display: flex;
-    justify-content:space-around;
+    justify-content:end;
     color: rgb(110, 156, 177);
     font-size: 14px;
-    font-weight: 600
+    font-weight: 600;
+    padding: 8px;
 }
 .forgot:hover {
     color: rgb(42, 140, 183);
