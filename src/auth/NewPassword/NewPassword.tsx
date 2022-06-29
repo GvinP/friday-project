@@ -7,6 +7,7 @@ import SuperButton from "../../common/SuperButton/SuperButton";
 import {setNewPassSuccessAC, setNewPassTC} from "../../bll/reducers/newPassword-reducer";
 import {setAppErrorAC} from "../../bll/reducers/app-reducer";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
+import FormControl from "@mui/material/FormControl";
 
 
 export const NewPassword = () => {
@@ -30,6 +31,7 @@ export const NewPassword = () => {
         <h1>Cards</h1>
         <h2>Create new password</h2>
         <div className={style.formContainer}>
+            <FormControl>
             <InputPassword
                 value={password}
                 onChangeText={setPassword}
@@ -38,12 +40,13 @@ export const NewPassword = () => {
             <div style={{color: "gray", margin: "10px"}}>Create new password and we will send you further instructions
                 to email
             </div>
-            <SuperButton disabled={status === 'loading'} onClick={() => {
+            <SuperButton  disabled={status === 'loading'} onClick={() => {
                 if (token) {
                     dispatch(setNewPassTC(password, token));
                 }
             }}>Create new password</SuperButton>
             {error && <p style={{color: "red"}}>{error}</p>}
+            </FormControl>
         </div>
-    </div>;
-};
+    </div>
+}

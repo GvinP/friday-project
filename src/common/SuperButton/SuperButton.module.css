@@ -11,6 +11,7 @@
     line-height: 1.5;
     transition: all 0.2s;
     margin: 10px 0;
+
 }
 .btn:hover {
     background-color: #184f79;
