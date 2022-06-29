@@ -48,12 +48,11 @@ export const Login = () => {
                 errors.password = "Password should be more than 3 symbols ";
             }
             return errors;
-        },
-    });
+        }
+    })
     if (user_ID) {
         return <Navigate to={PATH.packs}/>;
     }
-
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Sign in</h2>
@@ -91,7 +90,7 @@ export const Login = () => {
                                                       checked={formik.values.rememberMe}
                                                       {...formik.getFieldProps("rememberMe")}
                                                   />}/>
-                                <SuperButton disabled={status === 'loading'}>
+                                <SuperButton type={'submit'} disabled={status === 'loading'}>
                                     Login
                                 </SuperButton>
                             </FormGroup>

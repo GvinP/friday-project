@@ -53,7 +53,6 @@ export const Registration = () => {
         return <Navigate to={PATH.login}/>;
     }
 
-
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Sign up</h2>
