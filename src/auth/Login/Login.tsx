@@ -85,7 +85,8 @@ export const Login = () => {
                                              className={st.forgot}>forgot password</NavLink>
                                 </div>
 
-                                <FormControlLabel label={"Remember me"}
+                                <FormControlLabel
+                                    label={"Remember me"}
                                                   control={<Checkbox
                                                       checked={formik.values.rememberMe}
                                                       {...formik.getFieldProps("rememberMe")}
