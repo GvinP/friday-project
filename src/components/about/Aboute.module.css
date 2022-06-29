@@ -1,6 +1,6 @@
 .item a {
     margin: 10px;
-    color: #0a5599;
+    color: #2c7dc9;
     text-decoration: none;
     font-size: 15px;
     text-transform: uppercase;
@@ -8,4 +8,8 @@
 
 .item a.activeLink {
     color: #e68a13;
+}
+
+.item a:hover {
+    color: #e2b47f;
 }
