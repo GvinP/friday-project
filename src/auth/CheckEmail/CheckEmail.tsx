@@ -1,0 +1,19 @@
+import React from "react";
+import style from "../../App.module.css";
+import st from "./CheckEmail.module.css"
+import {useAppSelector} from "../../bll/store";
+
+
+export const CheckEmail = () => {
+
+    const email = useAppSelector(state => state.registrationManage.passwordRecovery.email);
+
+    return <div className={style.smallContainer}>
+        <h1>Cards</h1>
+        <div className={st.img}></div>
+        <h2>Check Email</h2>
+        <div className={st.text}>
+            <span>{`We've sent an Email with instructions to ${email}`}</span>
+        </div>
+    </div>;
+};

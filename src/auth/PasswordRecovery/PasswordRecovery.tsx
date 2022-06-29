@@ -9,7 +9,7 @@ import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {sendForgotPasswordTC} from "../../bll/reducers/passwordRecovery-reducer";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../routes/RoutesList";
 import s from "../../Navbar/Navbar.module.css";
 import st from "./PasswordRecovery.module.css";
@@ -18,6 +18,7 @@ import FormLabel from "@mui/material/FormLabel";
 
 export const PasswordRecovery = () => {
     const dispatch = useAppDispatch();
+    const email = useAppSelector(state => state.registrationManage.passwordRecovery.email);
     const status = useAppSelector(state => state.app.status);
     const formik = useFormik
     ({
@@ -38,6 +39,10 @@ export const PasswordRecovery = () => {
             return errors;
         },
     });
+
+    if (email) {
+        return <Navigate to={PATH.checkEmail}/>
+    }
 
 
     return <div className={style.smallContainer}>

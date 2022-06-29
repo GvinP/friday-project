@@ -1,0 +1,14 @@
+h1 {
+    margin: 0 0 20px 0;
+}
+
+.img {
+    background: url("../../assets/images/email.png");
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+}
+
+.text {
+    margin: 20px 0 0 0;
+}

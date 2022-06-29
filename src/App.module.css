@@ -17,12 +17,12 @@
     padding: 25px 33px 35px;
     position: relative;
     text-align: center;
-    width: 413px;
+    max-width: 413px;
     min-height: 450px;
 }
 
 .formContainer {
-    width: 210px;
+    max-width: 210px;
 }
 
 @media (max-width: 413px) {

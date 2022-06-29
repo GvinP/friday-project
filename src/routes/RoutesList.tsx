@@ -9,6 +9,7 @@ import {About} from "../components/about/About";
 import {Error404} from "./Error/Error404";
 import {Packs} from "../components/Packs";
 import {Cards} from "../components/Cards";
+import {CheckEmail} from "../auth/CheckEmail/CheckEmail";
 
 
 export const PATH = {
@@ -23,6 +24,7 @@ export const PATH = {
     home: "/home",
     packs: "/packs",
     cards: "/cards",
+    checkEmail: "/check-email"
 };
 
 export const RoutesList = () => {
@@ -32,6 +34,7 @@ export const RoutesList = () => {
                 <Route path="/" element={<Login/>}/>
                 <Route path={PATH.login} element={<Login/>}/>
                 <Route path={PATH.registration} element={<Registration/>}/>
+                <Route path={PATH.checkEmail} element={<CheckEmail/>}/>
                 <Route path={PATH.profile} element={<Profile/>}/>
                 <Route path={PATH.passwordRecovery} element={<PasswordRecovery/>}/>
                 <Route path={PATH.newPassword} element={<NewPassword/>}/>
