@@ -63,7 +63,7 @@ export const Registration = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl>
                             <FormLabel>
-                                <span>already have an account? </span>
+                                <span>have an account? </span>
                                 <NavLink to={PATH.login}
                                          className={s.signUp}>Sign In</NavLink>
                             </FormLabel>
