@@ -13,7 +13,7 @@ export const CheckEmail = () => {
         <div className={st.img}></div>
         <h2>Check Email</h2>
         <div className={st.text}>
-            <span>{`We've sent an Email with instructions to ${email}`}</span>
+            <span style={{color: "gray", margin: "10px"}}>{`We've sent an Email with instructions to ${email}`}</span>
         </div>
     </div>;
 };

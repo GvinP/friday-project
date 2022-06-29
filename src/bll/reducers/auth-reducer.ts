@@ -6,7 +6,15 @@ import {handleAppRequestError} from "../../common/utils/error-utils";
 import {registerAC, RegisterActionType} from "./registration-reducer";
 
 const initialState = {
-    login: "",
+    _id: '',
+    email: '',
+    name: '',
+    avatar: '',
+    publicCardPacksCount: 0,
+    created: 0,
+    updated: 0,
+    isAdmin: false,
+    verified: false, // подтвердил ли почту
     password: "",
     auth: false,
     rememberMe: false,

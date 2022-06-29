@@ -13,7 +13,6 @@ export type NewPasswordActions =
     | ReturnType<typeof setNewPassSuccessAC>
     | ReturnType<typeof setAppStatusAC>
 
-
 export const newPasswordReducer = (state: InitialStateType = initialState, action: NewPasswordActions): InitialStateType => {
     switch (action.type) {
         case "newPassword/SET-NEW-PASSWORD-SUCCESS":
@@ -24,10 +23,7 @@ export const newPasswordReducer = (state: InitialStateType = initialState, actio
 };
 
 export const setNewPassSuccessAC = (success: boolean) => ({
-    type: "newPassword/SET-NEW-PASSWORD-SUCCESS",
-    success
-} as const);
-
+    type: "newPassword/SET-NEW-PASSWORD-SUCCESS", success} as const);
 
 export const setNewPassTC = (password: string, token: string) => (dispatch: Dispatch<NewPasswordActions>) => {
     dispatch(setAppStatusAC("loading"));
@@ -39,7 +35,7 @@ export const setNewPassTC = (password: string, token: string) => (dispatch: Disp
             handleAppRequestError(e, dispatch);
         })
         .finally(() => {
-            dispatch(setAppStatusAC("succeeded"));
+            dispatch(setAppStatusAC("idle"));
         });
 };
 
