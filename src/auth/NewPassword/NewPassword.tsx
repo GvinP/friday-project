@@ -14,7 +14,7 @@ export const NewPassword = () => {
     const dispatch = useAppDispatch();
     const [password, setPassword] = useState("");
     const status = useAppSelector(state => state.app.status);
-    const success = useAppSelector(state => state.registrationManage.newPassword.success);
+    const info = useAppSelector(state => state.registrationManage.newPassword.success);
     const error = useAppSelector(state => state.registrationManage.newPassword.error);
     const token = useParams().token;
     useEffect(() => {
@@ -24,7 +24,7 @@ export const NewPassword = () => {
         };
     }, [dispatch]);
 
-    if (success) {
+    if (info) {
         return <Navigate to={PATH.login}/>;
     }
     return <div className={style.smallContainer}>

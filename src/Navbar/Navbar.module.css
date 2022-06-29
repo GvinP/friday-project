@@ -14,6 +14,9 @@
     font-size: 12px;
     text-transform: uppercase;
 }
+.item a:hover{
+    color: #e37309;
+}
 
 .item a.activeLink {
     color: #e9a671;
@@ -24,3 +27,6 @@
     font-weight: 600
 }
 
+.signUp:hover {
+    color: rgb(42, 140, 183);
+}

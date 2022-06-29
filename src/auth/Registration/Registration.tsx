@@ -53,7 +53,6 @@ export const Registration = () => {
         return <Navigate to={PATH.login}/>;
     }
 
-
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Sign up</h2>
@@ -63,7 +62,7 @@ export const Registration = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl>
                             <FormLabel>
-                                <span> have an account? </span>
+                                <span>have an account? </span>
                                 <NavLink to={PATH.login}
                                          className={s.signUp}>Sign In</NavLink>
                             </FormLabel>
