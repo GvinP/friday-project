@@ -14,6 +14,9 @@
     font-size: 12px;
     text-transform: uppercase;
 }
+.item a:hover{
+    color: #e37309;
+}
 
 .item a.activeLink {
     color: #e9a671;
