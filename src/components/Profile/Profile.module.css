@@ -14,7 +14,6 @@
     padding: 10px;
 }
 
-
 .profile {
     padding: 10px;
     display: flex;
@@ -81,7 +80,6 @@
 }
 
 .defaultAva {
-    box-shadow: 0 0 10px #9f9f9f;
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -93,8 +91,8 @@
     padding: 0 5px;
     border: 1px solid black;
     border-radius: 50%;
-    height: 30px;
-    width: 25px;
+    height: 25px;
+    width: 20px;
     position: relative;
     right: 26px;
     top: 3px;
