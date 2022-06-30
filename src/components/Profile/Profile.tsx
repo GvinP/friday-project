@@ -3,11 +3,9 @@ import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {PATH} from "../../routes/RoutesList";
 import style from "./Profile.module.css"
-
 import {ReactComponent as DefaultAva} from '../../assets/images/avatar.svg';
 import {ReactComponent as UploadAva} from '../../assets/images/add_photo.svg';
 import {ChangesInputs} from "./ChangesInputs";
-
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {updateNameTC} from "../../bll/reducers/profile-reducer";
 import {EditableSpan} from "../../common/EditableSpan";
