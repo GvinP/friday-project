@@ -26,7 +26,7 @@ type InitialStateType = typeof initialState
 export const authReducer = (state: InitialStateType = initialState, action: AuthActions): InitialStateType => {
     switch (action.type) {
         case "login/AUTH_ME":
-            return {...action.payload};
+            return {...state, auth: true};
         case "login/LOGIN":
             return {...action.payload};
         case "login/LOGOUT":
@@ -37,8 +37,24 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 };
 export const loginAC = (payload: InitialStateType) => ({type: "login/LOGIN", payload} as const);
 export const logoutAC = () => ({type: "login/LOGOUT"} as const);
-export const authMeAC = (payload: InitialStateType) => ({type: "login/AUTH_ME", payload} as const);
+export const authMeAC = (auth: boolean) => ({type: "login/AUTH_ME", auth} as const);
 
+export const authMeTC = () => ((dispatch: Dispatch<AuthActions>) => {
+    dispatch(setAppStatusAC("loading"));
+    authAPI.me()
+        .then(res => {
+            debugger
+            dispatch(authMeAC(true))
+            dispatch(setAuthDataAC(res));
+            dispatch(setAppStatusAC("succeeded"));
+        })
+        .catch(e => {
+            handleAppRequestError(e, dispatch);
+        })
+        .finally(() => {
+            dispatch(setAppStatusAC("succeeded"));
+        });
+});
 
 export const loginTC = (data: LoginParamsType) => ((dispatch: Dispatch<AuthActions>) => {
     dispatch(setAppStatusAC("loading"));

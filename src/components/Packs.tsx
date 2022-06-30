@@ -1,19 +1,23 @@
-import React from "react";
-import {useAppSelector} from "../bll/store";
+import React, {useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "../bll/store";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../routes/RoutesList";
+import {authMeTC} from "../bll/reducers/auth-reducer";
 
 export const Packs = () => {
+    const isLogged = useAppSelector(state => state.auth.auth)
+    const dispatch = useAppDispatch()
 
-    const user_ID = useAppSelector(state => state.profile.user._id);
+    useEffect(() => {
+        dispatch(authMeTC())
+    },[])
 
-    if (!user_ID) {
-        return <Navigate to={PATH.login}/>;
+    if (!isLogged) {
+        return <Navigate to={PATH.login}/>
     }
-
     return (
         <div>
-            Profile
+            Packs
         </div>
     );
 };
