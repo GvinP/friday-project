@@ -67,12 +67,14 @@ export const Login = () => {
                                          className={s.signUp}>Sign Up</NavLink>
                             </FormLabel>
                             <FormGroup>
+
                                 <TextField label="Email"
                                            margin="normal"
                                            {...formik.getFieldProps("email")}
                                 />
                                 {formik.touched.email && formik.errors.email &&
                                     <div style={{color: "red"}}>{formik.errors.email}</div>}
+
                                 <InputPassword
                                     placeholder={"Password"}
                                     {...formik.getFieldProps("password")}
@@ -80,6 +82,8 @@ export const Login = () => {
 
                                 {formik.touched.password && formik.errors.password &&
                                     <div style={{color: "red"}}>{formik.errors.password}</div>}
+
+
                                 <div>
                                     <NavLink to={PATH.passwordRecovery}
                                              className={st.forgot}>forgot password</NavLink>

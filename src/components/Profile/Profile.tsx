@@ -47,7 +47,8 @@ export const Profile = () => {
                     </div>
                     <span className={style.infoSpan}>Nickname</span>
                     <span className={style.email}>
-                        <EditableSpan value={value}  onChange={setValue}/>
+                        <EditableSpan value={value}  onChange={setValue}
+                        />
                     </span>
 
                     <span className={style.infoSpan}>Email</span>
