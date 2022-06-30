@@ -20,11 +20,10 @@
     align-items: center;
     height: 216px;
     width: 243px;
-    background-color: #D9D9F1;
+    background-color: #9eb2ca;
 }
 
 .name {
-    font-family: Poppins;
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
@@ -32,7 +31,6 @@
 }
 
 .email {
-    font-family: SF UI Display;
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -50,23 +48,21 @@
 
 .cardsRange {
     display: flex;
-    padding-top: 17px;
-    padding-left: 24px;
-    font-family: 'SF UI Display';
+    justify-content: center;
+    padding: 20px;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
-    line-height: 19px;
-    background-color: #ECECF9;
+    color: white;
+    background-color: #bccbd9;
     flex: 1;
 }
 
 .packsList {
-    padding-top: 24px;
-    padding-left: 48px;
-    font-family: 'Poppins';
+    display: flex;
+    justify-content: center;
+    padding: 30px;
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
-    line-height: 33px;
 }

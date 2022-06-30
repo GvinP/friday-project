@@ -33,6 +33,13 @@ export const authAPI = {
         return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken});
     },
 };
+export const profileAPI = {
+    updateUserData(name: string, avatar: string) {
+        return instance.put<UpdatedUser>(`/auth/me`, {name, avatar})
+            .then(res => res.data)
+    },
+}
+
 
 export type LoginParamsType = {
     email: string
@@ -65,6 +72,11 @@ export type UserType = {
     verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
+}
+export type UpdatedUser = {
+    token: string
+    tokenDeathTime: Date
+    updatedUser: UserType
 }
 
 

@@ -83,7 +83,7 @@ export const logoutTC = () => (dispatch: Dispatch<AuthActions>) => {
             handleAppRequestError(e, dispatch);
         })
         .finally(() => {
-            dispatch(setAppStatusAC("failed"));
+            dispatch(setAppStatusAC("idle"));
         });
 };
 export type AuthActions =
