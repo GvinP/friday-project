@@ -51,7 +51,7 @@ export const Login = () => {
         }
     })
     if (user_ID) {
-        return <Navigate to={PATH.packs}/>;
+        return <Navigate to={PATH.profile}/>;
     }
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
