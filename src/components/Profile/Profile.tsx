@@ -38,7 +38,6 @@ export const Profile = () => {
                            setNewPhoto={setNewPhoto}
                            inputRef={inputRef}/>
             <div className={style.profileContainer}>
-
                 <div className={style.profile}>
                     <div className={style.profileAva}>
                         {!avatar && !newPhoto
