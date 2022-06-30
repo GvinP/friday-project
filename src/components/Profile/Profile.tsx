@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import { Navigate } from "react-router-dom";
-
 import {useAppDispatch, useAppSelector} from "../bll/store";
 import {authMeTC} from "../bll/reducers/auth-reducer";
 import {PATH} from "../routes/RoutesList";
