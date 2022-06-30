@@ -7,9 +7,10 @@ import style from "./Profile.module.css"
 import {ReactComponent as DefaultAva} from '../../assets/images/avatar.svg';
 import {ReactComponent as UploadAva} from '../../assets/images/add_photo.svg';
 import {ChangesInputs} from "./ChangesInputs";
-import {InputText} from "../../common/c1-SuperInputText/InputText";
+
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {updateNameTC} from "../../bll/reducers/profile-reducer";
+import {EditableSpan} from "../../common/EditableSpan";
 
 
 export const Profile = () => {
@@ -47,11 +48,10 @@ export const Profile = () => {
                                    onClick={() => inputRef && inputRef.current && inputRef.current.click()}/>
                     </div>
                     <span className={style.infoSpan}>Nickname</span>
-                    <span className={style.email}>{name}</span>
-                    <InputText placeholder={'new nickName'}
-                               value={value}
-                               onChangeText={setValue}
-                    />
+                    <span className={style.email}>
+                        <EditableSpan value={value}  onChange={setValue}/>
+                    </span>
+
                     <span className={style.infoSpan}>Email</span>
                     <span className={style.email}>{email}</span>
                     <div className={style.profileError}>
@@ -64,7 +64,7 @@ export const Profile = () => {
                 </div>
             </div>
             <div className={style.packsList}>
-                {name}'s Packs list
+                {value}'s Packs list
             </div>
         </div>
     )
