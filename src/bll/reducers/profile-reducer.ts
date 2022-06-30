@@ -1,6 +1,5 @@
 import {profileAPI, UserType} from "../../api/api";
 import {Dispatch} from "redux";
-import {AuthActions} from "./auth-reducer";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 

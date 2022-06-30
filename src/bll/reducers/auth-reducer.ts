@@ -39,21 +39,21 @@ export const loginAC = (payload: InitialStateType) => ({type: "login/LOGIN", pay
 export const logoutAC = () => ({type: "login/LOGOUT"} as const);
 export const authMeAC = (auth: boolean) => ({type: "login/AUTH_ME", auth} as const);
 
-export const authMeTC = () => ((dispatch: Dispatch<AuthActions>) => {
-    dispatch(setAppStatusAC("loading"));
-    authAPI.me()
-        .then(res => {
-            dispatch(authMeAC(true))
-            dispatch(setAuthDataAC(res));
-            dispatch(setAppStatusAC("succeeded"));
-        })
-        .catch(e => {
-            handleAppRequestError(e, dispatch);
-        })
-        .finally(() => {
-            dispatch(setAppStatusAC("succeeded"));
-        });
-});
+// export const authMeTC = () => ((dispatch: Dispatch<AuthActions>) => {
+//     dispatch(setAppStatusAC("loading"));
+//     authAPI.me()
+//         .then(res => {
+//             dispatch(authMeAC(true))
+//             dispatch(setAuthDataAC(res));
+//             dispatch(setAppStatusAC("succeeded"));
+//         })
+//         .catch(e => {
+//             handleAppRequestError(e, dispatch);
+//         })
+//         .finally(() => {
+//             dispatch(setAppStatusAC("succeeded"));
+//         });
+// });
 
 export const loginTC = (data: LoginParamsType) => ((dispatch: Dispatch<AuthActions>) => {
     dispatch(setAppStatusAC("loading"));
