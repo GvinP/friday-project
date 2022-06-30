@@ -37,7 +37,6 @@ export const profileAPI = {
     },
 }
 
-
 export type LoginParamsType = {
     email: string
     password: string
