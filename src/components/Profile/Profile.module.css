@@ -1,7 +1,6 @@
 .container {
     display: flex;
     min-height: 636px;
-    width: 1008px;
     margin: 34px auto 0 auto;
     border-radius: 8px;
     color: #2D2E46;
