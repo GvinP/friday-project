@@ -47,11 +47,11 @@ export const Profile = () => {
                                    onClick={() => inputRef && inputRef.current && inputRef.current.click()}/>
                     </div>
                     <span className={style.infoSpan}>Nickname</span>
-                    <InputText placeholder={'NickName'}
+                    <span className={style.email}>{name}</span>
+                    <InputText placeholder={'new nickName'}
                                value={value}
                                onChangeText={setValue}
                     />
-
                     <span className={style.infoSpan}>Email</span>
                     <span className={style.email}>{email}</span>
                     <div className={style.profileError}>

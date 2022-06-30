@@ -27,19 +27,11 @@
 
 }
 
-.name {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 27px;
-    margin-top: 4px;
-}
-
 .email {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
-    line-height: 17px;
-    opacity: 0.5;
-    margin-top: 4px;
+    opacity: 0.8;
+    color: #ffffff;
 }
 
 .avatar {
@@ -100,6 +92,7 @@
 }
 
 .infoSpan {
+    padding: 10px;
     font-size: 14px;
     opacity: 50%;
 }
