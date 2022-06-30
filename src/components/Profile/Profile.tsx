@@ -2,9 +2,14 @@ import React, {useRef, useState} from "react";
 import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {PATH} from "../../routes/RoutesList";
-import userAvatar from "../../assets/images/avatar.svg"
 import style from "./Profile.module.css"
 import {updateNameTC} from "../../bll/reducers/profile-reducer";
+import {ReactComponent as DefaultAva} from '../../assets/images/avatar.svg';
+import {ReactComponent as UploadAva} from '../../assets/images/add_photo.svg';
+import {ChangesInputs} from "./ChangesInputs";
+import {InputText} from "../../common/c1-SuperInputText/InputText";
+import SuperButton from "../../common/SuperButton/SuperButton";
+
 
 export const Profile = () => {
     const {avatar, name, email} = useAppSelector(state => state.profile.user)
@@ -27,18 +32,39 @@ export const Profile = () => {
     }
     return (
         <div className={style.container}>
+            <ChangesInputs error={error}
+                           setError={setError}
+                           setNewPhoto={setNewPhoto}
+                           inputRef={inputRef}/>
             <div className={style.profileContainer}>
+
                 <div className={style.profile}>
-                    <img src={avatar ? avatar : userAvatar} alt='profilePhoto' className={style.avatar}/>
-                    <span className={style.name}>{name}</span>
+                    <div className={style.profileAva}>
+                        {!avatar && !newPhoto
+                            ? <DefaultAva className={style.defaultAva}/>
+                            : <img className={style.defaultAva} src={newPhoto ? newPhoto : avatar} alt="user-ava"/>}
+                        <UploadAva className={style.editPhoto}
+                                   onClick={() => inputRef && inputRef.current && inputRef.current.click()}/>
+                    </div>
+                    <span className={style.infoSpan}>Nickname</span>
+                    <InputText placeholder={'NickName'}
+                               value={value}
+                               onChangeText={setValue}
+                    />
+
+                    <span className={style.infoSpan}>Email</span>
                     <span className={style.email}>{email}</span>
+                    <div className={style.profileError}>
+                        {error}
+                    </div>
+                    <SuperButton disabled={status === 'loading'} onClick={changeName}>Save</SuperButton>
                 </div>
                 <div className={style.cardsRange}>
                     Number of cards
                 </div>
             </div>
             <div className={style.packsList}>
-                Packs list {name}'s
+                {name}'s Packs list
             </div>
         </div>
     )
