@@ -57,7 +57,7 @@ export const Profile = () => {
                     <div className={style.profileError}>
                         {error}
                     </div>
-                    <SuperButton disabled={status === 'loading'} onClick={changeName}>Save</SuperButton>
+                    <SuperButton disabled={status === 'loading'} btnStyle={"primary"} onClick={changeName}>Save</SuperButton>
                 </div>
                 <div className={style.cardsRange}>
                     Number of cards
