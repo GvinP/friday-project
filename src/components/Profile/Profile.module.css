@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    height: 636px;
+    width: 1008px;
+    margin: 34px auto 0 auto;
+    border-radius: 8px;
+    color: #2D2E46;
+    background-color: #FEFEFF;
+    overflow: hidden;
+}
+
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 216px;
+    width: 243px;
+    background-color: #D9D9F1;
+}
+
+.name {
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    margin-top: 4px;
+}
+
+.email {
+    font-family: SF UI Display;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    opacity: 0.5;
+    margin-top: 4px;
+}
+
+.avatar {
+    display: block;
+    margin-top: 24px;
+    width: 96px;
+    border-radius: 50%;
+    background-color: #ffffff;
+}
+
+.cardsRange {
+    display: flex;
+    padding-top: 17px;
+    padding-left: 24px;
+    font-family: 'SF UI Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    background-color: #ECECF9;
+    flex: 1;
+}
+
+.packsList {
+    padding-top: 24px;
+    padding-left: 48px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+}

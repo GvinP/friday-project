@@ -43,7 +43,6 @@ export const authMeTC = () => ((dispatch: Dispatch<AuthActions>) => {
     dispatch(setAppStatusAC("loading"));
     authAPI.me()
         .then(res => {
-            debugger
             dispatch(authMeAC(true))
             dispatch(setAuthDataAC(res));
             dispatch(setAppStatusAC("succeeded"));
