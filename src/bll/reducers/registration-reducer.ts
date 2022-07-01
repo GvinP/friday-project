@@ -27,11 +27,10 @@ export type RegisterActionType = ReturnType<typeof registerAC>
 
 export const registerAC = (payload: InitialStateType) => ({type: "registration/REGISTER_ME", payload} as const);
 
-
 export const registerTC = (data: RegisterParamType) => ((dispatch: Dispatch) => {
     dispatch(setAppStatusAC("loading"));
     authAPI.register(data)
-        .then(res => {
+        .then(() => {
             dispatch(registerAC({isRegister: true}));
             dispatch(setAppStatusAC("succeeded"));
         })
