@@ -11,10 +11,7 @@ export type InitialStateType = typeof initialState
 export const passwordRecoveryReducer = (state: InitialStateType = initialState, action: PasswordRecoveryActionsTypes): InitialStateType => {
     switch (action.type) {
         case "passwordRecovery/SEND_FORGOT_PASSWORD":
-            return {
-                ...state,
-                email: action.payload.email
-            }
+            return {...state, email: action.payload.email}
         default:
             return state
     }
@@ -30,7 +27,7 @@ export const sendForgotPasswordAC = (payload: InitialStateType) => ({
     payload
 } as const)
 
-export const sendForgotPasswordTC = (email: string):AppThunk => ((dispatch) => {
+export const sendForgotPasswordTC = (email: string): AppThunk => ((dispatch) => {
     const from = "test-front-admin <ai73a@yandex.by>";
     const message = `<div style="background-color: cornflowerblue; padding: 15px">password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`
     dispatch(setAppStatusAC("loading"))
