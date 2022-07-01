@@ -90,6 +90,7 @@ export const Login = () => {
                                 </div>
 
                                 <FormControlLabel
+                                    className={st.remember}
                                     label={"Remember me"}
                                                   control={<Checkbox
                                                       checked={formik.values.rememberMe}
