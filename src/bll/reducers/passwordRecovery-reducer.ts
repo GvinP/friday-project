@@ -1,7 +1,7 @@
 import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import {authAPI, ForgotParamType} from "../../api/api";
-import {Dispatch} from "redux";
 import {handleAppRequestError} from "../../common/utils/error-utils";
+import {AppThunk} from "../store";
 
 const initialState: ForgotParamType = {
     email: '',
@@ -30,7 +30,7 @@ export const sendForgotPasswordAC = (payload: InitialStateType) => ({
     payload
 } as const)
 
-export const sendForgotPasswordTC = (email: string) => ((dispatch: Dispatch) => {
+export const sendForgotPasswordTC = (email: string):AppThunk => ((dispatch) => {
     const from = "test-front-admin <ai73a@yandex.by>";
     const message = `<div style="background-color: cornflowerblue; padding: 15px">password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`
     dispatch(setAppStatusAC("loading"))

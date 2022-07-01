@@ -1,7 +1,7 @@
 import {profileAPI, UserType} from "../../api/api";
-import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
+import {AppThunk} from "../store";
 
 const initialState = {
     user: {} as UserType
@@ -16,7 +16,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return state;
     }
 };
-export const updateNameTC = (name: string, avatar: string) => (dispatch: Dispatch<ProfileActionsTypes>) => {
+export const updateNameTC = (name: string, avatar: string):AppThunk => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     profileAPI.updateUserData(name, avatar)
         .then(res => {

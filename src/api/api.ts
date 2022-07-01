@@ -7,7 +7,9 @@ export const instance = axios.create({
     baseURL:process.env.REACT_APP_BACK_URL||'https://neko-back.herokuapp.com/2.0',
     //перед деплоем на гитхаб
 })
+
 export const authAPI = {
+
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse>("auth/login", data)
             .then(res => res.data);
@@ -16,19 +18,26 @@ export const authAPI = {
         return instance.delete("auth/me")
             .then(res => res.data);
     },
+    me() {
+        return instance.post(`auth/me`);
+    },
     register(data: RegisterParamType) {
-        return instance.post(`auth/register`, data);
+        return instance.post("auth/register", data)
+            .then(res => res.data);
     },
     passRecovery(data: ForgotParamType) {
-        return instance.post(`auth/forgot`, data);
+        return instance.post("auth/forgot", data)
+            .then(res => res.data);
     },
     setNewPassword(password: string, resetPasswordToken: string) {
-        return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken});
+        return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken})
+            .then(res => res.data);
     },
 }
+
 export const profileAPI = {
     updateUserData(name: string, avatar: string) {
-        return instance.put<UpdatedUser>(`/auth/me`, {name, avatar})
+        return instance.put<UpdatedUser>("/auth/me", {name, avatar})
             .then(res => res.data)
     },
 }

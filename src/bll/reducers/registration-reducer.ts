@@ -1,7 +1,7 @@
 import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import {authAPI, RegisterParamType} from "../../api/api";
-import {Dispatch} from "redux";
 import {handleAppRequestError} from "../../common/utils/error-utils";
+import {AppThunk} from "../store";
 
 const initialState = {
     isRegister: false
@@ -27,7 +27,7 @@ export type RegisterActionType = ReturnType<typeof registerAC>
 
 export const registerAC = (payload: InitialStateType) => ({type: "registration/REGISTER_ME", payload} as const);
 
-export const registerTC = (data: RegisterParamType) => ((dispatch: Dispatch) => {
+export const registerTC = (data: RegisterParamType): AppThunk => ((dispatch) => {
     dispatch(setAppStatusAC("loading"));
     authAPI.register(data)
         .then(() => {

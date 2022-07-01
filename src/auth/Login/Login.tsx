@@ -20,9 +20,12 @@ import {InputPassword} from "../../common/InputPassword/InputPassword";
 
 
 export const Login = () => {
+
     const dispatch = useAppDispatch();
+
     const status = useAppSelector(state => state.app.status);
     const user_ID = useAppSelector(state => state.profile.user._id);
+
     const formik = useFormik
     ({
         initialValues: {
@@ -49,9 +52,11 @@ export const Login = () => {
             return errors;
         }
     })
+
     if (user_ID) {
         return <Navigate to={PATH.profile}/>;
     }
+
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
         <h2>Sign in</h2>

@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import {Login} from "../auth/Login/Login";
 import {Registration} from "../auth/Registration/Registration";
 import {Profile} from "../components/Profile/Profile";
@@ -7,8 +7,8 @@ import {PasswordRecovery} from "../auth/PasswordRecovery/PasswordRecovery";
 import {NewPassword} from "../auth/NewPassword/NewPassword";
 import {About} from "../components/about/About";
 import {Error404} from "./Error/Error404";
-import {Packs} from "../components/Packs";
-import {Cards} from "../components/Cards";
+import {Packs} from "../components/Packs/Packs";
+import {Cards} from "../components/Cards/Cards";
 import {CheckEmail} from "../auth/CheckEmail/CheckEmail";
 
 
@@ -31,7 +31,7 @@ export const RoutesList = () => {
     return (
         <div>
             <Routes>
-                <Route path="/" element={<Login/>}/>
+                <Route path="/" element={<Navigate to={PATH.login}/>}/>
                 <Route path={PATH.login} element={<Login/>}/>
                 <Route path={PATH.registration} element={<Registration/>}/>
                 <Route path={PATH.checkEmail} element={<CheckEmail/>}/>
@@ -47,5 +47,5 @@ export const RoutesList = () => {
                 <Route path="*" element={<Error404/>}/>
             </Routes>
         </div>
-    );
-};
+    )
+}

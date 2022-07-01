@@ -1,7 +1,7 @@
 import {setAppStatusAC} from "./app-reducer";
 import {authAPI} from "../../api/api";
-import {Dispatch} from "redux";
 import {handleAppRequestError} from "../../common/utils/error-utils";
+import {AppThunk} from "../store";
 
 const initialState = {
     info: "",
@@ -25,7 +25,7 @@ export const newPasswordReducer = (state: InitialStateType = initialState, actio
 export const setNewPassSuccessAC = (success: boolean) => ({
     type: "newPassword/SET-NEW-PASSWORD-SUCCESS", success} as const);
 
-export const setNewPassTC = (password: string, token: string) => (dispatch: Dispatch<NewPasswordActions>) => {
+export const setNewPassTC = (password: string, token: string):AppThunk => (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     authAPI.setNewPassword(password, token)
         .then(() => {
