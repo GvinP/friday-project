@@ -32,6 +32,7 @@ export const Profile = () => {
     }
     return (
         <div className={style.container}>
+
             <ChangesInputs error={error}
                            setError={setError}
                            setNewPhoto={setNewPhoto}
