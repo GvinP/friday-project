@@ -1,9 +1,9 @@
 import React from "react";
-import style from "../../App.module.css";
+import style from "../../app/App/App.module.css";
 import st from "./CheckEmail.module.css"
-import {useAppSelector} from "../../bll/store";
+import {useAppSelector} from "../../app/store";
 import {Navigate, NavLink} from "react-router-dom";
-import {PATH} from "../../routes/RoutesList";
+import {PATH} from "../../Navigation/Routes/RoutesList";
 import close from "../../assets/icons/close.png";
 
 

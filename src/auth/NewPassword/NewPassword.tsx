@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate, useParams} from "react-router-dom";
-import {PATH} from "../../routes/RoutesList";
-import style from "../../App.module.css";
+import {PATH} from "../../Navigation/Routes/RoutesList";
+import style from "../../app/App/App.module.css";
 import SuperButton from "../../common/SuperButton/SuperButton";
-import {setNewPassSuccessAC, setNewPassTC} from "../../bll/reducers/newPassword-reducer";
-import {setAppErrorAC} from "../../bll/reducers/app-reducer";
+import {setNewPassSuccessAC, setNewPassTC} from "../../app/reducers/newPassword-reducer";
+import {setAppErrorAC} from "../../app/reducers/app-reducer";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
 import FormControl from "@mui/material/FormControl";
 

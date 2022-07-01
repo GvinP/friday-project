@@ -1,9 +1,9 @@
 import React from "react";
-import {useAppSelector} from "../../bll/store";
+import {useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
-import {PATH} from "../../routes/RoutesList";
+import {PATH} from "../../Navigation/Routes/RoutesList";
 
-export const Cards = () => {
+export const Packs = () => {
     const user_ID = useAppSelector(state => state.profile.user._id)
 
     if (!user_ID) {
@@ -11,7 +11,7 @@ export const Cards = () => {
     }
     return (
         <div>
-            Cards
+            Packs
         </div>
     );
 };

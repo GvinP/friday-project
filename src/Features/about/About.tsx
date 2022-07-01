@@ -1,5 +1,5 @@
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import style from "../../App.module.css";
+import style from "../../app/App/App.module.css";
 import s from "./Aboute.module.css";
 import React from "react";
 import SuperButton from "../../common/SuperButton/SuperButton";

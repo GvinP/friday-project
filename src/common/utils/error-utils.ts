@@ -1,5 +1,5 @@
 import axios, {AxiosError} from "axios";
-import {setAppErrorAC} from "../../bll/reducers/app-reducer";
+import {setAppErrorAC} from "../../app/reducers/app-reducer";
 import {Dispatch} from "redux";
 
 export const handleAppRequestError = (error: Error | AxiosError, dispatch: Dispatch) => {

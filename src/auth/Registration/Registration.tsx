@@ -1,17 +1,17 @@
-import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useFormik} from "formik";
-import style from "../../App.module.css";
+import style from "../../app/App/App.module.css";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import React from "react";
-import {registerTC} from "../../bll/reducers/registration-reducer";
+import {registerTC} from "../../app/reducers/registration-reducer";
 import {RegisterParamType} from "../../api/api";
 import {Navigate, NavLink} from "react-router-dom";
-import {PATH} from "../../routes/RoutesList";
-import s from "../../Navbar/Navbar.module.css";
+import {PATH} from "../../Navigation/Routes/RoutesList";
+import s from "../../Navigation/Navbar/Navbar.module.css";
 import FormLabel from "@mui/material/FormLabel";
 import {InputPassword} from "../../common/InputPassword/InputPassword";
 
@@ -62,7 +62,7 @@ export const Registration = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl>
                             <FormLabel>
-                                <span>have an account? </span>
+                                <span>Have an account? </span>
                                 <NavLink to={PATH.login}
                                          className={s.signUp}>Sign In</NavLink>
                             </FormLabel>

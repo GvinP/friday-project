@@ -1,10 +1,10 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import s from "./Navbar.module.css";
-import {PATH} from "../routes/RoutesList";
-import {useAppDispatch, useAppSelector} from "../bll/store";
-import SuperButton from "../common/SuperButton/SuperButton";
-import {logoutTC} from "../bll/reducers/auth-reducer";
+import {PATH} from "../Routes/RoutesList";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import SuperButton from "../../common/SuperButton/SuperButton";
+import {logoutTC} from "../../app/reducers/auth-reducer";
 
 const setActive = (nav: { isActive: boolean }) => (nav.isActive ? s.activeLink : "")
 

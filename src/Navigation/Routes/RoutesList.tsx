@@ -1,15 +1,16 @@
 import React from "react";
 import {Route, Routes, Navigate} from "react-router-dom";
-import {Login} from "../auth/Login/Login";
-import {Registration} from "../auth/Registration/Registration";
-import {Profile} from "../components/Profile/Profile";
-import {PasswordRecovery} from "../auth/PasswordRecovery/PasswordRecovery";
-import {NewPassword} from "../auth/NewPassword/NewPassword";
-import {About} from "../components/about/About";
+import {Login} from "../../auth/Login/Login";
+import {Registration} from "../../auth/Registration/Registration";
+import {Profile} from "../../Features/Profile/Profile";
+import {PasswordRecovery} from "../../auth/PasswordRecovery/PasswordRecovery";
+import {NewPassword} from "../../auth/NewPassword/NewPassword";
+import {About} from "../../Features/about/About";
+
+import {Packs} from "../../Features/Packs/Packs";
+import {Cards} from "../../Features/Cards/Cards";
+import {CheckEmail} from "../../auth/CheckEmail/CheckEmail";
 import {Error404} from "./Error/Error404";
-import {Packs} from "../components/Packs/Packs";
-import {Cards} from "../components/Cards/Cards";
-import {CheckEmail} from "../auth/CheckEmail/CheckEmail";
 
 
 export const PATH = {

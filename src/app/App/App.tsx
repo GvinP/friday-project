@@ -1,15 +1,15 @@
 import React, {useEffect} from "react";
 import "./App.css";
 import s from "./App.module.css";
-import {RoutesList} from "./routes/RoutesList";
-import {Navbar} from "./Navbar/Navbar";
-import {useAppDispatch, useAppSelector} from "./bll/store";
+import {RoutesList} from "../../Navigation/Routes/RoutesList";
+import {Navbar} from "../../Navigation/Navbar/Navbar";
+import {useAppDispatch, useAppSelector} from "../store";
 import LinearProgress from "@mui/material/LinearProgress";
 import AppBar from "@mui/material/AppBar";
 
-import {ErrorSnackbar} from "./common/utils/ErrorSnackbar";
-import {initializeAppTC} from "./bll/reducers/app-reducer";
-import {Preloader} from "./common/Preloader/Preloader";
+import {ErrorSnackbar} from "../../common/utils/ErrorSnackbar";
+import {initializeAppTC} from "../reducers/app-reducer";
+import {Preloader} from "../../common/Preloader/Preloader";
 
 function App() {
     const status = useAppSelector((state) => state.app.status);
