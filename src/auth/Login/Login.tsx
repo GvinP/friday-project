@@ -46,8 +46,8 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = "password required";
-            } else if (values.password.trim().length < 4) {
-                errors.password = "Password should be more than 3 symbols ";
+            } else if (values.password.trim().length < 8) {
+                errors.password = "Password should be more than 7 symbols ";
             }
             return errors;
         }
@@ -66,7 +66,7 @@ export const Login = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <FormControl>
                             <FormLabel>
-                                <span>need registration? </span>
+                                <span>Need registration? </span>
                                 <NavLink to={PATH.registration}
                                          className={s.signUp}>Sign Up</NavLink>
                             </FormLabel>
@@ -90,7 +90,7 @@ export const Login = () => {
 
                                 <div>
                                     <NavLink to={PATH.passwordRecovery}
-                                             className={st.forgot}>forgot password</NavLink>
+                                             className={st.forgot}>Forgot Password?</NavLink>
                                 </div>
 
                                 <FormControlLabel
