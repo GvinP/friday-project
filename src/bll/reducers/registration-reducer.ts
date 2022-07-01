@@ -38,7 +38,7 @@ export const registerTC = (data: RegisterParamType) => ((dispatch: Dispatch) => 
             handleAppRequestError(e, dispatch);
         })
         .finally(() => {
-            dispatch(setAppStatusAC("succeeded"));
+            dispatch(setAppStatusAC("idle"));
         });
 });
 

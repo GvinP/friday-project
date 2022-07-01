@@ -24,10 +24,10 @@ function App() {
 
     return (
         <div className={s.App}>
-            <AppBar position="static">
-                {status === "loading" && <LinearProgress/>}
-            </AppBar>
             <Navbar/>
+            <AppBar position="static">
+                {status === "loading" && <LinearProgress color={'info'}/>}
+            </AppBar>
             <RoutesList/>
             <ErrorSnackbar/>
         </div>
