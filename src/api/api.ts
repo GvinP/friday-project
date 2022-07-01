@@ -6,7 +6,7 @@ export const instance = axios.create({
     //когда работаем локально
     baseURL:process.env.REACT_APP_BACK_URL||'https://neko-back.herokuapp.com/2.0',
     //перед деплоем на гитхаб
-});
+})
 export const authAPI = {
     login(data: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse>("auth/login", data)
@@ -25,7 +25,7 @@ export const authAPI = {
     setNewPassword(password: string, resetPasswordToken: string) {
         return instance.post<ResponseType>("auth/set-new-password", {password, resetPasswordToken});
     },
-};
+}
 export const profileAPI = {
     updateUserData(name: string, avatar: string) {
         return instance.put<UpdatedUser>(`/auth/me`, {name, avatar})

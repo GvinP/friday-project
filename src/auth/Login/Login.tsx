@@ -34,7 +34,6 @@ export const Login = () => {
             dispatch(loginTC(values));
             formik.resetForm();
         },
-
         validate: (values) => {
             const errors: Partial<LoginParamsType> = {};
             if (!values.email) {
@@ -105,7 +104,6 @@ export const Login = () => {
                 </div>
             </Grid>
         </Grid>
-    </div>;
-};
-
+    </div>
+}
 

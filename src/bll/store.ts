@@ -15,11 +15,10 @@ const rootReducer = combineReducers({
         newPassword: newPasswordReducer,
         passwordRecovery: passwordRecoveryReducer,
     }),
-    // loading: loadingReducer,
     app: appReducer,
     profile: profileReducer,
     auth: authReducer
-});
+})
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export type RootState = ReturnType<typeof rootReducer>
