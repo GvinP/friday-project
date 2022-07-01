@@ -7,6 +7,8 @@ import {NewPasswordActions, newPasswordReducer} from "./reducers/newPassword-red
 import {PasswordRecoveryActionsTypes, passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
 import {AppActions, appReducer} from "./reducers/app-reducer";
 import {ProfileActionsTypes, profileReducer} from "./reducers/profile-reducer";
+import {packsReducer} from "./reducers/test-reducer";
+import {cardsReducer} from "./reducers/cards-reducer";
 
 const rootReducer = combineReducers({
     registrationManage: combineReducers({
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
     }),
     app: appReducer,
     profile: profileReducer,
-    auth: authReducer
+    auth: authReducer,
+    packs: packsReducer,
+    cards: cardsReducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

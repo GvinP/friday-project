@@ -2,7 +2,7 @@ const initialState: InitialStateType = {
     testValue: ""
 };
 
-export const packsReducer = (state = initialState, action: ActionType) => {
+export const cardsReducer = (state = initialState, action: ActionType) => {
     switch (action.type) {
         case "SET-TEST-VALUE":
             return {...state, testValue: action.newValue};

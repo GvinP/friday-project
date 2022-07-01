@@ -13,16 +13,19 @@ import {EditableSpan} from "../../common/EditableSpan";
 
 export const Profile = () => {
     const {avatar, name, email} = useAppSelector(state => state.profile.user)
-    const status = useAppSelector(state => state.app.status);
-    const dispatch = useAppDispatch();
-    const inputRef = useRef<HTMLInputElement>(null);
 
-    const [value, setValue] = useState<string>(name);
-    const [error, setError] = useState<string>('');
-    const [newPhoto, setNewPhoto] = useState('');
+    const status = useAppSelector(state => state.app.status)
+
+    const dispatch = useAppDispatch()
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const [value, setValue] = useState<string>(name)
+    const [error, setError] = useState<string>('')
+    const [newPhoto, setNewPhoto] = useState('')
 
     const changeName = () => {
-        if (newPhoto === avatar) return setError('the same photo');
+        if (newPhoto === avatar) return setError('the same photo')
         if (name === value && !newPhoto) return setError('nothing has been changed');
         dispatch(updateNameTC(value, newPhoto));
     }
@@ -32,7 +35,6 @@ export const Profile = () => {
     }
     return (
         <div className={style.container}>
-
             <ChangesInputs error={error}
                            setError={setError}
                            setNewPhoto={setNewPhoto}
@@ -48,7 +50,7 @@ export const Profile = () => {
                     </div>
                     <span className={style.infoSpan}>Nickname</span>
                     <span className={style.email}>
-                        <EditableSpan value={value}  onChange={setValue}
+                        <EditableSpan value={value} onChange={setValue}
                         />
                     </span>
 
@@ -57,7 +59,8 @@ export const Profile = () => {
                     <div className={style.profileError}>
                         {error}
                     </div>
-                    <SuperButton disabled={status === 'loading'} btnStyle={"primary"} onClick={changeName}>Save</SuperButton>
+                    <SuperButton disabled={status === 'loading'} btnStyle={"primary"}
+                                 onClick={changeName}>Save</SuperButton>
                 </div>
                 <div className={style.cardsRange}>
                     Number of cards

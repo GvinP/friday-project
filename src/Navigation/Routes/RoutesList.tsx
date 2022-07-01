@@ -30,7 +30,6 @@ export const PATH = {
 
 export const RoutesList = () => {
     return (
-        <div>
             <Routes>
                 <Route path="/" element={<Navigate to={PATH.login}/>}/>
                 <Route path={PATH.login} element={<Login/>}/>
@@ -47,6 +46,5 @@ export const RoutesList = () => {
                 </Route>
                 <Route path="*" element={<Error404/>}/>
             </Routes>
-        </div>
     )
 }
