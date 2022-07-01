@@ -10,5 +10,10 @@
     color: rgb(42, 140, 183);
 }
 .remember{
-    color: #666e7c;
+    color: #202124;
+}
+.recommend{
+    font-size:10px;
+    color: #202124;
+    opacity: 0.8;
 }

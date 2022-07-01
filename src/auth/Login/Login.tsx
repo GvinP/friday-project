@@ -95,11 +95,12 @@ export const Login = () => {
 
                                 <FormControlLabel
                                     className={st.remember}
-                                    label={"Remember me"}
+                                    label={"Keep Me Signed In"}
                                                   control={<Checkbox
                                                       checked={formik.values.rememberMe}
                                                       {...formik.getFieldProps("rememberMe")}
                                                   />}/>
+                                <div className={st.recommend}>For your security, we don't recommend checking this box if you are using a public device.</div>
                                 <SuperButton type={'submit'} disabled={status === 'loading'}>
                                     Login
                                 </SuperButton>
