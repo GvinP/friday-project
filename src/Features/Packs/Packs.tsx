@@ -7,6 +7,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {PacksTable} from "./PacksTable/PacksTable";
 import {Paginator} from "./Paginator/Paginator";
 import {Search} from "./Search/Search";
+import {Search2} from "./Search/Search2";
 
 export const Packs = () => {
 
@@ -41,6 +42,7 @@ export const Packs = () => {
                     <h1>PacksList</h1>
                     <div className={s.searchHeader}>
                         <Search/>
+                        <Search2/>
                     </div>
                     <PacksTable />
                     {/*<Paginator />*/}
