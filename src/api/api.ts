@@ -63,17 +63,18 @@ export type ForgotParamType = {
 }
 
 export type UserType = {
-    _id: string;
-    email: string;
-    name: string;
     avatar?: string;
-    publicCardPacksCount: number; // количество колод
     created: Date;
-    updated: Date;
+    email: string;
     isAdmin: boolean;
-    verified: boolean; // подтвердил ли почту
+    name: string;
+    publicCardPacksCount: number; // количество колод
     rememberMe: boolean;
-    error?: string;
+    token:string;
+    tokenDeathTime:Date;
+    updated: Date;
+    verified: boolean; // подтвердил ли почту
+    _id: string;
 }
 export type UpdatedUser = {
     token: string

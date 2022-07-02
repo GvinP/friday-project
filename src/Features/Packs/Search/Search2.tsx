@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useDebounce} from "./useDebounce";
+import {useDebounce} from "../../../common/Hooks/useDebounce";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {InputText} from "../../../common/InputText/InputText";
 import {searchCardsPackThunk} from "../../../app/reducers/packs-reducer";
@@ -20,7 +20,7 @@ export const Search2 = () => {
         <div>
             <InputText type="search"
                    placeholder={'Search'}
-                   value={searchValue}
+                   value={value}
                    onChange={(e) => {
                        setValue(e.target.value)
                    }
