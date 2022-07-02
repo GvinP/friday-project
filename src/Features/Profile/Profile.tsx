@@ -9,12 +9,25 @@ import {ChangesInputs} from "./ChangesInputs";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {updateNameTC} from "../../app/reducers/profile-reducer";
 import {EditableSpan} from "../../common/EditableSpan";
+import s from "../Packs/Packs.module.css";
+import {Search} from "../Packs/Search/Search";
+import {Search2} from "../Packs/Search/Search2";
+import EnhancedTable from "../Packs/PacksTable/PacksTable";
+import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
+import {filterCardsCountAC} from "../../app/reducers/packs-reducer";
 
 
 export const Profile = () => {
     const {avatar, name, email} = useAppSelector(state => state.profile.user)
-
     const status = useAppSelector(state => state.app.status)
+    const minCards = useAppSelector(state => state.packs.min)
+    const maxCards = useAppSelector(state => state.packs.max)
+    const maxCardsCount = useAppSelector(store => store.packs.cardsCount.maxCardsCount)
+    const minCardsCount = useAppSelector(store => store.packs.cardsCount.minCardsCount)
+    const filterCardsCount = (value: [number, number]) => {
+        const [min, max] = value
+        dispatch(filterCardsCountAC(min, max))
+    }
 
     const dispatch = useAppDispatch()
 
@@ -62,13 +75,35 @@ export const Profile = () => {
                     <SuperButton disabled={status === 'loading'} btnStyle={"primary"}
                                  onClick={changeName}>Save</SuperButton>
                 </div>
+
                 <div className={style.cardsRange}>
-                    Number of cards
+                    <div>
+                        <h3> Number of cards</h3>
+                    </div>
+
+                    <div>
+                        <DoubleRange
+                            rangeValues={[minCards as number, maxCards as number]}
+                            onChangeRange={filterCardsCount}
+                            min={minCardsCount}
+                            max={maxCardsCount}
+                        />
+                    </div>
+
                 </div>
+
             </div>
-            <div className={style.packsList}>
-                {value}'s Packs list
-            </div>
+            <section className={s.pack}>
+                <h1>{value}'s Packs list</h1>
+                <div className={s.search}>
+                    <Search/>
+                </div>
+                <div className={s.search}>
+                    <Search2/>
+                </div>
+                <EnhancedTable/>
+                {/*<Paginator />*/}
+            </section>
         </div>
     )
 };

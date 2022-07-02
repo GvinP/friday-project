@@ -44,11 +44,11 @@
 
 .cardsRange {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     padding: 20px;
-    font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
     background-color: #bccbd9;
     flex: 1;

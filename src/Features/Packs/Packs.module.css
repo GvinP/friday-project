@@ -71,3 +71,9 @@
     margin: 24px 48px;
     width: 100%;
 }
+.pack h3 {
+    margin: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #2D2E46;
+}
