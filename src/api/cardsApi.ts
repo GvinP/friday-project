@@ -1,6 +1,6 @@
 import {instance} from "./api";
 
-export type PacksType = {
+export type PackType = {
   _id: string
   user_id: string
   user_name: string
@@ -18,18 +18,7 @@ export type PacksType = {
   more_id: string
 }
 
-export type cardPacksDataType = {
-  cardPacks: PacksType[]
-  cardPacksTotalCount: number
-  maxCardsCount: number
-  minCardsCount: number
-  page: number
-  pageCount: number
-  token: string
-  tokenDeathTime: Date
-}
-
-export type requestDataType = {
+export type reqDataType = {
   pageCount?: number
   page?: number
   packName?: string
@@ -41,8 +30,8 @@ export type requestDataType = {
 
 export const cardsAPI = {
 
-  getCardsPack(requestData: requestDataType) {
-    return instance.get<cardPacksDataType>(`/cards/pack`,
+  getCardsPack(requestData: reqDataType) {
+    return instance.get(`/cards/pack`,
         {params: {...requestData}})
         .then(res => {
           return res.data
