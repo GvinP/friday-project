@@ -55,6 +55,8 @@ export const Packs = () => {
                 <h1>PacksList</h1>
                 <div className={s.search}>
                     <Search/>
+                </div>
+                <div className={s.search}>
                     <Search2/>
                 </div>
                 <EnhancedTable/>
