@@ -7,8 +7,8 @@ import {NewPasswordActions, newPasswordReducer} from "./reducers/newPassword-red
 import {PasswordRecoveryActionsTypes, passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
 import {AppActions, appReducer} from "./reducers/app-reducer";
 import {ProfileActionsTypes, profileReducer} from "./reducers/profile-reducer";
-import {packsReducer} from "./reducers/test-reducer";
 import {cardsReducer} from "./reducers/cards-reducer";
+import {PacksActionTypes, packsReducer} from "./reducers/packs-reducer";
 
 const rootReducer = combineReducers({
     registrationManage: combineReducers({
@@ -31,7 +31,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export type AppDispatch = ThunkDispatch<RootState, unknown, StoreActions>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 type StoreActions = AppActions | AuthActions | NewPasswordActions
-    | PasswordRecoveryActionsTypes | RegistrationActionsTypes | ProfileActionsTypes
+    | PasswordRecoveryActionsTypes | RegistrationActionsTypes | ProfileActionsTypes | PacksActionTypes
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, RootState, unknown, A>
 
