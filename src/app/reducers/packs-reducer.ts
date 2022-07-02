@@ -44,7 +44,7 @@ export const packsReducer = (state:InitialStateType = initialState, action: Pack
         case 'packs/GET-CARDS-PACK':
         case 'packs/SET-CARD-PACKS-TOTAL-COUNT':
             return {...state, ...action.payload}
-        case 'packsList/SET-MAX-MIN-CARDS-COUNT':
+        case 'packs/SET-MAX-MIN-CARDS-COUNT':
             return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
         default:
             return state;
@@ -58,13 +58,7 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     const packName = searchResult ? searchResult : '';
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCardsPack({
-        pageCount,
-        page,
-        sortPacks: filter,
-        user_id,
-        packName,
-        min,
-        max,
+        pageCount, page, sortPacks: filter, user_id, packName, min, max,
     })
         .then(res => {
             dispatch(getCardsPackAC(res.cardPacks));
@@ -103,7 +97,7 @@ export const getCardsPackAC = (cardPacks: PacksType[]) =>
 export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
     ({type:'packs/SET-CARD-PACKS-TOTAL-COUNT', payload: {cardPacksTotalCount}} as const);
 export const setMaxMinCardsCountAC = (max: number, min: number) =>
-    ({type:'packsList/SET-MAX-MIN-CARDS-COUNT', max, min} as const);
+    ({type:'packs/SET-MAX-MIN-CARDS-COUNT', max, min} as const);
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>
