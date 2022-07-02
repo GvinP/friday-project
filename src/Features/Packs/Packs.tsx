@@ -4,7 +4,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import s from './Packs.module.css'
 import {Preloader} from "../../common/Preloader/Preloader";
-import {PacksTable} from "./PacksTable/PacksTable";
+import EnhancedTable from "./PacksTable/PacksTable";
 import {Paginator} from "./Paginator/Paginator";
 import {Search} from "./Search/Search";
 import {Search2} from "./Search/Search2";
@@ -57,7 +57,7 @@ export const Packs = () => {
                     <Search/>
                     <Search2/>
                 </div>
-                <PacksTable/>
+                <EnhancedTable/>
                 {/*<Paginator />*/}
             </section>
         </div>

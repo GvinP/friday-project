@@ -10,7 +10,7 @@
 }
 
 .setting {
-    background: #ECECF9;
+    background: #c0def0;
     padding: 0 24px;
     width: 244px;
 }
@@ -47,7 +47,7 @@
 
 .active {
     align-items: center;
-    background: #7ba6c4;
+    background: #568aae;
     border-radius: 0 2px 2px 0;
     color: #FFFFFF;
     display: flex;
