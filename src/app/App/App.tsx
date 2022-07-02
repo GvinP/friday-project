@@ -6,23 +6,24 @@ import {Navbar} from "../../Navigation/Navbar/Navbar";
 import {useAppDispatch, useAppSelector} from "../store";
 import LinearProgress from "@mui/material/LinearProgress";
 import AppBar from "@mui/material/AppBar";
-
 import {ErrorSnackbar} from "../../common/utils/ErrorSnackbar";
 import {initializeAppTC} from "../reducers/app-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 
+
 function App() {
-    const status = useAppSelector((state) => state.app.status);
-    const isInitialized = useAppSelector((state) => state.app.isInitialized);
+    const status = useAppSelector((state) => state.app.status)
+    const isInitialized = useAppSelector((state) => state.app.isInitialized)
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(initializeAppTC());
-    }, [dispatch, isInitialized]);
+    }, [dispatch]);
 
-    if (!isInitialized) {
-        return <Preloader/>
-    }
+    // if (!isInitialized) {
+    //     return <Preloader/>
+    // }
 
     return (
         <div className={s.App}>

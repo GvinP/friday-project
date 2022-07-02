@@ -4,7 +4,7 @@ export const instance = axios.create({
     withCredentials: true,
     // baseURL: process.env.REACT_APP_BACK_URL || "http://localhost:7542/2.0/",
     //когда работаем локально
-    baseURL:process.env.REACT_APP_BACK_URL||'https://neko-back.herokuapp.com/2.0',
+    baseURL: process.env.REACT_APP_BACK_URL || 'https://neko-back.herokuapp.com/2.0',
     //перед деплоем на гитхаб
 })
 
@@ -19,7 +19,8 @@ export const authAPI = {
             .then(res => res.data);
     },
     me() {
-        return instance.post(`auth/me`);
+        return instance.post(`auth/me`)
+            .then(res => res.data)
     },
     register(data: RegisterParamType) {
         return instance.post("auth/register", data)
