@@ -68,25 +68,25 @@ export type PacksType = {
   deckCover: string
   cardsCount: number
   type: string
-  rating: number // useless o_O
-  created: string // Лёха, тут нужна строка!!!
-  updated: string // Лёха, тут нужна строка!!!
+  rating: number
+  created: string
+  updated: string
   more_id: string
 }
 export type AddPackType = {
-  name: string // если не отправить будет таким
-  deckCover: string // не обязателен
+  name: string
+  deckCover: string
   private: boolean
 }
 export type UpdatePackType = {
-  _id: string // если не отправить будет таким
-  deckCover: string // не обязателен
+  _id: string
+  deckCover: string
   private: boolean
 }
 export type cardPacksDataType = {
   cardPacks: PacksType[]
 
-  // we need it types ?!
+
   cardPacksTotalCount: number
   maxCardsCount: number
   minCardsCount: number
