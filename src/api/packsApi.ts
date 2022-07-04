@@ -1,10 +1,10 @@
 import {instance} from "./api";
 
 export type PackType = {
- cards: string | number;
- lastUpdated: string | number;
- createdBy: string | number;
- actions: string | number;
+ cards:   number;
+ lastUpdated: number;
+ createdBy: string ;
+ actions:  number;
 
   _id: string
   user_id: string
