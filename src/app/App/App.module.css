@@ -24,6 +24,9 @@
 .formContainer {
     max-width: 210px;
 }
+.changeTheme{
+    cursor: pointer;
+}
 
 @media (max-width: 413px) {
     .smallContainer {
