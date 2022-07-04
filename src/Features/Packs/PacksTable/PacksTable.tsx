@@ -167,7 +167,6 @@ export default function EnhancedTable() {
     const dispatch = useAppDispatch()
     const rows = packs.map(el => createData(el.name, el.cards, el.lastUpdated, el.createdBy, el.actions))
 
-
     useEffect(() => {
         if (user_id) {
             dispatch(getCardsPackThunk())

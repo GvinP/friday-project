@@ -12,8 +12,8 @@ import {createTheme} from '@mui/material';
 const darkTheme = createTheme({
     palette: {
         text: {
-            primary: '#2d3946',
-            secondary: '#4a1a32',
+            primary: '#a0c3ea',
+            secondary: '#236074',
         },
         primary: {
             main: '#a7697d',
