@@ -14,18 +14,19 @@ import {
 import {Search} from "./Search/Search";
 import {Search2} from "./Search/Search2";
 import EnhancedTable from "./PacksTable/PacksTable";
+import {Preloader} from "../../common/Preloader/Preloader";
 
 export const Packs = () => {
-
     const dispatch = useAppDispatch();
 
-    const name = useAppSelector(store => store.profile.user.name)
-    const page = useAppSelector(store => store.packs.page)
-    const isMyPacks = useAppSelector(store => store.packs.isMyPacks);
+    const name = useAppSelector(state => state.profile.user.name)
+    const status = useAppSelector(state => state.app.status)
+    const page = useAppSelector(state => state.packs.page)
+    const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const minCards = useAppSelector(state => state.packs.min)
     const maxCards = useAppSelector(state => state.packs.max)
-    const maxCardsCount = useAppSelector(store => store.packs.cardsCount.maxCardsCount)
-    const minCardsCount = useAppSelector(store => store.packs.cardsCount.minCardsCount)
+    const maxCardsCount = useAppSelector(state => state.packs.cardsCount.maxCardsCount)
+    const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount)
 
     const filterCardsCount = (value: [number, number]) => {
         const [min, max] = value
@@ -62,17 +63,19 @@ export const Packs = () => {
                         ALL
                     </SuperButton>
                 </div>
-                <div>
-                    <h3> Number of cards</h3>
-                </div>
-                <div>
+                {(status==='loading')
+                    ?   <Preloader/>
+                   :    <div>
+                        <h3> Number of cards</h3>
                     <DoubleRange
-                        rangeValues={[minCards as number, maxCards as number]}
-                        onChangeRange={filterCardsCount}
-                        min={minCardsCount}
-                        max={maxCardsCount}
+                    rangeValues={[minCards as number, maxCards as number]}
+                    onChangeRange={filterCardsCount}
+                    min={minCardsCount}
+                    max={maxCardsCount}
                     />
-                </div>
+                    </div>
+                }
+
             </section>
             <section className={s.pack}>
                 <div className={s.search}>
@@ -82,7 +85,6 @@ export const Packs = () => {
                     <Search2/>
                     <SuperButton>Add new pack</SuperButton>
                 </div>
-
                 <EnhancedTable/>
             </section>
         </div>

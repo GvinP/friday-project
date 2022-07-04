@@ -10,43 +10,43 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import { visuallyHidden } from '@mui/utils';
-
+import {visuallyHidden} from '@mui/utils';
+import {useAppSelector} from "../../../app/store";
 
 interface Data {
-    calories: number;
-    lastUpdated: number;
-    cards: number;
     name: string;
-    protein: number;
+    cards: number;
+    lastUpdated: number;
+    createdBy: string;
+    actions: number;
 }
 
-function createData(
-    name: string,
-    calories: number,
-    cards: number,
-    lastUpdated: number,
-    protein: number,
-): Data {
-    return {
-        name,
-        calories,
-        cards,
-        lastUpdated,
-        protein,
-    };
-}
-
-const rows = [
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Donut', 452, 25.0, 51, 4.9),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Honeycomb', 408, 3.2, 87, 6.5),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-
-];
+// function createData(
+//     name: string,
+//     cards: number,
+//     lastUpdated: number,
+//     createdBy: string,
+//     actions: number,
+// ): Data {
+//     return {
+//         name,
+//         cards,
+//         lastUpdated,
+//         createdBy,
+//         actions,
+//     };
+// }
+//
+// const rows = [
+//     createData('Cupcake', 305, 3.7, 67, 4.3),
+//     createData('Donut', 452, 25.0, 51, 4.9),
+//     createData('Eclair', 262, 16.0, 24, 6.0),
+//     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+//     createData('Gingerbread', 356, 16.0, 49, 3.9),
+//     createData('Honeycomb', 408, 3.2, 87, 6.5),
+//     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+//
+// ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -84,13 +84,7 @@ const headCells: readonly HeadCell[] = [
         id: 'name',
         numeric: false,
         disablePadding: true,
-        label: 'Dessert',
-    },
-    {
-        id: 'calories',
-        numeric: true,
-        disablePadding: false,
-        label: 'Calories',
+        label: 'Name',
     },
     {
         id: 'cards',
@@ -102,13 +96,19 @@ const headCells: readonly HeadCell[] = [
         id: 'lastUpdated',
         numeric: true,
         disablePadding: false,
-        label: 'lastUpdated',
+        label: 'Last Updared',
     },
     {
-        id: 'protein',
+        id: 'createdBy',
         numeric: true,
         disablePadding: false,
-        label: 'Protein (g)',
+        label: 'Created By',
+    },
+    {
+        id: 'actions',
+        numeric: true,
+        disablePadding: false,
+        label: 'Actions',
     },
 ];
 
@@ -122,7 +122,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} =
         props;
     const createSortHandler =
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -138,14 +138,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select all desserts',
+                            'aria-label': 'select all ',
                         }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -169,11 +168,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function EnhancedTable() {
+    const rows = useAppSelector(state => state.packs.cardPacks);
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+    const [orderBy, setOrderBy] = React.useState<keyof Data>('cards');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
-
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (
@@ -223,7 +222,6 @@ export default function EnhancedTable() {
         setPage(0);
     };
 
-
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -231,11 +229,11 @@ export default function EnhancedTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
+        <Box sx={{width: '100%'}}>
+            <Paper sx={{width: '100%', mb: 2}}>
                 <TableContainer>
                     <Table
-                        sx={{ minWidth: 600 }}
+                        sx={{minWidth: 600}}
                         aria-labelledby="tableTitle"
                     >
                         <EnhancedTableHead
@@ -247,7 +245,7 @@ export default function EnhancedTable() {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            { rows.slice().sort(getComparator(order, orderBy))
+                            {rows.slice().sort(getComparator(order, orderBy))
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -279,10 +277,10 @@ export default function EnhancedTable() {
                                             >
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
                                             <TableCell align="right">{row.cards}</TableCell>
                                             <TableCell align="right">{row.lastUpdated}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{row.createdBy}</TableCell>
+                                            <TableCell align="right">{row.actions}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -290,7 +288,7 @@ export default function EnhancedTable() {
                                 <TableRow
 
                                 >
-                                    <TableCell colSpan={6} />
+                                    <TableCell colSpan={6}/>
                                 </TableRow>
                             )}
                         </TableBody>

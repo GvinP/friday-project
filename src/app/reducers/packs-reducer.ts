@@ -2,6 +2,7 @@ import {AppThunk} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 import {packsApi, PackType} from "../../api/packsApi";
+import {cardsApi} from "../../api/cardsApi";
 
 const initialState = {
     cardPacks: [] as PackType[],
@@ -78,6 +79,15 @@ export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
             dispatch(setAppStatusAC("idle"));
         })
 }
+export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk => (dispatch => {
+    dispatch(setAppStatusAC("loading"));
+    cardsApi.addNewPack(name, makePrivate)
+        .then(() => {
+            dispatch(getCardsPackThunk());
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => dispatch(setAppStatusAC("idle")));
+});
 
 export const searchCardsPackThunk = (packName: string): AppThunk => (
     dispatch, getState) => {

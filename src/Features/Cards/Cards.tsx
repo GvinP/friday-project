@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate, useParams} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
-import {instance} from "../../api/api";
 import {getCardsThunk} from "../../app/reducers/cards-reducer";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
