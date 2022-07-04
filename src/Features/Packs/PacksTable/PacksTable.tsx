@@ -11,7 +11,11 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import {visuallyHidden} from '@mui/utils';
-import {useAppSelector} from "../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
+
+import {useEffect} from "react";
+
+import {getCardsPackThunk} from "../../../app/reducers/packs-reducer";
 
 interface Data {
     name: string;
@@ -21,32 +25,22 @@ interface Data {
     actions: number;
 }
 
-// function createData(
-//     name: string,
-//     cards: number,
-//     lastUpdated: number,
-//     createdBy: string,
-//     actions: number,
-// ): Data {
-//     return {
-//         name,
-//         cards,
-//         lastUpdated,
-//         createdBy,
-//         actions,
-//     };
-// }
-//
-// const rows = [
-//     createData('Cupcake', 305, 3.7, 67, 4.3),
-//     createData('Donut', 452, 25.0, 51, 4.9),
-//     createData('Eclair', 262, 16.0, 24, 6.0),
-//     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//     createData('Gingerbread', 356, 16.0, 49, 3.9),
-//     createData('Honeycomb', 408, 3.2, 87, 6.5),
-//     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//
-// ];
+function createData(
+    name: string,
+    cards:   number,
+    lastUpdated:  number,
+    createdBy: string ,
+    actions: number ,
+): Data {
+    return {
+        name,
+        cards,
+        lastUpdated,
+        createdBy,
+        actions,
+    };
+}
+
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -168,7 +162,19 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function EnhancedTable() {
-    const rows = useAppSelector(state => state.packs.cardPacks);
+    const user_id = useAppSelector(state => state.profile.user._id)
+    const packs = useAppSelector(state => state.packs.cardPacks)
+    const dispatch = useAppDispatch()
+    const rows = packs.map(el => createData(el.name, el.cards, el.lastUpdated, el.createdBy, el.actions))
+
+
+    useEffect(() => {
+        if (user_id) {
+            dispatch(getCardsPackThunk())
+        }
+    }, [dispatch])
+
+
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('cards');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
