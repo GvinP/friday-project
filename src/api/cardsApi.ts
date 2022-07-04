@@ -1,40 +1,50 @@
 import {instance} from "./api";
 
-export type PackType = {
-  _id: string
-  user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  path: string
-  grade: number
-  shots: number
-  deckCover: string
-  cardsCount: number
-  type: string
-  rating: number
-  created: string
-  updated: string
-  more_id: string
+export type CardType = {
+    _id: string;
+    cardsPack_id: string;
+    user_id: string;
+
+    answer: string;
+    question: string;
+    grade: number;
+    shots: number;
+
+    questionImg: string;
+    answerImg: string;
+    answerVideo: string;
+    questionVideo: string;
+
+    comments: string;
+
+    type: string;
+    rating: number;
+    more_id: string;
+
+    created: string;
+    updated: string;
 }
 
-export type reqDataType = {
-  pageCount?: number
-  page?: number
-  packName?: string
-  user_id?: string
-  sortPacks?: string
-  min?: number
-  max?: number
+export type GetDataType = {
+    cards: CardType[];
+
+    error: string;
 }
 
-export const cardsAPI = {
-
-  getCardsPack(requestData: reqDataType) {
-    return instance.get(`/cards/pack`,
-        {params: {...requestData}})
-        .then(res => {
-          return res.data
+export const cardsApi = {
+    getCards(cardsPack_id: string) {
+        return instance.get<GetDataType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    addCard(cardsPack_id: string, question: string, answer: string) {
+        instance.post('cards/card', {
+            card: {
+                cardsPack_id,
+                question,
+                answer
+            }
         })
-  },
+    },
 };

@@ -24,7 +24,7 @@ export const PATH = {
     about: "/about",
     home: "/home",
     packs: "/packs",
-    cards: "/cards",
+    cards: "/cards/:cardsPack_id",
     checkEmail: "/check-email"
 };
 

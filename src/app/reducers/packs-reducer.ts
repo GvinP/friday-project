@@ -1,7 +1,7 @@
 import {AppThunk} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
-import {cardsAPI, PackType} from "../../api/cardsApi";
+import {packsApi, PackType} from "../../api/packsApi";
 
 const initialState = {
     cardPacks: [] as PackType[],
@@ -44,7 +44,7 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     const packName = searchResult ? searchResult : ''
 
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack({
+    packsApi.getCardsPack({
         pageCount, page, sortPacks: filter, user_id, packName, min, max,
     })
         .then(res => {
@@ -67,7 +67,7 @@ export const searchCardsPackThunk = (packName: string): AppThunk => (
     const {_id} = getState().profile.user;
     const user_id = isMyPacks ? _id : '';
     dispatch(setAppStatusAC("loading"));
-    cardsAPI.getCardsPack({pageCount, packName, user_id})
+    packsApi.getCardsPack({pageCount, packName, user_id})
         .then(res => {
             dispatch(getCardsPackAC(res.cardPacks));
             dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
