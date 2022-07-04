@@ -1,9 +1,4 @@
 .container {
-    display: flex;
-    min-height: 636px;
-    margin: 34px auto 0 auto;
-    border-radius: 8px;
-    color: #2D2E46;
     background-color: #FEFEFF;
     overflow: hidden;
 }
@@ -54,7 +49,13 @@
     flex: 1;
     border-radius: 0 0 5px 5px;
 }
-
+.userChooseButton {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    height: 36px;
+    cursor: pointer;
+}
 .packsList {
     display: flex;
     justify-content: center;
@@ -69,6 +70,7 @@
     align-items: baseline;
     justify-content: center;
     padding-left: 33px;
+    margin:15px
 }
 
 .defaultAva {

@@ -26,6 +26,8 @@ export const packsReducer = (state:InitialStateType = initialState, action: Pack
     switch (action.type) {
         case 'packs/SET-SEARCH-RESULT':
         case 'packs/GET-CARDS-PACK':
+        case 'packs/SET-VIEW-PACKS':
+        case  'packs/SET-CURRENT-FILTER':
         case 'packs/SET-CARD-PACKS-TOTAL-COUNT':
             return {...state, ...action.payload}
         case 'packs/SET-MAX-MIN-CARDS-COUNT':
@@ -60,6 +62,22 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
             dispatch(setAppStatusAC('idle'))
         })
 }
+export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
+    const {_id} = getState().profile.user;
+    const {pageCount} = getState().packs;
+    dispatch(setAppStatusAC("loading"));
+    dispatch(setSearchResultAC(''));
+    dispatch(setCurrentFilterAC('0updated'));
+    packsApi.getCardsPack({user_id: _id, pageCount})
+        .then(res => {
+            dispatch(getCardsPackAC(res.cardPacks));
+            dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => {
+            dispatch(setAppStatusAC("idle"));
+        })
+}
 
 export const searchCardsPackThunk = (packName: string): AppThunk => (
     dispatch, getState) => {
@@ -88,6 +106,10 @@ export const setMaxMinCardsCountAC = (max: number, min: number) =>
     ({type:'packs/SET-MAX-MIN-CARDS-COUNT', max, min} as const)
 export const filterCardsCountAC = (min: number, max: number) =>
     ({type: 'packs/FILTER-CARDS-COUNT', cardsCount: {min, max}} as const)
+export const setViewPacksAC = (isMyPacks: boolean) =>
+    ({type: 'packs/SET-VIEW-PACKS', payload: {isMyPacks}} as const);
+export const setCurrentFilterAC = (filter: string) =>
+    ({type:  'packs/SET-CURRENT-FILTER', payload: {filter}} as const);
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>
@@ -95,3 +117,5 @@ export type PacksActionTypes =
     | ReturnType<typeof setCardPacksTotalCountAC>
     | ReturnType<typeof setMaxMinCardsCountAC>
     | ReturnType<typeof filterCardsCountAC>
+    | ReturnType<typeof setViewPacksAC>
+    | ReturnType<typeof setCurrentFilterAC>

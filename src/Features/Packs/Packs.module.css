@@ -52,7 +52,7 @@
     color: #FFFFFF;
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 40%;
 }
 
 .inactive {
@@ -62,7 +62,7 @@
     color: #2D2E46;
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 40%;
 }
 
 .pack {

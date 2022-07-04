@@ -26,9 +26,6 @@ export function Navbar() {
                         <div className={s.item}>
                             <NavLink to={PATH.registration} className={setActive}>Registration</NavLink>
                         </div>
-                        {/*<div className={s.item}>*/}
-                        {/*    <NavLink to={PATH.newPassword} className={setActive}>NewPassword</NavLink>*/}
-                        {/*</div>*/}
                         <div className={s.item}>
                             <NavLink to={PATH.passwordRecovery} className={setActive}>PasswordRecovery</NavLink>
                         </div>
