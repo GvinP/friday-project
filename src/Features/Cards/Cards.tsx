@@ -320,7 +320,6 @@ export const Cards = () => {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </Paper>
-
             </Box>
         </div>
     );

@@ -12,31 +12,40 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import {visuallyHidden} from '@mui/utils';
 import {useAppDispatch, useAppSelector} from "../../../app/store";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
 import {useEffect} from "react";
 
-import {getCardsPackThunk} from "../../../app/reducers/packs-reducer";
+import {changeCardsPackNameThunk, deleteCardsPackThunk, getCardsPackThunk} from "../../../app/reducers/packs-reducer";
 
 interface Data {
     name: string;
+    pack_id: string;
+    user_id: string;
     cards: number;
-    lastUpdated: number;
-    createdBy: string;
+    created: string;
+    updated: string;
     actions: number;
 }
 
 function createData(
     name: string,
-    cards:   number,
-    lastUpdated:  number,
-    createdBy: string ,
-    actions: number ,
+    pack_id: string,
+    user_id: string,
+    cards: number,
+    created: string,
+    updated: string,
+    actions: number,
 ): Data {
     return {
         name,
+        pack_id,
+        user_id,
         cards,
-        lastUpdated,
-        createdBy,
+        created,
+        updated,
         actions,
     };
 }
@@ -84,19 +93,19 @@ const headCells: readonly HeadCell[] = [
         id: 'cards',
         numeric: true,
         disablePadding: false,
-        label: 'Cards',
+        label: 'Cards count',
     },
     {
-        id: 'lastUpdated',
+        id: 'created',
         numeric: true,
         disablePadding: false,
-        label: 'Last Updared',
+        label: 'Created',
     },
     {
-        id: 'createdBy',
+        id: 'updated',
         numeric: true,
         disablePadding: false,
-        label: 'Created By',
+        label: 'Updated',
     },
     {
         id: 'actions',
@@ -136,9 +145,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         }}
                     />
                 </TableCell>
-                {headCells.map((headCell) => (
+                {headCells.map((headCell, index) => (
                     <TableCell
                         key={headCell.id}
+                        align={headCell.numeric ? 'center' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -161,11 +171,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     );
 }
 
-export default function EnhancedTable() {
+export default function PacksTable() {
     const user_id = useAppSelector(state => state.profile.user._id)
     const packs = useAppSelector(state => state.packs.cardPacks)
+    const isMyPacks = useAppSelector(state => state.packs.isMyPacks)
     const dispatch = useAppDispatch()
-    const rows = packs.map(el => createData(el.name, el.cards, el.lastUpdated, el.createdBy, el.actions))
+    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions))
 
     useEffect(() => {
         if (user_id) {
@@ -252,17 +263,29 @@ export default function EnhancedTable() {
                         <TableBody>
                             {rows.slice().sort(getComparator(order, orderBy))
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row.pack_id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
+
+                                    const deleteCardsPackHandler = (packId: string) => {
+                                        dispatch(deleteCardsPackThunk(packId))
+                                    }
+
+                                    const changeCardsPackNameHandler = (packId: string) => {
+                                        dispatch(changeCardsPackNameThunk(packId))
+                                    }
+
+                                    const editCardsPackHandler = (packId: string) => {
+
+                                    }
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.pack_id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={row.pack_id}
                                             selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">
@@ -282,10 +305,14 @@ export default function EnhancedTable() {
                                             >
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.cards}</TableCell>
-                                            <TableCell align="right">{row.lastUpdated}</TableCell>
-                                            <TableCell align="right">{row.createdBy}</TableCell>
-                                            <TableCell align="right">{row.actions}</TableCell>
+                                            <TableCell align="center">{row.cards}</TableCell>
+                                            <TableCell align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
+                                            <TableCell align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
+                                            {isMyPacks && <TableCell align="center">
+                                                <button onClick={() => deleteCardsPackHandler(row.pack_id)} ><DeleteIcon fontSize={"small"}/></button>
+                                                <button onClick={() => changeCardsPackNameHandler(row.pack_id)}><EditIcon fontSize={"small"}/></button>
+                                                <button onClick={() => editCardsPackHandler(row.pack_id)}><CreditCardIcon fontSize={"small"}/></button>
+                                            </TableCell>}
                                         </TableRow>
                                     );
                                 })}
@@ -309,7 +336,6 @@ export default function EnhancedTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-
         </Box>
     );
 }

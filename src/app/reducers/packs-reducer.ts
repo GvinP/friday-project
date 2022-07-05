@@ -2,7 +2,6 @@ import {AppThunk} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 import {packsApi, PackType} from "../../api/packsApi";
-import {cardsApi} from "../../api/cardsApi";
 
 const initialState = {
     cardPacks: [] as PackType[],
@@ -79,18 +78,40 @@ export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
             dispatch(setAppStatusAC("idle"));
         })
 }
-export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk => (dispatch => {
+export const addNewCardsPackThunk = (): AppThunk => (dispatch => {
+
+    const packName = "Eto noviy pack"
+    const makePrivate = false
+
     dispatch(setAppStatusAC("loading"));
-    cardsApi.addNewPack(name, makePrivate)
+    packsApi.addNewPack(packName, makePrivate)
         .then(() => {
             dispatch(getCardsPackThunk());
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => dispatch(setAppStatusAC("idle")));
 });
+export const deleteCardsPackThunk = (packId: string): AppThunk => (dispatch => {
+    dispatch(setAppStatusAC("loading"));
+    packsApi.deleteCardsPack(packId)
+        .then(() => {
+            dispatch(getCardsPackThunk());
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => dispatch(setAppStatusAC("idle")));
+});
+export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch => {
+    const newName = "Novoe imya"
 
-export const searchCardsPackThunk = (packName: string): AppThunk => (
-    dispatch, getState) => {
+    dispatch(setAppStatusAC("loading"));
+    packsApi.changeCardsPackName(packId, newName)
+        .then(() => {
+            dispatch(getCardsPackThunk());
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => dispatch(setAppStatusAC("idle")));
+});
+export const searchCardsPackThunk = (packName: string): AppThunk => (dispatch, getState) => {
     const {pageCount, isMyPacks} = getState().packs;
     const {_id} = getState().profile.user;
     const user_id = isMyPacks ? _id : '';

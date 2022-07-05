@@ -37,8 +37,4 @@ export const cardsApi = {
             card: {cardsPack_id, question, answer}
         })
     },
-    addNewPack(name: string, makePrivate: boolean) {
-        return instance.post(`/cards/pack`,
-            {cardsPack: {name, private: makePrivate}})
-    },
 };

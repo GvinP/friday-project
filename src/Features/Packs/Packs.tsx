@@ -6,6 +6,7 @@ import s from './Packs.module.css'
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
+    addNewCardsPackThunk,
     filterCardsCountAC, getCardsPackThunk,
     getMyCardsPackThunk,
     setCurrentFilterAC,
@@ -13,7 +14,7 @@ import {
 } from "../../app/reducers/packs-reducer";
 import {Search} from "./Search/Search";
 import {Search2} from "./Search/Search2";
-import EnhancedTable from "./PacksTable/PacksTable";
+import PacksTable from "./PacksTable/PacksTable";
 import {Preloader} from "../../common/Preloader/Preloader";
 
 export const Packs = () => {
@@ -42,6 +43,10 @@ export const Packs = () => {
         dispatch(getCardsPackThunk());
     }
 
+    const addNewPackHandler = () => {
+        dispatch(addNewCardsPackThunk())
+    }
+
     useEffect(() => {
         dispatch(getCardsPackThunk());
     }, [dispatch, page, minCardsCount, maxCardsCount])
@@ -63,16 +68,16 @@ export const Packs = () => {
                         ALL
                     </SuperButton>
                 </div>
-                {(status==='loading')
-                    ?   <Preloader/>
-                   :    <div>
+                {(status === 'loading')
+                    ? <Preloader/>
+                    : <div>
                         <h3> Number of cards</h3>
-                    <DoubleRange
-                    rangeValues={[minCards as number, maxCards as number]}
-                    onChangeRange={filterCardsCount}
-                    min={minCardsCount}
-                    max={maxCardsCount}
-                    />
+                        <DoubleRange
+                            rangeValues={[minCards as number, maxCards as number]}
+                            onChangeRange={filterCardsCount}
+                            min={minCardsCount}
+                            max={maxCardsCount}
+                        />
                     </div>
                 }
 
@@ -83,9 +88,11 @@ export const Packs = () => {
                 </div>
                 <div className={s.search}>
                     <Search2/>
-                    <SuperButton>Add new pack</SuperButton>
+                    <div className={s.btn}>
+                        <SuperButton onClick={addNewPackHandler}>Add pack</SuperButton>
+                    </div>
                 </div>
-                <EnhancedTable/>
+                <PacksTable/>
             </section>
         </div>
     )
