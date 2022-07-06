@@ -16,7 +16,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return state;
     }
 };
-export const updateNameTC = (name: string, avatar: string):AppThunk => (dispatch) => {
+export const updateNameTC = (name: string, avatar: string): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC(true));
     profileAPI.updateUserData(name, avatar)
         .then(res => {

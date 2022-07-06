@@ -9,6 +9,5 @@ export let Preloader = () => {
         <div className={s.container}>
             <img src={preloader} alt={"preloader"}/>
         </div>
-
     );
 };

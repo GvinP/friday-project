@@ -14,62 +14,43 @@ const initialState = {
     },
     page: 1,
     isLoading: false,
-    filter: '0updated' as string,
+    filter: "0updated" as string,
     isMyPacks: false,
-    searchResult: '',
-}
+    searchResult: "",
+};
 
 export type InitialStateType = typeof initialState
 
 export const packsReducer = (state: InitialStateType = initialState, action: PacksActionTypes): InitialStateType => {
     switch (action.type) {
-        case 'packs/GET-CARDS-PACK': {
-            return {
-                ...state, cardPacks: action.payload.cardPacks
-            }
-        }
-        case 'packs/SET-SEARCH-RESULT': {
-            return {
-                ...state,
-                searchResult: action.payload.searchResult
-            }
-        }
-        case  'packs/SET-CURRENT-FILTER': {
-            return {
-                ...state,
-                filter: action.payload.filter
-            }
-        }
-        case 'packs/SET-VIEW-PACKS': {
-            return {
-                ...state,
-                isMyPacks: action.payload.isMyPacks
-            }
-        }
-        case "packs/SET-LOADING-PACK": {
-            return {
-                ...state,
-                isLoading: action.payload.isLoading
-            }
-        }
-        case 'packs/SET-CARD-PACKS-TOTAL-COUNT':
-            return {...state, ...action.payload}
-        case 'packs/SET-MAX-MIN-CARDS-COUNT':
-            return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}}
-        case 'packs/FILTER-CARDS-COUNT':
-            return {...state, ...action.cardsCount}
+        case "packs/GET-CARDS-PACK":
+            return {...state, cardPacks: action.payload.cardPacks};
+        case "packs/SET-SEARCH-RESULT":
+            return {...state, searchResult: action.payload.searchResult};
+        case  "packs/SET-CURRENT-FILTER":
+            return {...state, filter: action.payload.filter};
+        case "packs/SET-VIEW-PACKS":
+            return {...state, isMyPacks: action.payload.isMyPacks};
+        case "packs/SET-LOADING-PACK":
+            return {...state, isLoading: action.payload.isLoading};
+        case "packs/SET-CARD-PACKS-TOTAL-COUNT":
+            return {...state, ...action.payload};
+        case "packs/SET-MAX-MIN-CARDS-COUNT":
+            return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}};
+        case "packs/FILTER-CARDS-COUNT":
+            return {...state, ...action.cardsCount};
         default:
             return state;
     }
-}
+};
 
 export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     const {pageCount, page, filter, isMyPacks, searchResult, min, max} = getState().packs;
-    const {_id} = getState().profile.user
-    const user_id = isMyPacks ? _id : ''
-    const packName = searchResult ? searchResult : ''
+    const {_id} = getState().profile.user;
+    const user_id = isMyPacks ? _id : "";
+    const packName = searchResult ? searchResult : "";
 
-    dispatch(setLoadingPackAC(true))
+    dispatch(setLoadingPackAC(true));
     packsApi.getCardsPack({
         pageCount, page, sortPacks: filter, user_id, packName, min, max,
     })
@@ -78,12 +59,12 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
-            dispatch(setLoadingPackAC(false))
-        })
-}
+            dispatch(setLoadingPackAC(false));
+        });
+};
 export const addNewCardsPackThunk = (): AppThunk => (dispatch => {
-    const packName = "This is new pack"
-    const makePrivate = false
+    const packName = "This is new pack";
+    const makePrivate = false;
 
     dispatch(setLoadingPackAC(true));
     packsApi.addNewPack(packName, makePrivate)
@@ -103,7 +84,7 @@ export const deleteCardsPackThunk = (packId: string): AppThunk => (dispatch => {
         .finally(() => dispatch(setLoadingPackAC(false)));
 });
 export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch => {
-    const newName = "Name changed"
+    const newName = "Name changed";
 
     dispatch(setLoadingPackAC(true));
     packsApi.changeCardsPackName(packId, newName)
@@ -116,7 +97,7 @@ export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch 
 export const searchCardsPackThunk = (packName: string): AppThunk => (dispatch, getState) => {
     const {pageCount, isMyPacks} = getState().packs;
     const {_id} = getState().profile.user;
-    const user_id = isMyPacks ? _id : '';
+    const user_id = isMyPacks ? _id : "";
     dispatch(setLoadingPackAC(true));
     packsApi.getCardsPack({pageCount, packName, user_id})
         .then(res => {
@@ -126,25 +107,25 @@ export const searchCardsPackThunk = (packName: string): AppThunk => (dispatch, g
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
             dispatch(setLoadingPackAC(false));
-        })
-}
+        });
+};
 
 export const setSearchResultAC = (searchResult: string) =>
-    ({type: 'packs/SET-SEARCH-RESULT', payload: {searchResult}} as const)
+    ({type: "packs/SET-SEARCH-RESULT", payload: {searchResult}} as const);
 export const getCardsPackAC = (cardPacks: PackType[]) =>
-    ({type: 'packs/GET-CARDS-PACK', payload: {cardPacks}} as const)
+    ({type: "packs/GET-CARDS-PACK", payload: {cardPacks}} as const);
 export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) =>
-    ({type: 'packs/SET-CARD-PACKS-TOTAL-COUNT', payload: {cardPacksTotalCount}} as const)
+    ({type: "packs/SET-CARD-PACKS-TOTAL-COUNT", payload: {cardPacksTotalCount}} as const);
 export const setMaxMinCardsCountAC = (max: number, min: number) =>
-    ({type: 'packs/SET-MAX-MIN-CARDS-COUNT', max, min} as const)
+    ({type: "packs/SET-MAX-MIN-CARDS-COUNT", max, min} as const);
 export const filterCardsCountAC = (min: number, max: number) =>
-    ({type: 'packs/FILTER-CARDS-COUNT', cardsCount: {min, max}} as const)
+    ({type: "packs/FILTER-CARDS-COUNT", cardsCount: {min, max}} as const);
 export const setViewPacksAC = (isMyPacks: boolean) =>
-    ({type: 'packs/SET-VIEW-PACKS', payload: {isMyPacks}} as const);
+    ({type: "packs/SET-VIEW-PACKS", payload: {isMyPacks}} as const);
 export const setCurrentFilterAC = (filter: string) =>
-    ({type: 'packs/SET-CURRENT-FILTER', payload: {filter}} as const);
+    ({type: "packs/SET-CURRENT-FILTER", payload: {filter}} as const);
 export const setLoadingPackAC = (value: boolean) =>
-    ({type: 'packs/SET-LOADING-PACK', payload: {isLoading: value}} as const);
+    ({type: "packs/SET-LOADING-PACK", payload: {isLoading: value}} as const);
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>

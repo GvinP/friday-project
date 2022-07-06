@@ -23,9 +23,10 @@ export const newPasswordReducer = (state: InitialStateType = initialState, actio
 };
 
 export const setNewPassSuccessAC = (success: boolean) => ({
-    type: "newPassword/SET-NEW-PASSWORD-SUCCESS", success} as const);
+    type: "newPassword/SET-NEW-PASSWORD-SUCCESS", success
+} as const);
 
-export const setNewPassTC = (password: string, token: string):AppThunk => (dispatch) => {
+export const setNewPassTC = (password: string, token: string): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC(true));
     authAPI.setNewPassword(password, token)
         .then(() => {

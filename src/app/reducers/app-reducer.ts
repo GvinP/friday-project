@@ -13,7 +13,7 @@ const initialState = {
 export const appReducer = (state: InitialStateType = initialState, action: AppActions): InitialStateType => {
     switch (action.type) {
         case "APP/SET-STATUS": {
-            return {...state, status: action.payload.appIsLoading}
+            return {...state, status: action.payload.appIsLoading};
         }
         case "APP/SET-INITIALIZED":
             return {...state, isInitialized: action.payload.appIsInitialized};
@@ -34,16 +34,16 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
     authAPI.me()
         .then(data => {
             dispatch(setAuthDataAC(data));
-            dispatch(setAppIsInitializedAC(true))
+            dispatch(setAppIsInitializedAC(true));
         })
         .catch(error => {
             const errorMessage = error.response
                 ? error.response.data.error
-                : (error.message + ', more details in the console');
-            console.log('Error: ', errorMessage);
+                : (error.message + ", more details in the console");
+            console.log("Error: ", errorMessage);
         })
         .finally(() => {
-            dispatch(setAppStatusAC(false))
+            dispatch(setAppStatusAC(false));
         });
 };
 

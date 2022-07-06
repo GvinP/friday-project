@@ -24,7 +24,7 @@ export const Login = () => {
     const dispatch = useAppDispatch();
 
     const status = useAppSelector(state => state.app.status);
-    const isInitialized = useAppSelector((state) => state.app.isInitialized)
+    const isInitialized = useAppSelector((state) => state.app.isInitialized);
 
     const formik = useFormik
     ({
@@ -51,7 +51,7 @@ export const Login = () => {
             }
             return errors;
         }
-    })
+    });
 
 
     if (isInitialized) {
@@ -104,7 +104,7 @@ export const Login = () => {
                                 <div className={st.recommend}>For your security, we don't recommend checking this box if
                                     you are using a public device.
                                 </div>
-                                <SuperButton type={'submit'} disabled={status}>
+                                <SuperButton type={"submit"} disabled={status}>
                                     Login
                                 </SuperButton>
                             </FormGroup>
@@ -113,6 +113,6 @@ export const Login = () => {
                 </div>
             </Grid>
         </Grid>
-    </div>
-}
+    </div>;
+};
 

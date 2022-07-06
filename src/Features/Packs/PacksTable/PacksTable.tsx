@@ -1,23 +1,23 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import {visuallyHidden} from '@mui/utils';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import {visuallyHidden} from "@mui/utils";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 import {NavLink} from "react-router-dom";
 import {changeCardsPackNameThunk, deleteCardsPackThunk} from "../../../app/reducers/packs-reducer";
-import {PATH} from "../../../Navigation/Routes/RoutesList";
+import {IconButton} from "@mui/material";
 
 
 interface Data {
@@ -61,7 +61,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     return 0;
 }
 
-type Order = 'asc' | 'desc';
+type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
     order: Order,
@@ -70,7 +70,7 @@ function getComparator<Key extends keyof any>(
     a: { [key in Key]: number | string },
     b: { [key in Key]: number | string },
 ) => number {
-    return order === 'desc'
+    return order === "desc"
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -84,34 +84,34 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
     {
-        id: 'name',
+        id: "name",
         numeric: false,
         disablePadding: true,
-        label: 'Name',
+        label: "Name",
     },
     {
-        id: 'cards',
+        id: "cards",
         numeric: true,
         disablePadding: false,
-        label: 'Cards count',
+        label: "Cards count",
     },
     {
-        id: 'created',
+        id: "created",
         numeric: true,
         disablePadding: false,
-        label: 'Created',
+        label: "Created",
     },
     {
-        id: 'updated',
+        id: "updated",
         numeric: true,
         disablePadding: false,
-        label: 'Updated',
+        label: "Updated",
     },
     {
-        id: 'actions',
+        id: "actions",
         numeric: true,
         disablePadding: false,
-        label: 'Actions',
+        label: "Actions",
     },
 ];
 
@@ -141,26 +141,26 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select all ',
+                            "aria-label": "select all ",
                         }}
                     />
                 </TableCell>
                 {headCells.map((headCell, index) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'center' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
+                        align={headCell.numeric ? "center" : "left"}
+                        padding={headCell.disablePadding ? "none" : "normal"}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
+                            direction={orderBy === headCell.id ? order : "asc"}
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
                                 </Box>
                             ) : null}
                         </TableSortLabel>
@@ -172,13 +172,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function PacksTable() {
-    const packs = useAppSelector(state => state.packs.cardPacks)
-    const dispatch = useAppDispatch()
-    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions))
+    const packs = useAppSelector(state => state.packs.cardPacks);
+    const userId = useAppSelector(state => state.auth._id)
+    const dispatch = useAppDispatch();
+    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
 
 
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('cards');
+    const [order, setOrder] = React.useState<Order>("asc");
+    const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -187,8 +188,8 @@ export default function PacksTable() {
         event: React.MouseEvent<unknown>,
         property: keyof Data,
     ) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
+        const isAsc = orderBy === property && order === "asc";
+        setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
     };
 
@@ -237,8 +238,8 @@ export default function PacksTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Paper sx={{width: '100%', mb: 2}}>
+        <Box sx={{width: "100%"}}>
+            <Paper sx={{width: "100%", mb: 2}}>
                 <TableContainer>
                     <Table
                         sx={{minWidth: 600}}
@@ -255,16 +256,17 @@ export default function PacksTable() {
                         <TableBody>
                             {rows.slice().sort(getComparator(order, orderBy))
                                 .map((row, index) => {
+                                    console.log(row);
                                     const isItemSelected = isSelected(row.pack_id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     const deleteCardsPackHandler = (packId: string) => {
-                                        dispatch(deleteCardsPackThunk(packId))
-                                    }
+                                        dispatch(deleteCardsPackThunk(packId));
+                                    };
 
                                     const changeCardsPackNameHandler = (packId: string) => {
-                                        dispatch(changeCardsPackNameThunk(packId))
-                                    }
+                                        dispatch(changeCardsPackNameThunk(packId));
+                                    };
 
                                     return (
                                         <TableRow
@@ -281,7 +283,7 @@ export default function PacksTable() {
                                                     color="primary"
                                                     checked={isItemSelected}
                                                     inputProps={{
-                                                        'aria-labelledby': labelId,
+                                                        "aria-labelledby": labelId,
                                                     }}
                                                 />
                                             </TableCell>
@@ -294,13 +296,32 @@ export default function PacksTable() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="center">{row.cards}</TableCell>
-                                            <TableCell align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
-                                            <TableCell align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
-                                            <TableCell align="center">
-                                                <button onClick={() => deleteCardsPackHandler(row.pack_id)} ><DeleteIcon fontSize={"small"}/></button>
-                                                <button onClick={() => changeCardsPackNameHandler(row.pack_id)}><EditIcon fontSize={"small"}/></button>
-                                                <NavLink to={`/cards/${row.pack_id}`} ><CreditCardIcon fontSize={"small"}/></NavLink>
+                                            <TableCell
+                                                align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
+                                            <TableCell
+                                                align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
+                                            {userId === row.user_id
+                                            ? <TableCell align="center">
+                                                <IconButton aria-label="delete"
+                                                            onClick={() => deleteCardsPackHandler(row.pack_id)}>
+                                                    <DeleteIcon/>
+                                                </IconButton>
+                                                <IconButton onClick={() => changeCardsPackNameHandler(row.pack_id)}>
+                                                    <EditIcon/>
+                                                </IconButton>
+                                                <NavLink to={`/cards/${row.pack_id}`}>
+                                                    <IconButton>
+                                                        <CreditCardIcon/>
+                                                    </IconButton>
+                                                </NavLink>
                                             </TableCell>
+                                            : <TableCell align="center">
+                                                    <NavLink to={`/cards/${row.pack_id}`}>
+                                                        <IconButton>
+                                                            <CreditCardIcon/>
+                                                        </IconButton>
+                                                    </NavLink>
+                                                </TableCell>}
                                         </TableRow>
                                     );
                                 })}

@@ -6,61 +6,60 @@ import reportWebVitals from "./reportWebVitals";
 import {HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./app/store";
-import {createTheme} from '@mui/material';
+import {createTheme} from "@mui/material";
 
 
 const darkTheme = createTheme({
     palette: {
         text: {
-            primary: '#a0c3ea',
-            secondary: '#236074',
+            primary: "#a0c3ea",
+            secondary: "#236074",
         },
         primary: {
-            main: '#a7697d',
-            contrastText: '#090606',
-            dark: 'white',
+            main: "#a7697d",
+            contrastText: "#090606",
+            dark: "white",
         },
         secondary: {
-            main: '#822f4d',
-            contrastText: '#000000',
-            dark: 'white',
+            main: "#822f4d",
+            contrastText: "#000000",
+            dark: "white",
         },
         mode: "dark",
     },
-})
+});
 
 const lightTheme = createTheme({
     palette: {
         text: {
-            primary: '#000',
-            secondary: '#767676',
+            primary: "#000",
+            secondary: "#767676",
         },
         primary: {
-            main: '#206c7f',
-            contrastText: '#873f3f',
-            dark: 'black',
+            main: "#206c7f",
+            contrastText: "#873f3f",
+            dark: "black",
         },
         secondary: {
-            main: '#54a4e1',
-            contrastText: 'rgba(59,108,173,0.8)',
-            dark: 'black',
+            main: "#54a4e1",
+            contrastText: "rgba(59,108,173,0.8)",
+            dark: "black",
         },
         mode: "light"
     }
-})
+});
 
-const themes = [lightTheme, darkTheme]
+const themes = [lightTheme, darkTheme];
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
-        <HashRouter>
-            <Provider store={store}>
-                <App themes={themes}/>
-            </Provider>
-        </HashRouter>
-
+    <HashRouter>
+        <Provider store={store}>
+            <App themes={themes}/>
+        </Provider>
+    </HashRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
