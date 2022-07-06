@@ -256,7 +256,6 @@ export default function PacksTable() {
                         <TableBody>
                             {rows.slice().sort(getComparator(order, orderBy))
                                 .map((row, index) => {
-                                    console.log(row);
                                     const isItemSelected = isSelected(row.pack_id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
