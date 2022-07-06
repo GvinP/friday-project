@@ -62,7 +62,6 @@ export const logoutTC = (): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC(true));
     authAPI.logout()
         .then((res) => {
-            debugger
             dispatch(logoutAC());
             dispatch(setAuthDataAC(res));
             dispatch(registerAC({isRegister: false}));

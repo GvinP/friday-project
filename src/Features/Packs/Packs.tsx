@@ -5,7 +5,7 @@ import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
     addNewCardsPackThunk,
-    filterCardsCountAC, getCardsPackThunk,
+    filterCardsCountAC, getCardsPackThunk, getMyCardsPackThunk,
     setCurrentFilterAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
@@ -26,32 +26,34 @@ export const Packs = () => {
     const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount);
     const isInitialized = useAppSelector((state) => state.app.isInitialized);
 
+    useEffect(() => {
+        dispatch(getCardsPackThunk());
+    }, [dispatch, minCards, maxCards]);
+
+
     const filterCardsCount = (value: [number, number]) => {
         const [min, max] = value;
         dispatch(filterCardsCountAC(min, max));
     };
     const getMyPackHandler = () => {
         dispatch(setViewPacksAC(true));
+        dispatch(getMyCardsPackThunk());
 
     };
     const getAllPackHandler = () => {
         dispatch(setViewPacksAC(false));
         dispatch(setCurrentFilterAC("0updated"));
+        dispatch(getCardsPackThunk());
     };
 
     const addNewPackHandler = () => {
         dispatch(addNewCardsPackThunk());
     };
 
-    useEffect(() => {
-        console.log("render getCardsPackThunk");
-        dispatch(getCardsPackThunk());
-    }, [isMyPacks]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
     }
-
 
     return (
         <div className={s.main}>

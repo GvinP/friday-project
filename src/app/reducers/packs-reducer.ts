@@ -56,12 +56,33 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     })
         .then(res => {
             dispatch(getCardsPackAC(res.cardPacks));
+            dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+            dispatch(setMaxMinCardsCountAC(res.maxCardsCount, res.minCardsCount));
+            if (!min && !max) {
+                dispatch(filterCardsCountAC(res.minCardsCount, res.maxCardsCount));
+            }
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
             dispatch(setLoadingPackAC(false));
         });
 };
+
+export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
+    const {_id} = getState().profile.user;
+    const {pageCount} = getState().packs;
+    dispatch(setLoadingPackAC(true));
+    dispatch(setSearchResultAC(''));
+    dispatch(setCurrentFilterAC('0updated'));
+    packsApi.getCardsPack({user_id: _id, pageCount})
+        .then(res => {
+            dispatch(getCardsPackAC(res.cardPacks));
+            dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => dispatch(setLoadingPackAC(false)));
+};
+
 export const addNewCardsPackThunk = (): AppThunk => (dispatch => {
     const packName = "This is new pack";
     const makePrivate = false;
@@ -74,6 +95,7 @@ export const addNewCardsPackThunk = (): AppThunk => (dispatch => {
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => dispatch(setLoadingPackAC(false)));
 });
+
 export const deleteCardsPackThunk = (packId: string): AppThunk => (dispatch => {
     dispatch(setLoadingPackAC(true));
     packsApi.deleteCardsPack(packId)
@@ -83,6 +105,7 @@ export const deleteCardsPackThunk = (packId: string): AppThunk => (dispatch => {
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => dispatch(setLoadingPackAC(false)));
 });
+
 export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch => {
     const newName = "Name changed";
 
@@ -94,6 +117,7 @@ export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch 
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => dispatch(setLoadingPackAC(false)));
 });
+
 export const searchCardsPackThunk = (packName: string): AppThunk => (dispatch, getState) => {
     const {pageCount, isMyPacks} = getState().packs;
     const {_id} = getState().profile.user;
