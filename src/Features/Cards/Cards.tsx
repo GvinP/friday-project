@@ -166,7 +166,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export const Cards = () => {
     const user_id = useAppSelector(state => state.profile.user._id)
     const cards = useAppSelector(state => state.cards.cards)
-    const {cardsPack_id} = useParams<'cardsPack_id'>()
+    const {cardsPack_id} = useParams()
     const dispatch = useAppDispatch()
     const rows = cards.map(el => createData(el._id, el.cardsPack_id, el.user_id, el.answer, el.question, el.grade, el.updated))
 
@@ -174,7 +174,7 @@ export const Cards = () => {
         if (cardsPack_id) {
             dispatch(getCardsThunk(cardsPack_id))
         }
-    }, [dispatch, cardsPack_id])
+    }, [])
     const addCard = () => {
         cardsApi.addCard('62c298a7b4951500044d4df5', 'question5', 'answer5')
     }
@@ -274,7 +274,7 @@ export const Cards = () => {
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
-                                                key={row.question}
+                                                key={row._id}
                                                 selected={isItemSelected}
                                             >
                                                 <TableCell padding="checkbox">

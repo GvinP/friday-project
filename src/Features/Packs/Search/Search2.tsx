@@ -13,18 +13,18 @@ export const Search2 = () => {
 
 
     useEffect(() => {
-            dispatch(searchCardsPackThunk(debouncedValue));
+        dispatch(searchCardsPackThunk(debouncedValue));
     }, [dispatch])
 
     return (
         <div>
             <InputText type="search"
-                   placeholder={'Search'}
-                   value={value}
-                   onChange={(e) => {
-                       setValue(e.target.value)
-                   }
-                   }/>
+                       placeholder={'Search'}
+                       value={value}
+                       onChange={(e) => {
+                           setValue(e.target.value)
+                       }
+                       }/>
             <p>Value real-time: {searchValue}</p>
             <p>Debounced value: {debouncedValue}</p>
         </div>

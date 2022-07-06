@@ -82,3 +82,11 @@
     font-weight: bold;
     color: #285062;
 }
+
+.userChooseButton {
+    display: flex;
+}
+
+.userChooseButton button {
+    margin: 5px;
+}

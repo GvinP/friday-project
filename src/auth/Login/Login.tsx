@@ -24,7 +24,6 @@ export const Login = () => {
     const dispatch = useAppDispatch();
 
     const status = useAppSelector(state => state.app.status);
-    const user_ID = useAppSelector(state => state.profile.user._id);
     const isInitialized = useAppSelector((state) => state.app.isInitialized)
 
     const formik = useFormik

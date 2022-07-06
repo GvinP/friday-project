@@ -1,7 +1,5 @@
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {Navigate} from "react-router-dom";
-import {PATH} from "../../Navigation/Routes/RoutesList";
 import s from './Packs.module.css'
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
@@ -77,9 +75,6 @@ export const Packs = () => {
             <section className={s.pack}>
                 <div className={s.search}>
                     <Search/>
-                </div>
-                <div className={s.search}>
-                    <Search2/>
                     <div className={s.btn}>
                         <SuperButton onClick={addNewPackHandler}>Add pack</SuperButton>
                     </div>
