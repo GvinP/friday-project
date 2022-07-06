@@ -5,17 +5,17 @@ import {AppThunk} from "../store";
 
 const initialState = {
     isRegister: false
-}
+};
 
 export type InitialStateType = typeof initialState
 export const registrationReducer = (state: InitialStateType = initialState, action: RegistrationActionsTypes): InitialStateType => {
     switch (action.type) {
         case "registration/REGISTER_ME":
-            return {...state, ...action.payload}
+            return {...state, ...action.payload};
         default:
             return state;
     }
-}
+};
 
 export type RegistrationActionsTypes =
     | ReturnType<typeof setAppErrorAC>

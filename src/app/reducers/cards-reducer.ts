@@ -19,16 +19,16 @@ export const cardsReducer = (state = initialState, action: ActionType) => {
 };
 
 export const getCardsThunk = (pack_id: string): AppThunk => (dispatch, getState) => {
-    dispatch(setLoadingPackAC(true))
+    dispatch(setLoadingPackAC(true));
     cardsApi.getCards(pack_id)
         .then(res => {
             dispatch(getCardsAC(res.cards));
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
-            dispatch(setLoadingPackAC(false))
-        })
-}
+            dispatch(setLoadingPackAC(false));
+        });
+};
 
 export const getCardsAC = (cards: CardType[]) =>
     ({type: "cards/GET-CARDS", cards} as const);

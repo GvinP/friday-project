@@ -58,7 +58,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     return 0;
 }
 
-type Order = 'asc' | 'desc';
+type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
     order: Order,
@@ -67,7 +67,7 @@ function getComparator<Key extends keyof any>(
     a: { [key in Key]: number | string },
     b: { [key in Key]: number | string },
 ) => number {
-    return order === 'desc'
+    return order === "desc"
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -81,28 +81,28 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
     {
-        id: 'question',
+        id: "question",
         numeric: false,
         disablePadding: true,
-        label: 'questions',
+        label: "questions",
     },
     {
-        id: 'answer',
+        id: "answer",
         numeric: false,
         disablePadding: false,
-        label: 'answers',
+        label: "answers",
     },
     {
-        id: 'updated',
+        id: "updated",
         numeric: true,
         disablePadding: false,
-        label: 'lastUpdated',
+        label: "lastUpdated",
     },
     {
-        id: 'grade',
+        id: "grade",
         numeric: true,
         disablePadding: false,
-        label: 'grades',
+        label: "grades",
     },
 ];
 
@@ -132,26 +132,26 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{
-                            'aria-label': 'select all desserts',
+                            "aria-label": "select all desserts",
                         }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
+                        align={headCell.numeric ? "right" : "left"}
+                        padding={headCell.disablePadding ? "none" : "normal"}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
+                            direction={orderBy === headCell.id ? order : "asc"}
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
                                 <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                    {order === "desc" ? "sorted descending" : "sorted ascending"}
                                 </Box>
                             ) : null}
                         </TableSortLabel>
@@ -164,23 +164,23 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 
 export const Cards = () => {
-    const user_id = useAppSelector(state => state.profile.user._id)
-    const cards = useAppSelector(state => state.cards.cards)
-    const {cardsPack_id} = useParams()
-    const dispatch = useAppDispatch()
-    const rows = cards.map(el => createData(el._id, el.cardsPack_id, el.user_id, el.answer, el.question, el.grade, el.updated))
+    const user_id = useAppSelector(state => state.profile.user._id);
+    const cards = useAppSelector(state => state.cards.cards);
+    const {cardsPack_id} = useParams();
+    const dispatch = useAppDispatch();
+    const rows = cards.map(el => createData(el._id, el.cardsPack_id, el.user_id, el.answer, el.question, el.grade, el.updated));
 
     useEffect(() => {
         if (cardsPack_id) {
-            dispatch(getCardsThunk(cardsPack_id))
+            dispatch(getCardsThunk(cardsPack_id));
         }
-    }, [])
+    }, []);
     const addCard = () => {
-        cardsApi.addCard('62c298a7b4951500044d4df5', 'question5', 'answer5')
-    }
+        cardsApi.addCard("62c298a7b4951500044d4df5", "question5", "answer5");
+    };
 
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('updated');
+    const [order, setOrder] = React.useState<Order>("asc");
+    const [orderBy, setOrderBy] = React.useState<keyof Data>("updated");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
 
@@ -190,8 +190,8 @@ export const Cards = () => {
         event: React.MouseEvent<unknown>,
         property: keyof Data,
     ) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
+        const isAsc = orderBy === property && order === "asc";
+        setOrder(isAsc ? "desc" : "asc");
         setOrderBy(property);
     };
 
@@ -238,7 +238,7 @@ export const Cards = () => {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     if (!user_id) {
-        return <Navigate to={PATH.login}/>
+        return <Navigate to={PATH.login}/>;
     }
 
     return (
@@ -246,8 +246,8 @@ export const Cards = () => {
             <h2>Cards Page</h2>
             <div>{cardsPack_id}</div>
             <button onClick={addCard}>add card</button>
-            <Box sx={{width: '100%'}}>
-                <Paper sx={{width: '100%', mb: 2}}>
+            <Box sx={{width: "100%"}}>
+                <Paper sx={{width: "100%", mb: 2}}>
                     <TableContainer>
                         <Table
                             sx={{minWidth: 600}}
@@ -282,7 +282,7 @@ export const Cards = () => {
                                                         color="primary"
                                                         checked={isItemSelected}
                                                         inputProps={{
-                                                            'aria-labelledby': labelId,
+                                                            "aria-labelledby": labelId,
                                                         }}
                                                     />
                                                 </TableCell>

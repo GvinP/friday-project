@@ -27,30 +27,30 @@ export const Registration = () => {
             confirmPassword: ""
         },
         onSubmit: values => {
-            dispatch(registerTC(values))
-            formik.resetForm()
+            dispatch(registerTC(values));
+            formik.resetForm();
         },
         validate: (values) => {
-            const errors: Partial<RegisterParamType> = {}
+            const errors: Partial<RegisterParamType> = {};
             if (!values.email) {
                 errors.email = "email required";
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = "Invalid email address"
+                errors.email = "Invalid email address";
             }
             if (!values.password) {
-                errors.password = "password required"
+                errors.password = "password required";
             } else if (values.password.trim().length < 9) {
-                errors.password = "Password should be more than 8 symbols "
+                errors.password = "Password should be more than 8 symbols ";
             }
             if (values.confirmPassword !== values.password) {
-                errors.confirmPassword = "Passwords do not match"
+                errors.confirmPassword = "Passwords do not match";
             }
-            return errors
+            return errors;
         },
-    })
+    });
 
     if (isRegister) {
-        return <Navigate to={PATH.login}/>
+        return <Navigate to={PATH.login}/>;
     }
 
     return <div className={style.smallContainer}>
@@ -94,5 +94,5 @@ export const Registration = () => {
                 </div>
             </Grid>
         </Grid>
-    </div>
-}
+    </div>;
+};

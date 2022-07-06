@@ -1,6 +1,6 @@
 import React from "react";
 import style from "../../app/App/App.module.css";
-import st from "./CheckEmail.module.css"
+import st from "./CheckEmail.module.css";
 import {useAppSelector} from "../../app/store";
 import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
@@ -12,12 +12,6 @@ export const CheckEmail = () => {
 
     return <div className={style.smallContainer}>
         <h1>Cards</h1>
-
-                {/*<NavLink to={PATH.login}>*/}
-                {/*    <div className={st.close}>    </div>*/}
-                {/*</NavLink>*/}
-
-
         <div className={st.img}></div>
         <h2>Check Email</h2>
         <div className={st.text}>

@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     packs: packsReducer,
     cards: cardsReducer,
-})
+});
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export type RootState = ReturnType<typeof rootReducer>

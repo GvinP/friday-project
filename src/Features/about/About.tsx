@@ -10,7 +10,6 @@ export const About = () => {
     const goBack = () => navigate(-1);
     return (
         <div className={style.smallContainer}>
-
             <h1>Cards</h1>
             <h2>About us</h2>
             <ul>

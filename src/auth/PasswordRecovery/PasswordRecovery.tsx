@@ -17,31 +17,31 @@ import FormLabel from "@mui/material/FormLabel";
 
 
 export const PasswordRecovery = () => {
-    const dispatch = useAppDispatch()
-    const email = useAppSelector(state => state.registrationManage.passwordRecovery.email)
-    const status = useAppSelector(state => state.app.status)
+    const dispatch = useAppDispatch();
+    const email = useAppSelector(state => state.registrationManage.passwordRecovery.email);
+    const status = useAppSelector(state => state.app.status);
     const formik = useFormik
     ({
         initialValues: {
-            email: '',
+            email: "",
         },
         onSubmit: values => {
-            dispatch(sendForgotPasswordTC(values.email))
-            formik.resetForm()
+            dispatch(sendForgotPasswordTC(values.email));
+            formik.resetForm();
         },
         validate: (values) => {
-            const errors: Partial<RegisterParamType> = {}
+            const errors: Partial<RegisterParamType> = {};
             if (!values.email) {
                 errors.email = "email required";
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = "Invalid email address"
+                errors.email = "Invalid email address";
             }
-            return errors
+            return errors;
         },
-    })
+    });
 
     if (email) {
-        return <Navigate to={PATH.checkEmail}/>
+        return <Navigate to={PATH.checkEmail}/>;
     }
 
     return <div className={style.smallContainer}>
@@ -76,5 +76,5 @@ export const PasswordRecovery = () => {
                 </div>
             </Grid>
         </Grid>
-    </div>
-}
+    </div>;
+};

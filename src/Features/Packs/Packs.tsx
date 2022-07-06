@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import s from './Packs.module.css'
+import s from "./Packs.module.css";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
@@ -10,42 +10,41 @@ import {
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
 import {Search} from "./Search/Search";
-import {Search2} from "./Search/Search2";
 import PacksTable from "./PacksTable/PacksTable";
 import {Preloader} from "../../common/Preloader/Preloader";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.app.status)
+    const status = useAppSelector(state => state.app.status);
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
-    const minCards = useAppSelector(state => state.packs.min)
-    const maxCards = useAppSelector(state => state.packs.max)
-    const maxCardsCount = useAppSelector(state => state.packs.cardsCount.maxCardsCount)
-    const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount)
+    const minCards = useAppSelector(state => state.packs.min);
+    const maxCards = useAppSelector(state => state.packs.max);
+    const maxCardsCount = useAppSelector(state => state.packs.cardsCount.maxCardsCount);
+    const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount);
 
     const filterCardsCount = (value: [number, number]) => {
-        const [min, max] = value
-        dispatch(filterCardsCountAC(min, max))
-    }
+        const [min, max] = value;
+        dispatch(filterCardsCountAC(min, max));
+    };
     const getMyPackHandler = () => {
-        dispatch(setViewPacksAC(true))
+        dispatch(setViewPacksAC(true));
 
-    }
+    };
     const getAllPackHandler = () => {
-        dispatch(setViewPacksAC(false))
-        dispatch(setCurrentFilterAC('0updated'))
-    }
+        dispatch(setViewPacksAC(false));
+        dispatch(setCurrentFilterAC("0updated"));
+    };
 
     const addNewPackHandler = () => {
-        dispatch(addNewCardsPackThunk())
-    }
+        dispatch(addNewCardsPackThunk());
+    };
 
     useEffect(() => {
-        console.log('render getCardsPackThunk')
+        console.log("render getCardsPackThunk");
         dispatch(getCardsPackThunk());
-    }, [isMyPacks])
+    }, [isMyPacks]);
 
-    console.log('status: ', status)
+    console.log("status: ", status);
     return (
         <div className={s.main}>
             <section className={s.setting}>
@@ -70,7 +69,6 @@ export const Packs = () => {
                         />
                     </div>
                 }
-
             </section>
             <section className={s.pack}>
                 <div className={s.search}>
@@ -82,6 +80,6 @@ export const Packs = () => {
                 <PacksTable/>
             </section>
         </div>
-    )
-}
+    );
+};
 
