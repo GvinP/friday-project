@@ -61,7 +61,7 @@ export const Profile = () => {
                         {error}
                     </div>
 
-                    <SuperButton disabled={status === 'loading'} btnStyle={"primary"}
+                    <SuperButton disabled={status} btnStyle={"primary"}
                                  onClick={changeName}>Save</SuperButton>
                     <SuperButton onClick={goBack}>Go back</SuperButton>
                 </div>

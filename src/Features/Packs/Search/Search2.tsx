@@ -14,7 +14,7 @@ export const Search2 = () => {
 
     useEffect(() => {
             dispatch(searchCardsPackThunk(debouncedValue));
-    }, [dispatch, debouncedValue])
+    }, [dispatch])
 
     return (
         <div>
