@@ -1,5 +1,5 @@
 import {authAPI, LoginParamsType} from "../../api/api";
-import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
+import {setAppErrorAC, setAppIsInitializedAC, setAppStatusAC} from "./app-reducer";
 import {setAuthDataAC} from "./profile-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 import {registerAC, RegisterActionType} from "./registration-reducer";
@@ -43,23 +43,23 @@ export const setIsLoggedIn = (isLoggedIn: boolean) => ({
     isLoggedIn,
 } as const)
 export const loginTC = (data: LoginParamsType): AppThunk => ((dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(setAppStatusAC(true));
     authAPI.login(data)
         .then(res => {
             dispatch(loginAC(res))
             dispatch(setAuthDataAC(res))
-            dispatch(setAppStatusAC("succeeded"));
+            dispatch(setAppIsInitializedAC(true))
         })
         .catch(e => {
             handleAppRequestError(e, dispatch)
         })
         .finally(() => {
-            dispatch(setAppStatusAC("succeeded"))
+            dispatch(setAppStatusAC(false))
         })
 })
 
 export const logoutTC = (): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(setAppStatusAC(true));
     authAPI.logout()
         .then((res) => {
             dispatch(logoutAC())
@@ -70,7 +70,7 @@ export const logoutTC = (): AppThunk => (dispatch) => {
             handleAppRequestError(e, dispatch);
         })
         .finally(() => {
-            dispatch(setAppStatusAC("idle"))
+            dispatch(setAppStatusAC(false))
         })
 }
 export type AuthActions =

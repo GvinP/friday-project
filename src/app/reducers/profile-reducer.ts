@@ -17,14 +17,14 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
     }
 };
 export const updateNameTC = (name: string, avatar: string):AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(setAppStatusAC(true));
     profileAPI.updateUserData(name, avatar)
         .then(res => {
             dispatch(setAuthDataAC(res.updatedUser));
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
-            dispatch(setAppStatusAC("idle"));
+            dispatch(setAppStatusAC(false));
         });
 };
 

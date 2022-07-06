@@ -25,6 +25,7 @@ export const Login = () => {
 
     const status = useAppSelector(state => state.app.status);
     const user_ID = useAppSelector(state => state.profile.user._id);
+    const isInitialized = useAppSelector((state) => state.app.isInitialized)
 
     const formik = useFormik
     ({
@@ -53,7 +54,8 @@ export const Login = () => {
         }
     })
 
-    if (user_ID) {
+
+    if (isInitialized) {
         return <Navigate to={PATH.packs}/>;
     }
 
@@ -103,7 +105,7 @@ export const Login = () => {
                                 <div className={st.recommend}>For your security, we don't recommend checking this box if
                                     you are using a public device.
                                 </div>
-                                <SuperButton type={'submit'} disabled={status === 'loading'}>
+                                <SuperButton type={'submit'} disabled={status}>
                                     Login
                                 </SuperButton>
                             </FormGroup>

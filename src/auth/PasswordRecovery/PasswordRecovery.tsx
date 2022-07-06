@@ -67,7 +67,7 @@ export const PasswordRecovery = () => {
                                 <div className={st.text}>
                                     <p>Enter your email address and we will send you further instructions</p>
                                 </div>
-                                <SuperButton disabled={status === 'loading'} type={"submit"}>
+                                <SuperButton disabled={status} type={"submit"}>
                                     Send instructions
                                 </SuperButton>
                             </FormGroup>

@@ -26,7 +26,7 @@ export const setNewPassSuccessAC = (success: boolean) => ({
     type: "newPassword/SET-NEW-PASSWORD-SUCCESS", success} as const);
 
 export const setNewPassTC = (password: string, token: string):AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(setAppStatusAC(true));
     authAPI.setNewPassword(password, token)
         .then(() => {
             dispatch(setNewPassSuccessAC(true));
@@ -35,7 +35,7 @@ export const setNewPassTC = (password: string, token: string):AppThunk => (dispa
             handleAppRequestError(e, dispatch);
         })
         .finally(() => {
-            dispatch(setAppStatusAC("idle"));
+            dispatch(setAppStatusAC(false));
         });
 };
 

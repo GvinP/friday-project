@@ -85,7 +85,7 @@ export const Registration = () => {
                                 />
                                 {formik.touched.confirmPassword && formik.errors.confirmPassword &&
                                     <div style={{color: "red"}}>{formik.errors.confirmPassword}</div>}
-                                <SuperButton disabled={status === 'loading'} type={"submit"}>
+                                <SuperButton disabled={status} type={"submit"}>
                                     Register
                                 </SuperButton>
                             </FormGroup>

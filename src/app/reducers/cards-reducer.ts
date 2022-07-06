@@ -17,23 +17,15 @@ export const cardsReducer = (state = initialState, action: ActionType) => {
     }
 };
 
-export const getCardsThunk = (pack_id: string, pageCount: number, page: number): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    cardsApi.getCards(pack_id, pageCount, page)
+export const getCardsThunk = (pack_id: string): AppThunk => (dispatch, getState) => {
+    dispatch(setAppStatusAC(true))
+    cardsApi.getCards(pack_id)
         .then(res => {
             dispatch(getCardsAC(res.cards));
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
-            dispatch(setAppStatusAC('idle'))
-        })
-}
-export const deleteCardThunk = (cardId: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    cardsApi.deleteCard(cardId)
-        .catch(error => handleAppRequestError(error, dispatch))
-        .finally(() => {
-            dispatch(setAppStatusAC('idle'))
+            dispatch(setAppStatusAC(false))
         })
 }
 

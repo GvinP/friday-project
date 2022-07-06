@@ -8,7 +8,6 @@ import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
     addNewCardsPackThunk,
     filterCardsCountAC, getCardsPackThunk,
-    getMyCardsPackThunk,
     setCurrentFilterAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
@@ -19,10 +18,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
-
-    const name = useAppSelector(state => state.profile.user.name)
     const status = useAppSelector(state => state.app.status)
-    const page = useAppSelector(state => state.packs.page)
     const isMyPacks = useAppSelector(state => state.packs.isMyPacks);
     const minCards = useAppSelector(state => state.packs.min)
     const maxCards = useAppSelector(state => state.packs.max)
@@ -35,12 +31,11 @@ export const Packs = () => {
     }
     const getMyPackHandler = () => {
         dispatch(setViewPacksAC(true))
-        dispatch(getMyCardsPackThunk());
+
     }
     const getAllPackHandler = () => {
         dispatch(setViewPacksAC(false))
         dispatch(setCurrentFilterAC('0updated'))
-        dispatch(getCardsPackThunk());
     }
 
     const addNewPackHandler = () => {
@@ -48,14 +43,11 @@ export const Packs = () => {
     }
 
     useEffect(() => {
+        console.log('render getCardsPackThunk')
         dispatch(getCardsPackThunk());
-    }, [dispatch, page, minCardsCount, maxCardsCount])
+    }, [isMyPacks])
 
-
-    if (!name) {
-        return <Navigate to={PATH.login}/>
-    }
-
+    console.log('status: ', status)
     return (
         <div className={s.main}>
             <section className={s.setting}>
@@ -68,7 +60,7 @@ export const Packs = () => {
                         ALL
                     </SuperButton>
                 </div>
-                {(status === 'loading')
+                {(status)
                     ? <Preloader/>
                     : <div>
                         <h3> Number of cards</h3>

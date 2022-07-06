@@ -41,7 +41,7 @@ export const NewPassword = () => {
                     instructions
                     to email
                 </div>
-                <SuperButton disabled={status === 'loading'} onClick={() => {
+                <SuperButton disabled={status} onClick={() => {
                     if (token) {
                         dispatch(setNewPassTC(password, token))
                     }

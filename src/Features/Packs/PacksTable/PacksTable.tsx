@@ -16,9 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 
-import {useEffect} from "react";
 
-import {changeCardsPackNameThunk, deleteCardsPackThunk, getCardsPackThunk} from "../../../app/reducers/packs-reducer";
+import {changeCardsPackNameThunk, deleteCardsPackThunk} from "../../../app/reducers/packs-reducer";
 
 interface Data {
     name: string;
@@ -172,17 +171,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function PacksTable() {
-    const user_id = useAppSelector(state => state.profile.user._id)
     const packs = useAppSelector(state => state.packs.cardPacks)
-    const isMyPacks = useAppSelector(state => state.packs.isMyPacks)
     const dispatch = useAppDispatch()
     const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions))
-
-    useEffect(() => {
-        if (user_id) {
-            dispatch(getCardsPackThunk())
-        }
-    }, [dispatch])
 
 
     const [order, setOrder] = React.useState<Order>('asc');
@@ -308,11 +299,11 @@ export default function PacksTable() {
                                             <TableCell align="center">{row.cards}</TableCell>
                                             <TableCell align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
                                             <TableCell align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
-                                            {isMyPacks && <TableCell align="center">
+                                            <TableCell align="center">
                                                 <button onClick={() => deleteCardsPackHandler(row.pack_id)} ><DeleteIcon fontSize={"small"}/></button>
                                                 <button onClick={() => changeCardsPackNameHandler(row.pack_id)}><EditIcon fontSize={"small"}/></button>
                                                 <button onClick={() => editCardsPackHandler(row.pack_id)}><CreditCardIcon fontSize={"small"}/></button>
-                                            </TableCell>}
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}

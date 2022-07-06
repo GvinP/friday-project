@@ -30,17 +30,16 @@ export const sendForgotPasswordAC = (payload: InitialStateType) => ({
 export const sendForgotPasswordTC = (email: string): AppThunk => ((dispatch) => {
     const from = "test-front-admin <ai73a@yandex.by>";
     const message = `<div style="background-color: cornflowerblue; padding: 15px">password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a></div>`
-    dispatch(setAppStatusAC("loading"))
+    dispatch(setAppStatusAC(true))
     authAPI.passRecovery({email, from, message})
         .then(() => {
             dispatch(sendForgotPasswordAC({email}))
-            dispatch(setAppStatusAC("succeeded"))
         })
         .catch(e => {
             handleAppRequestError(e, dispatch)
         })
         .finally(() => {
-            dispatch(setAppStatusAC("succeeded"))
+            dispatch(setAppStatusAC(false))
         })
 })
 
