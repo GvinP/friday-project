@@ -103,7 +103,7 @@ export const Login = () => {
                                        }}
                                        {...formik.getFieldProps("password")}
                             />
-                            {formik.touched.email && formik.errors.email &&
+                            {formik.touched.password && formik.errors.password &&
                                 <div style={{color: "red"}}>{formik.errors.password}</div>}
 
 

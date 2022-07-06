@@ -5,21 +5,28 @@ import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
-import SuperButton from "../../common/SuperButton/SuperButton";
-import React from "react";
+import React, {useCallback, useState} from "react";
 import {registerTC} from "../../app/reducers/registration-reducer";
 import {RegisterParamType} from "../../api/api";
 import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import s from "../../Navigation/Navbar/Navbar.module.css";
 import FormLabel from "@mui/material/FormLabel";
-import {InputPassword} from "../../common/InputPassword/InputPassword";
+import {Button, CssBaseline, IconButton, InputAdornment, Typography} from "@mui/material";
+import Paper from "@mui/material/Paper";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 
 export const Registration = () => {
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.app.status);
     const isRegister = useAppSelector(state => state.registrationManage.registration.isRegister);
+    const [passVisibility, setPassVisibility] = useState(false)
+
+    const changeVisibility = useCallback(() => {
+        setPassVisibility(!passVisibility)
+    }, [passVisibility])
+
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -39,8 +46,8 @@ export const Registration = () => {
             }
             if (!values.password) {
                 errors.password = "password required";
-            } else if (values.password.trim().length < 9) {
-                errors.password = "Password should be more than 8 symbols ";
+            } else if (values.password.trim().length < 8) {
+                errors.password = "Password should be more than 7 symbols ";
             }
             if (values.confirmPassword !== values.password) {
                 errors.confirmPassword = "Passwords do not match";
@@ -53,46 +60,75 @@ export const Registration = () => {
         return <Navigate to={PATH.login}/>;
     }
 
-    return <div className={style.smallContainer}>
-        <h1>Cards</h1>
-        <h2>Sign up</h2>
-        <Grid container justifyContent={"center"}>
-            <Grid item justifyContent={"center"}>
-                <div className={style.formContainer}>
-                    <form onSubmit={formik.handleSubmit}>
-                        <FormControl>
-                            <FormLabel>
-                                <span>Have an account? </span>
-                                <NavLink to={PATH.login}
-                                         className={s.signUp}>Sign In</NavLink>
-                            </FormLabel>
-                            <FormGroup>
-                                <TextField label="Email"
-                                           margin="normal"
-                                           {...formik.getFieldProps("email")}
-                                />
-                                {formik.touched.email && formik.errors.email &&
-                                    <div style={{color: "red"}}>{formik.errors.email}</div>}
-                                <InputPassword
-                                    placeholder={"Password"}
-                                    {...formik.getFieldProps("password")}
-                                />
-                                {formik.touched.password && formik.errors.password &&
-                                    <div style={{color: "red"}}>{formik.errors.password}</div>}
-                                <InputPassword
-                                    placeholder={"Confirm password"}
-                                    {...formik.getFieldProps("confirmPassword")}
-                                />
-                                {formik.touched.confirmPassword && formik.errors.confirmPassword &&
-                                    <div style={{color: "red"}}>{formik.errors.confirmPassword}</div>}
-                                <SuperButton disabled={status} type={"submit"}>
-                                    Register
-                                </SuperButton>
-                            </FormGroup>
-                        </FormControl>
-                    </form>
-                </div>
-            </Grid>
+    return (
+        <Grid item justifyContent={"center"}>
+
+            <form onSubmit={formik.handleSubmit}>
+                <Paper elevation={6} className={style.smallContainer}>
+                    <CssBaseline/>
+                    <Typography m={1} variant="h4">
+                        Cards
+                    </Typography>
+                    <Typography m={3} variant="h6">
+                        Sign up
+                    </Typography>
+                    <FormControl>
+                        <FormLabel>
+                            <span>Have an account? </span>
+                            <NavLink to={PATH.login}
+                                     className={s.signUp}>Sign In</NavLink>
+                        </FormLabel>
+                        <FormGroup>
+                            <TextField label="Email"
+                                       margin="normal"
+                                       {...formik.getFieldProps("email")}
+                            />
+                            {formik.touched.email && formik.errors.email &&
+                                <div style={{color: "red"}}>{formik.errors.email}</div>}
+                            <TextField label="Password"
+                                       margin="normal"
+                                       type={passVisibility ? 'text' : 'password'}
+                                       InputProps={{
+                                           endAdornment: <InputAdornment position="start">
+                                               <IconButton
+                                                   aria-label="toggle password visibility"
+                                                   onClick={changeVisibility}
+                                                   edge="end">
+                                                   {passVisibility ? <Visibility/> : <VisibilityOff/>}
+                                               </IconButton>
+                                           </InputAdornment>,
+                                       }}
+                                       {...formik.getFieldProps("password")}
+                            />
+                            {formik.touched.password && formik.errors.password &&
+                                <div style={{color: "red"}}>{formik.errors.password}</div>}
+
+                            <TextField label="Confirm Password"
+                                       margin="normal"
+                                       type={passVisibility ? 'text' : 'password'}
+                                       InputProps={{
+                                           endAdornment: <InputAdornment position="start">
+                                               <IconButton
+                                                   aria-label="toggle password visibility"
+                                                   onClick={changeVisibility}
+                                                   edge="end">
+                                                   {passVisibility ? <Visibility/> : <VisibilityOff/>}
+                                               </IconButton>
+                                           </InputAdornment>,
+                                       }}
+                                       {...formik.getFieldProps("confirmPassword")}
+                            />
+                            {formik.touched.confirmPassword && formik.errors.confirmPassword &&
+                                <div style={{color: "red"}}>{formik.errors.confirmPassword}</div>}
+                            <Button variant="outlined" type={"submit"} disabled={status}>
+                                Register
+                            </Button>
+                        </FormGroup>
+                    </FormControl>
+                </Paper>
+            </form>
+
         </Grid>
-    </div>;
+
+    )
 };
