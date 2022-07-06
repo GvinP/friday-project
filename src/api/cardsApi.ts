@@ -26,15 +26,18 @@ export type GetDataType = {
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string) {
-        return instance.get<GetDataType>(`/cards/card?cardsPack_id=${cardsPack_id}`)
+    getCards(cardsPack_id: string, pageCount?: number, page?:number) {
+        return instance.get<GetDataType>(`/cards/card?cardsPack_id=${cardsPack_id}&pageCount=${pageCount}&page=${page}`)
             .then(res => {
                 return res.data
             })
     },
     addCard(cardsPack_id: string, question: string, answer: string) {
-        instance.post('cards/card', {
+        return instance.post('cards/card', {
             card: {cardsPack_id, question, answer}
         })
+    },
+    deleteCard(cardId: string) {
+        return instance.delete(`cards/card?id=${cardId}`)
     },
 };
