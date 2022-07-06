@@ -23,7 +23,7 @@ const App = React.memo((props: AppPropsType) => {
     useEffect(() => {
         console.log("render initialized");
         dispatch(initializeAppTC());
-    }, []);
+    }, [ dispatch]);
 
     if (status) {
         return <Preloader/>;
@@ -33,7 +33,7 @@ const App = React.memo((props: AppPropsType) => {
         <ThemeProvider theme={darkMode ? props.themes[1] : props.themes[0]}>
             {status && <LinearProgress/>}
             <Paper
-                style={{backgroundImage: darkMode ? "linear-gradient(0deg, #589CD7FF 20%, black )" : "linear-gradient(0deg, #c0d2e2 0%, #3e597c 100%)"}}>
+                style={{backgroundImage: darkMode ? "linear-gradient(0deg,   #3c5369 30%, black )" : "linear-gradient(0deg, #c0d2e2 0%, #3e597c 100%)"}}>
                 <Navbar/>
                 <AppBar position="static">
                     {status && <LinearProgress color={"info"}/>}
