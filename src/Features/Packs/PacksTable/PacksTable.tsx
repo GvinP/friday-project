@@ -25,8 +25,8 @@ interface Data {
     pack_id: string;
     user_id: string;
     cards: number;
-    created: string;
-    updated: string;
+    created: Date;
+    updated: Date;
     actions: number;
 }
 
@@ -35,8 +35,8 @@ function createData(
     pack_id: string,
     user_id: string,
     cards: number,
-    created: string,
-    updated: string,
+    created: Date,
+    updated: Date,
     actions: number,
 ): Data {
     return {
@@ -67,8 +67,8 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key,
 ): (
-    a: { [key in Key]: number | string },
-    b: { [key in Key]: number | string },
+    a: { [key in Key]: number | string |Date},
+    b: { [key in Key]: number | string |Date},
 ) => number {
     return order === "desc"
         ? (a, b) => descendingComparator(a, b, orderBy)

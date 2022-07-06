@@ -34,6 +34,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case "packs/SET-LOADING-PACK":
             return {...state, isLoading: action.payload.isLoading};
         case "packs/SET-CARD-PACKS-TOTAL-COUNT":
+        case  'packsList/SET-CURRENT-PAGE':
             return {...state, ...action.payload};
         case "packs/SET-MAX-MIN-CARDS-COUNT":
             return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}};
@@ -150,6 +151,8 @@ export const setCurrentFilterAC = (filter: string) =>
     ({type: "packs/SET-CURRENT-FILTER", payload: {filter}} as const);
 export const setLoadingPackAC = (value: boolean) =>
     ({type: "packs/SET-LOADING-PACK", payload: {isLoading: value}} as const);
+export const setCurrentPageCardPacksAC = (page: number) =>
+    ({type: 'packsList/SET-CURRENT-PAGE', payload: {page}} as const);
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>
@@ -160,3 +163,4 @@ export type PacksActionTypes =
     | ReturnType<typeof setViewPacksAC>
     | ReturnType<typeof setCurrentFilterAC>
     | ReturnType<typeof setLoadingPackAC>
+    | ReturnType<typeof setCurrentPageCardPacksAC>

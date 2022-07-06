@@ -18,8 +18,8 @@ export type PackType = {
     cardsCount: number
     type: string
     rating: number
-    created: string
-    updated: string
+    created: Date
+    updated: Date
     more_id: string
 }
 
