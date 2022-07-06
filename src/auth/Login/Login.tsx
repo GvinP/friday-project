@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {useFormik} from "formik";
 import {LoginParamsType} from "../../api/api";
@@ -14,18 +14,21 @@ import {Navigate, NavLink} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import s from "../../Navigation/Navbar/Navbar.module.css";
 import st from "./Login.module.css";
-import style from "../../app/App/App.module.css";
 import SuperButton from "../../common/SuperButton/SuperButton";
-import {InputPassword} from "../../common/InputPassword/InputPassword";
-
+import Paper from '@mui/material/Paper';
+import {CssBaseline, IconButton, InputAdornment, Typography} from "@mui/material";
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 export const Login = () => {
 
     const dispatch = useAppDispatch();
-
     const status = useAppSelector(state => state.app.status);
     const isInitialized = useAppSelector((state) => state.app.isInitialized);
 
+    const [passVisibility, setPassVisibility] = useState(false)
+    const changeVisibility = useCallback(() => {
+        setPassVisibility(!passVisibility)
+    }, [passVisibility])
     const formik = useFormik
     ({
         initialValues: {
@@ -58,13 +61,15 @@ export const Login = () => {
         return <Navigate to={PATH.packs}/>;
     }
 
-    return <div className={style.smallContainer}>
-        <h1>Cards</h1>
-        <h2>Sign in</h2>
-        <Grid container justifyContent={"center"}>
+    return (
             <Grid item justifyContent={"center"}>
-                <div className={style.formContainer}>
                     <form onSubmit={formik.handleSubmit}>
+                        <Paper className={st.container}>
+                            <CssBaseline/>
+                            <h1>Cards</h1>
+                            <Typography component="h1" variant="h5">
+                                Sign in
+                            </Typography>
                         <FormControl>
                             <FormLabel>
                                 <span>Need registration? </span>
@@ -79,13 +84,23 @@ export const Login = () => {
                                 />
                                 {formik.touched.email && formik.errors.email &&
                                     <div style={{color: "red"}}>{formik.errors.email}</div>}
-
-                                <InputPassword
-                                    placeholder={"Password"}
-                                    {...formik.getFieldProps("password")}
+                                <TextField label="Password"
+                                           margin="normal"
+                                           color={"secondary"}
+                                           type={passVisibility ? 'text' : 'password'}
+                                           InputProps={{
+                                               endAdornment: <InputAdornment position="start">
+                                                   <IconButton
+                                                       aria-label="toggle password visibility"
+                                                       onClick={changeVisibility}
+                                                       edge="end">
+                                                       {passVisibility ? <Visibility/> : <VisibilityOff/>}
+                                                   </IconButton>
+                                               </InputAdornment>,
+                                           }}
+                                           {...formik.getFieldProps("password")}
                                 />
-
-                                {formik.touched.password && formik.errors.password &&
+                                {formik.touched.email && formik.errors.email &&
                                     <div style={{color: "red"}}>{formik.errors.password}</div>}
 
 
@@ -109,10 +124,11 @@ export const Login = () => {
                                 </SuperButton>
                             </FormGroup>
                         </FormControl>
+                        </Paper>
                     </form>
-                </div>
+
             </Grid>
-        </Grid>
-    </div>;
-};
+    )
+
+}
 
