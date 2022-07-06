@@ -23,7 +23,7 @@ const App = React.memo((props: AppPropsType) => {
     useEffect(() => {
         console.log('render initialized')
         dispatch(initializeAppTC());
-    }, [dispatch]);
+    }, []);
 
     if (status) {
         return <Preloader/>

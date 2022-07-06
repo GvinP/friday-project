@@ -22,6 +22,7 @@ export type CardType = {
 
 export type GetDataType = {
     cards: CardType[];
+    cardsTotalCount: number;
     error: string;
 }
 
