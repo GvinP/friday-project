@@ -15,9 +15,10 @@ import {useAppDispatch, useAppSelector} from "../../../app/store";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-
-
+import {NavLink} from "react-router-dom";
 import {changeCardsPackNameThunk, deleteCardsPackThunk} from "../../../app/reducers/packs-reducer";
+import {PATH} from "../../../Navigation/Routes/RoutesList";
+
 
 interface Data {
     name: string;
@@ -265,10 +266,6 @@ export default function PacksTable() {
                                         dispatch(changeCardsPackNameThunk(packId))
                                     }
 
-                                    const editCardsPackHandler = (packId: string) => {
-
-                                    }
-
                                     return (
                                         <TableRow
                                             hover
@@ -302,7 +299,7 @@ export default function PacksTable() {
                                             <TableCell align="center">
                                                 <button onClick={() => deleteCardsPackHandler(row.pack_id)} ><DeleteIcon fontSize={"small"}/></button>
                                                 <button onClick={() => changeCardsPackNameHandler(row.pack_id)}><EditIcon fontSize={"small"}/></button>
-                                                <button onClick={() => editCardsPackHandler(row.pack_id)}><CreditCardIcon fontSize={"small"}/></button>
+                                                <NavLink to={`/cards/${row.pack_id}`} ><CreditCardIcon fontSize={"small"}/></NavLink>
                                             </TableCell>
                                         </TableRow>
                                     );

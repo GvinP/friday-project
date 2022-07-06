@@ -2,6 +2,7 @@ import {AppThunk} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 import {cardsApi, CardType} from "../../api/cardsApi";
+import {setLoadingPackAC} from "./packs-reducer";
 
 
 const initialState: InitialStateType = {
@@ -18,14 +19,14 @@ export const cardsReducer = (state = initialState, action: ActionType) => {
 };
 
 export const getCardsThunk = (pack_id: string): AppThunk => (dispatch, getState) => {
-    dispatch(setAppStatusAC(true))
+    dispatch(setLoadingPackAC(true))
     cardsApi.getCards(pack_id)
         .then(res => {
             dispatch(getCardsAC(res.cards));
         })
         .catch(error => handleAppRequestError(error, dispatch))
         .finally(() => {
-            dispatch(setAppStatusAC(false))
+            dispatch(setLoadingPackAC(false))
         })
 }
 

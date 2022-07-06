@@ -1,5 +1,4 @@
 import {AppThunk} from "../store";
-import {setAppStatusAC} from "./app-reducer";
 import {handleAppRequestError} from "../../common/utils/error-utils";
 import {packsApi, PackType} from "../../api/packsApi";
 
@@ -29,9 +28,18 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
                 ...state, cardPacks: action.payload.cardPacks
             }
         }
-        // case 'packs/SET-SEARCH-RESULT':
-
-        // case  'packs/SET-CURRENT-FILTER':
+        case 'packs/SET-SEARCH-RESULT': {
+            return {
+                ...state,
+                searchResult: action.payload.searchResult
+            }
+        }
+        case  'packs/SET-CURRENT-FILTER': {
+            return {
+                ...state,
+                filter: action.payload.filter
+            }
+        }
         case 'packs/SET-VIEW-PACKS': {
             return {
                 ...state,
@@ -73,7 +81,6 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
             dispatch(setLoadingPackAC(false))
         })
 }
-
 export const addNewCardsPackThunk = (): AppThunk => (dispatch => {
     const packName = "This is new pack"
     const makePrivate = false

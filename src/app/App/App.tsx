@@ -25,7 +25,6 @@ const App = React.memo((props: AppPropsType) => {
         dispatch(initializeAppTC());
     }, [dispatch]);
 
-
     if (status) {
         return <Preloader/>
     }

@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate, useParams} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
-import {deleteCardThunk, getCardsThunk} from "../../app/reducers/cards-reducer";
+import {getCardsThunk} from "../../app/reducers/cards-reducer";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import Checkbox from "@mui/material/Checkbox";
 import TablePagination from "@mui/material/TablePagination";
 import Box from "@mui/material/Box";
 import TableHead from "@mui/material/TableHead";
@@ -103,12 +104,6 @@ const headCells: readonly HeadCell[] = [
         disablePadding: false,
         label: 'grades',
     },
-    {
-        id: '_id',
-        numeric: true,
-        disablePadding: false,
-        label: 'actions',
-    },
 ];
 
 interface EnhancedTableProps {
@@ -121,7 +116,7 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const {order, orderBy, onRequestSort} =
+    const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} =
         props;
     const createSortHandler =
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -131,6 +126,16 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     return (
         <TableHead>
             <TableRow>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        indeterminate={numSelected > 0 && numSelected < rowCount}
+                        checked={rowCount > 0 && numSelected === rowCount}
+                        onChange={onSelectAllClick}
+                        inputProps={{
+                            'aria-label': 'select all desserts',
+                        }}
+                    />
+                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -161,37 +166,25 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export const Cards = () => {
     const user_id = useAppSelector(state => state.profile.user._id)
     const cards = useAppSelector(state => state.cards.cards)
-    const {cardsPack_id} = useParams<'cardsPack_id'>()
+    const {cardsPack_id} = useParams()
     const dispatch = useAppDispatch()
     const rows = cards.map(el => createData(el._id, el.cardsPack_id, el.user_id, el.answer, el.question, el.grade, el.updated))
-    const [order, setOrder] = useState<Order>('asc');
-    const [orderBy, setOrderBy] = useState<keyof Data>('updated');
-    const [selected, setSelected] = useState<readonly string[]>([]);
-    const [page, setPage] = useState(0);
 
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
         if (cardsPack_id) {
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page+1))
+            dispatch(getCardsThunk(cardsPack_id))
         }
-    }, [dispatch, cardsPack_id, rowsPerPage, page])
-
+    }, [])
     const addCard = () => {
-        if (cardsPack_id) {
-            cardsApi.addCard(cardsPack_id, 'question5', 'answer5')
-        }
-
-    } ///62c298a7b4951500044d4df5
-    const deleteCard = (cardId: string) => {
-        if (cardsPack_id) {
-            dispatch(deleteCardThunk(cardId))
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page+1))
-        }
-    }
-    const editCard = (cardId: string) => {
-        //
+        cardsApi.addCard('62c298a7b4951500044d4df5', 'question5', 'answer5')
     }
 
+    const [order, setOrder] = React.useState<Order>('asc');
+    const [orderBy, setOrderBy] = React.useState<keyof Data>('updated');
+    const [selected, setSelected] = React.useState<readonly string[]>([]);
+    const [page, setPage] = React.useState(0);
+
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -239,7 +232,7 @@ export const Cards = () => {
         setPage(0);
     };
 
-    // const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -252,7 +245,6 @@ export const Cards = () => {
         <div>
             <h2>Cards Page</h2>
             <div>{cardsPack_id}</div>
-            <div>page: {page}</div>
             <button onClick={addCard}>add card</button>
             <Box sx={{width: '100%'}}>
                 <Paper sx={{width: '100%', mb: 2}}>
@@ -272,7 +264,7 @@ export const Cards = () => {
                             <TableBody>
                                 {rows.slice().sort(getComparator(order, orderBy))
                                     .map((row, index) => {
-                                        // const isItemSelected = isSelected(row.question);
+                                        const isItemSelected = isSelected(row.question);
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
                                         return (
@@ -280,9 +272,20 @@ export const Cards = () => {
                                                 hover
                                                 onClick={(event) => handleClick(event, row.question)}
                                                 role="checkbox"
+                                                aria-checked={isItemSelected}
                                                 tabIndex={-1}
                                                 key={row._id}
+                                                selected={isItemSelected}
                                             >
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        color="primary"
+                                                        checked={isItemSelected}
+                                                        inputProps={{
+                                                            'aria-labelledby': labelId,
+                                                        }}
+                                                    />
+                                                </TableCell>
                                                 <TableCell
                                                     component="th"
                                                     id={labelId}
@@ -295,10 +298,7 @@ export const Cards = () => {
                                                 <TableCell
                                                     align="right">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                                 <TableCell align="right">{row.grade}</TableCell>
-                                                <TableCell align="right">
-                                                    <button onClick={() => deleteCard(row._id)}>delete</button>
-                                                    <button onClick={() => editCard(row._id)}>edit</button>
-                                                </TableCell>
+                                                {/*<TableCell align="right">{row}</TableCell>*/}
                                             </TableRow>
                                         );
                                     })}
@@ -313,7 +313,7 @@ export const Cards = () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={23}
+                        count={rows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
