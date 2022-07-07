@@ -6,8 +6,8 @@ const initialState = {
     cardPacks: [] as PackType[],
     pageCount: 5,
     cardPacksTotalCount: 5,
-    min: undefined as number | undefined,
-    max: undefined as number | undefined,
+    min: 0,
+    max: 110,
     cardsCount: {
         maxCardsCount: 0,
         minCardsCount: 0,
@@ -40,7 +40,7 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case "packs/SET-MAX-MIN-CARDS-COUNT":
             return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}};
         case "packs/FILTER-CARDS-COUNT":
-            return {...state, ...action.cardsCount};
+            return {...state, min: action.cardsCount.min, max: action.cardsCount.max};
         case "packsList/SET-PAGE-COUNT":
             return {...state, pageCount: action.payload.pageCount}
         default:

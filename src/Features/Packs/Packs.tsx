@@ -79,7 +79,6 @@ export const Packs = () => {
                             onChangeRange={filterCardsCount}
                             min={minCardsCount}
                             max={maxCardsCount}
-
                         />
                     </div>
                 }
