@@ -41,4 +41,10 @@ export const cardsApi = {
     deleteCard(cardId: string) {
         return instance.delete(`cards/card?id=${cardId}`)
     },
+
+    updateCard(cardId: string, newQuestion: string, newAnswer: string) {
+        return instance.put('cards/card', {
+            card: {_id: cardId, question: newQuestion, answer: newAnswer}
+        })
+    },
 };
