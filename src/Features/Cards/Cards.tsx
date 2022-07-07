@@ -14,8 +14,8 @@ import Box from "@mui/material/Box";
 import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import {visuallyHidden} from "@mui/utils";
-import {cardsApi} from "../../api/cardsApi";
 import style from "./Cards.module.css"
+import {Button} from "@mui/material";
 
 interface Data {
     _id: string;
@@ -128,6 +128,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onRequestSort(event, property);
         };
 
+
     return (
         <TableHead>
             <TableRow>
@@ -161,6 +162,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export const Cards = () => {
     const user_id = useAppSelector(state => state.profile.user._id);
     const cards = useAppSelector(state => state.cards.cards);
+    const status = useAppSelector(state => state.app.status);
     const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
     const {cardsPack_id} = useParams();
     const dispatch = useAppDispatch();
@@ -253,7 +255,7 @@ export const Cards = () => {
     return (
         <div className={style.cardsContainer}>
             <h2 className={style.pageTitle}>Cards Page</h2>
-            <button onClick={addCard} className={style.addCardsButton}>add card</button>
+            <Button variant="outlined" type={"submit"} disabled={status} onClick={addCard} className={style.addCardsButton}>add card</Button>
             <Box sx={{width: "100%"}}>
                 <Paper sx={{width: "100%", mb: 2}}>
                     <TableContainer>
