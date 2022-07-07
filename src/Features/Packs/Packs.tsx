@@ -6,15 +6,13 @@ import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
     addNewCardsPackThunk,
     filterCardsCountAC, getCardsPackThunk, getMyCardsPackThunk,
-    setCurrentFilterAC, setCurrentPageCardPacksAC,
+    setCurrentFilterAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
 import PacksTable from "./PacksTable/PacksTable";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
-import {Paginator} from "./Paginator/Paginator";
-import Search3 from "./Search/Search3";
 import {Search2} from "./Search/Search2";
 
 
@@ -28,14 +26,8 @@ export const Packs = () => {
     const maxCardsCount = useAppSelector(state => state.packs.cardsCount.maxCardsCount);
     const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount);
     const isInitialized = useAppSelector((state) => state.app.isInitialized);
-    // const currentPage = useAppSelector(state => state.packs.page);
-    // const pageSize = useAppSelector(state => state.packs.pageCount);
-    // const totalCountPage = useAppSelector(state => state.packs.cardPacksTotalCount);
-
-    useEffect(() => {
-        dispatch(getCardsPackThunk());
-    }, [dispatch, minCards, maxCards]);
-
+    const page = useAppSelector(state => state.packs.page);
+    const pageCount = useAppSelector(state => state.packs.pageCount)
 
     const filterCardsCount = (value: [number, number]) => {
         const [min, max] = value;
@@ -55,10 +47,12 @@ export const Packs = () => {
     const addNewPackHandler = () => {
         dispatch(addNewCardsPackThunk());
     };
-    // const changePageHandler = (page: number) => {
-    //     dispatch(setCurrentPageCardPacksAC(page))
-    // }
 
+    useEffect(() => {
+        if (isInitialized) {
+            dispatch(getCardsPackThunk());
+        }
+    }, [minCards, maxCards, page, pageCount]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
@@ -98,12 +92,6 @@ export const Packs = () => {
                     </div>
                 </div>
                 <PacksTable/>
-                {/*<Paginator currentPage={currentPage}*/}
-                {/*           pageSize={pageSize}*/}
-                {/*           totalCount={totalCountPage}*/}
-                {/*           onPageChange={changePageHandler}*/}
-                {/*           siblingCount={2}*/}
-                {/*/>*/}
             </section>
         </div>
     );

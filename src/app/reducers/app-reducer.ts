@@ -4,7 +4,6 @@ import {authAPI} from "../../api/api";
 
 
 const initialState = {
-    // status: "loading" as RequestStatusType,
     status: true,
     appError: null as string | null,
     isInitialized: false,

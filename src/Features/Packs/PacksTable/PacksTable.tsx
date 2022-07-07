@@ -16,7 +16,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import {NavLink} from "react-router-dom";
-import {changeCardsPackNameThunk, deleteCardsPackThunk} from "../../../app/reducers/packs-reducer";
+import {
+    changeCardsPackNameThunk,
+    deleteCardsPackThunk,
+    setCurrentPageCardPacksAC, setPageCountAC
+} from "../../../app/reducers/packs-reducer";
 import {IconButton} from "@mui/material";
 
 
@@ -174,15 +178,15 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export default function PacksTable() {
     const packs = useAppSelector(state => state.packs.cardPacks);
     const userId = useAppSelector(state => state.auth._id)
+    const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
     const dispatch = useAppDispatch();
     const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
-
+    const page = useAppSelector(state => state.packs.page)
+    const pageCount = useAppSelector(state => state.packs.pageCount)
 
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
     const [selected, setSelected] = React.useState<readonly string[]>([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -223,17 +227,17 @@ export default function PacksTable() {
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        dispatch(setCurrentPageCardPacksAC(newPage));
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+        dispatch(setPageCountAC(parseInt(event.target.value, 10)))
     };
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
+    const rowsPerPage = 5
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -291,6 +295,7 @@ export default function PacksTable() {
                                                 id={labelId}
                                                 scope="row"
                                                 padding="none"
+                                                sx={{ overflowWrap: "anywhere"}}
                                             >
                                                 {row.name}
                                             </TableCell>
@@ -325,9 +330,7 @@ export default function PacksTable() {
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow
-
-                                >
+                                <TableRow>
                                     <TableCell colSpan={6}/>
                                 </TableRow>
                             )}
@@ -337,8 +340,8 @@ export default function PacksTable() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
+                    count={cardPacksTotalCount}
+                    rowsPerPage={pageCount}
                     page={page}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}

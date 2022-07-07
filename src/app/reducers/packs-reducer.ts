@@ -4,15 +4,15 @@ import {packsApi, PackType} from "../../api/packsApi";
 
 const initialState = {
     cardPacks: [] as PackType[],
-    pageCount: 10,
-    cardPacksTotalCount: 0,
+    pageCount: 5,
+    cardPacksTotalCount: 5,
     min: undefined as number | undefined,
     max: undefined as number | undefined,
     cardsCount: {
         maxCardsCount: 0,
         minCardsCount: 0,
     },
-    page: 1,
+    page: 0,
     isLoading: false,
     filter: "0updated" as string,
     isMyPacks: false,
@@ -34,12 +34,15 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case "packs/SET-LOADING-PACK":
             return {...state, isLoading: action.payload.isLoading};
         case "packs/SET-CARD-PACKS-TOTAL-COUNT":
-        case  'packsList/SET-CURRENT-PAGE':
+            return {...state, cardPacksTotalCount: action.payload.cardPacksTotalCount};
+        case  "packsList/SET-CURRENT-PAGE":
             return {...state, ...action.payload};
         case "packs/SET-MAX-MIN-CARDS-COUNT":
             return {...state, cardsCount: {maxCardsCount: action.max, minCardsCount: action.min}};
         case "packs/FILTER-CARDS-COUNT":
             return {...state, ...action.cardsCount};
+        case "packsList/SET-PAGE-COUNT":
+            return {...state, pageCount: action.payload.pageCount}
         default:
             return state;
     }
@@ -73,8 +76,8 @@ export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     const {_id} = getState().profile.user;
     const {pageCount} = getState().packs;
     dispatch(setLoadingPackAC(true));
-    dispatch(setSearchResultAC(''));
-    dispatch(setCurrentFilterAC('0updated'));
+    dispatch(setSearchResultAC(""));
+    dispatch(setCurrentFilterAC("0updated"));
     packsApi.getCardsPack({user_id: _id, pageCount})
         .then(res => {
             dispatch(getCardsPackAC(res.cardPacks));
@@ -152,7 +155,10 @@ export const setCurrentFilterAC = (filter: string) =>
 export const setLoadingPackAC = (value: boolean) =>
     ({type: "packs/SET-LOADING-PACK", payload: {isLoading: value}} as const);
 export const setCurrentPageCardPacksAC = (page: number) =>
-    ({type: 'packsList/SET-CURRENT-PAGE', payload: {page}} as const);
+    ({type: "packsList/SET-CURRENT-PAGE", payload: {page}} as const);
+export const setPageCountAC = (pageCount: number) =>
+    ({type: "packsList/SET-PAGE-COUNT", payload: {pageCount}} as const);
+;
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>
@@ -164,3 +170,4 @@ export type PacksActionTypes =
     | ReturnType<typeof setCurrentFilterAC>
     | ReturnType<typeof setLoadingPackAC>
     | ReturnType<typeof setCurrentPageCardPacksAC>
+    | ReturnType<typeof setPageCountAC>
