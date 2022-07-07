@@ -9,12 +9,14 @@ import {
     setCurrentFilterAC, setCurrentPageCardPacksAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
-import {Search} from "./Search/Search";
 import PacksTable from "./PacksTable/PacksTable";
 import {Preloader} from "../../common/Preloader/Preloader";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Paginator} from "./Paginator/Paginator";
+import Search3 from "./Search/Search3";
+import {Search2} from "./Search/Search2";
+
 
 export const Packs = () => {
     const dispatch = useAppDispatch();
@@ -83,13 +85,14 @@ export const Packs = () => {
                             onChangeRange={filterCardsCount}
                             min={minCardsCount}
                             max={maxCardsCount}
+
                         />
                     </div>
                 }
             </section>
             <section className={s.pack}>
                 <div className={s.search}>
-                    <Search/>
+                    <Search2/>
                     <div className={s.btn}>
                         <SuperButton onClick={addNewPackHandler}>Add pack</SuperButton>
                     </div>

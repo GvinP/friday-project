@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from 'react'
 import {useDebounce} from "../../../common/Hooks/useDebounce";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
+import {useAppDispatch} from "../../../app/store";
 import {InputText} from "../../../common/InputText/InputText";
-import {searchCardsPackThunk} from "../../../app/reducers/packs-reducer";
+import {searchCardsPackThunk, setSearchResultAC} from "../../../app/reducers/packs-reducer";
 
 
 export const Search2 = () => {
     const [value, setValue] = useState<string>('')
-    const debouncedValue = useDebounce<string>(value, 1000)
+    const debounce = useDebounce<string>(value, 1000)
     const dispatch = useAppDispatch();
-    const searchValue = useAppSelector(state => state.packs.searchResult);
-
 
     useEffect(() => {
-        dispatch(searchCardsPackThunk(debouncedValue));
-    }, [dispatch])
+        dispatch(searchCardsPackThunk(debounce));
+    }, [debounce])
 
     return (
         <div>
@@ -23,10 +21,9 @@ export const Search2 = () => {
                        value={value}
                        onChange={(e) => {
                            setValue(e.target.value)
+                           dispatch(setSearchResultAC(debounce))
                        }
                        }/>
-            <p>Value real-time: {searchValue}</p>
-            <p>Debounced value: {debouncedValue}</p>
         </div>
     )
 }
