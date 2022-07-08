@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {useFormik} from "formik";
-import {LoginParamsType} from "../../api/api";
+import {LoginParamsType} from "../../../api/api";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
@@ -9,15 +9,15 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import {loginTC} from "../../app/reducers/auth-reducer";
+import {loginTC} from "../../../app/reducers/auth-reducer";
 import {Navigate, NavLink} from "react-router-dom";
-import {PATH} from "../../Navigation/Routes/RoutesList";
-import s from "../../Navigation/Navbar/Navbar.module.css";
+import {PATH} from "../../../Navigation/Routes/RoutesList";
+import s from "../../../Navigation/Navbar/Navbar.module.css";
 import st from "./Login.module.css";
 import Paper from '@mui/material/Paper';
 import {Button, CssBaseline, IconButton, InputAdornment, Typography} from "@mui/material";
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-import style from "../../app/App/App.module.css";
+import style from "../../../app/App/App.module.css";
 
 export const Login = () => {
 

@@ -170,7 +170,7 @@ export const Cards = () => {
     const [order, setOrder] = useState<Order>("asc");
     const [orderBy, setOrderBy] = useState<keyof Data>("updated");
     const [selected, setSelected] = useState<readonly string[]>([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     useEffect(() => {

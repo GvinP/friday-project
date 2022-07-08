@@ -1,6 +1,6 @@
 
 .img {
-    background: url("../../assets/images/email.png");
+    background: url("../../../assets/images/email.png");
     background-size: cover;
     width: 80px;
     height: 80px;
@@ -15,7 +15,7 @@
     width: 32px;
     height: 32px;
     opacity: 0.3;
-    background: url("../../assets/icons/close.png");
+    background: url("../../../assets/icons/close.png");
     cursor: pointer;
 }
 

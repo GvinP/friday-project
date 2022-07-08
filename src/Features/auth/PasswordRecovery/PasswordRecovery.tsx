@@ -1,17 +1,17 @@
 import React from "react";
-import {useAppDispatch, useAppSelector} from "../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
 import {useFormik} from "formik";
-import {RegisterParamType} from "../../api/api";
-import style from "../../app/App/App.module.css";
+import {RegisterParamType} from "../../../api/api";
+import style from "../../../app/App/App.module.css";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "@mui/material/TextField";
-import SuperButton from "../../common/SuperButton/SuperButton";
-import {sendForgotPasswordTC} from "../../app/reducers/passwordRecovery-reducer";
+import SuperButton from "../../../common/SuperButton/SuperButton";
+import {sendForgotPasswordTC} from "../../../app/reducers/passwordRecovery-reducer";
 import {Navigate, NavLink} from "react-router-dom";
-import {PATH} from "../../Navigation/Routes/RoutesList";
-import s from "../../Navigation/Navbar/Navbar.module.css";
+import {PATH} from "../../../Navigation/Routes/RoutesList";
+import s from "../../../Navigation/Navbar/Navbar.module.css";
 import st from "./PasswordRecovery.module.css";
 import FormLabel from "@mui/material/FormLabel";
 
