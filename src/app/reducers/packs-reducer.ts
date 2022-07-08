@@ -47,6 +47,17 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
             return state;
     }
 };
+export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk=> (dispatch => {
+    dispatch(setLoadingPackAC(true));
+    packsApi.addNewPack(name, makePrivate)
+        .then(() => {
+            dispatch(getCardsPackThunk());
+        })
+        .catch(error => handleAppRequestError(error, dispatch))
+        .finally(() => {
+            dispatch(setLoadingPackAC(false));
+        });
+});
 
 export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
     const {pageCount, page, filter, isMyPacks, searchResult, min, max} = getState().packs;

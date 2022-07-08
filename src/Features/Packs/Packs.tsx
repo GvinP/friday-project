@@ -1,12 +1,12 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import s from "./Packs.module.css";
 import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
-    addNewCardsPackThunk,
+    addNewCardsPackThunk, addNewPackThunk,
     filterCardsCountAC, getCardsPackThunk, getMyCardsPackThunk,
-    setCurrentFilterAC,
+    setCurrentFilterAC, setSearchResultAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
 import PacksTable from "./PacksTable/PacksTable";
@@ -14,6 +14,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Search2} from "./Search/Search2";
+import {Button} from "@mui/material";
 
 
 
@@ -30,10 +31,19 @@ export const Packs = () => {
     const page = useAppSelector(state => state.packs.page);
     const pageCount = useAppSelector(state => state.packs.pageCount)
 
+    const [activeAddPackModal, setActiveAddPackModal] = useState(false)
+    const [name, setName] = useState<string>('');
+    const [makePrivate, setMakePrivate] = useState(false);
+
     const filterCardsCount = (value: [number, number]) => {
         const [min, max] = value;
         dispatch(filterCardsCountAC(min, max));
     };
+    const addPack = () => {
+        dispatch(addNewPackThunk(name, makePrivate));
+        dispatch(setSearchResultAC(''));
+        setActiveAddPackModal(false);
+    }
     const getMyPackHandler = () => {
         dispatch(setViewPacksAC(true));
         dispatch(getMyCardsPackThunk());
@@ -47,6 +57,7 @@ export const Packs = () => {
 
     const addNewPackHandler = () => {
         dispatch(addNewCardsPackThunk());
+        setActiveAddPackModal(true)
     };
 
     useEffect(() => {
@@ -63,6 +74,7 @@ export const Packs = () => {
         <div className={s.main}>
             <section className={s.setting}>
                 <h2>Show packs cards</h2>
+
                 <div className={s.userChooseButton}>
                     <SuperButton className={isMyPacks ? s.active : s.inactive} onClick={getMyPackHandler}>
                         MY
@@ -88,8 +100,9 @@ export const Packs = () => {
                 <div className={s.search}>
                     <Search2/>
                     <div className={s.btn}>
-                        <SuperButton onClick={addNewPackHandler}>Add pack</SuperButton>
+                        <Button variant={'outlined'} onClick={addNewPackHandler}>Add new pack</Button>
                     </div>
+
                 </div>
                 <PacksTable/>
             </section>

@@ -6,6 +6,7 @@ export const Modal1 = () => {
             <div>
                 <h1>modal1</h1>
                 <h1>modal...</h1>
+
             </div>}/>
     )
 }

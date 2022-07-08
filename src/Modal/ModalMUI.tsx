@@ -36,7 +36,7 @@ export const ModalMUI: FC<PropsType> = ({children}) => {
             >
                 <Box sx={style}>
                     {children}
-                    <Button  onClick={handleClose} variant={'outlined'}>close</Button>
+                    <Button  onClick={handleClose} variant={'outlined'} color="error">close</Button>
                 </Box>
             </Modal>
         </div>
