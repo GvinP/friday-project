@@ -16,6 +16,7 @@ import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Search2} from "./Search/Search2";
 
 
+
 export const Packs = () => {
     const dispatch = useAppDispatch();
 
@@ -52,7 +53,7 @@ export const Packs = () => {
         if (isInitialized) {
             dispatch(getCardsPackThunk());
         }
-    }, [minCards, maxCards, page, pageCount]);
+    }, [dispatch,isInitialized, minCards, maxCards, page, pageCount]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
