@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, {tableCellClasses} from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
@@ -21,7 +21,7 @@ import {
     setCurrentPageCardPacksAC, setPageCountAC
 } from "../../../app/reducers/packs-reducer";
 import {IconButton} from "@mui/material";
-
+import { styled } from '@mui/material/styles';
 
 interface Data {
     name: string;
@@ -132,12 +132,23 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onRequestSort(event, property);
         };
 
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }));
+
     return (
-        <TableHead>
+
+        <TableHead >
             <TableRow>
 
                 {headCells.map((headCell) => (
-                    <TableCell
+                    <StyledTableCell
                         key={headCell.id}
                         align={headCell.numeric ? "center" : "left"}
                         padding='normal'
@@ -155,7 +166,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 </Box>
                             ) : null}
                         </TableSortLabel>
-                    </TableCell>
+                    </StyledTableCell>
                 ))}
             </TableRow>
         </TableHead>
@@ -216,6 +227,15 @@ export default function PacksTable() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
     return (
         <Box sx={{width: "100%"}}>
             <Paper sx={{width: "100%", mb: 2}}>
@@ -243,7 +263,7 @@ export default function PacksTable() {
                                     };
 
                                     return (
-                                        <TableRow
+                                        <StyledTableRow
                                             hover
                                             // onClick={(event) => handleClick(event, row.pack_id)}
                                             tabIndex={-1}
@@ -286,7 +306,7 @@ export default function PacksTable() {
                                                         </IconButton>
                                                     </NavLink>
                                                 </TableCell>}
-                                        </TableRow>
+                                        </StyledTableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
@@ -298,7 +318,7 @@ export default function PacksTable() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[5, 10, 25,50]}
                     component="div"
                     count={cardPacksTotalCount}
                     rowsPerPage={pageCount}

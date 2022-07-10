@@ -7,7 +7,7 @@ const initialState = {
     pageCount: 5,
     cardPacksTotalCount: 5,
     min: 0,
-    max: 110,
+    max: 0,
     cardsCount: {
         maxCardsCount: 0,
         minCardsCount: 0,
@@ -169,7 +169,7 @@ export const setCurrentPageCardPacksAC = (page: number) =>
     ({type: "packsList/SET-CURRENT-PAGE", payload: {page}} as const);
 export const setPageCountAC = (pageCount: number) =>
     ({type: "packsList/SET-PAGE-COUNT", payload: {pageCount}} as const);
-;
+
 
 export type PacksActionTypes =
     | ReturnType<typeof setSearchResultAC>
