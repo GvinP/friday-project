@@ -9,7 +9,6 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
 import {visuallyHidden} from "@mui/utils";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -120,16 +119,13 @@ const headCells: readonly HeadCell[] = [
 ];
 
 interface EnhancedTableProps {
-    numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
-    rowCount: number;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler =
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
@@ -139,21 +135,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            "aria-label": "select all ",
-                        }}
-                    />
-                </TableCell>
-                {headCells.map((headCell, index) => (
+
+                {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? "center" : "left"}
-                        padding={headCell.disablePadding ? "none" : "normal"}
+                        padding='normal'
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -186,7 +173,6 @@ export default function PacksTable() {
 
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -197,34 +183,25 @@ export default function PacksTable() {
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
 
-    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected: readonly string[] = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
+    // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    //     const selectedIndex = selected.indexOf(name);
+    //     let newSelected: readonly string[] = [];
+    //
+    //     if (selectedIndex === -1) {
+    //         newSelected = newSelected.concat(selected, name);
+    //     } else if (selectedIndex === 0) {
+    //         newSelected = newSelected.concat(selected.slice(1));
+    //     } else if (selectedIndex === selected.length - 1) {
+    //         newSelected = newSelected.concat(selected.slice(0, -1));
+    //     } else if (selectedIndex > 0) {
+    //         newSelected = newSelected.concat(
+    //             selected.slice(0, selectedIndex),
+    //             selected.slice(selectedIndex + 1),
+    //         );
+    //     }
+    //     setSelected(newSelected);
+    // };
 
     const handleChangePage = (event: unknown, newPage: number) => {
         dispatch(setCurrentPageCardPacksAC(newPage));
@@ -233,8 +210,6 @@ export default function PacksTable() {
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPageCountAC(parseInt(event.target.value, 10)))
     };
-
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const rowsPerPage = 5
@@ -250,17 +225,13 @@ export default function PacksTable() {
                         aria-labelledby="tableTitle"
                     >
                         <EnhancedTableHead
-                            numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
                         />
                         <TableBody>
                             {rows.slice().sort(getComparator(order, orderBy))
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.pack_id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     const deleteCardsPackHandler = (packId: string) => {
@@ -274,27 +245,16 @@ export default function PacksTable() {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.pack_id)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
+                                            // onClick={(event) => handleClick(event, row.pack_id)}
                                             tabIndex={-1}
                                             key={row.pack_id}
-                                            selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        "aria-labelledby": labelId,
-                                                    }}
-                                                />
-                                            </TableCell>
+
                                             <TableCell
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
-                                                padding="none"
+                                                padding='normal'
                                                 sx={{ overflowWrap: "anywhere"}}
                                             >
                                                 {row.name}
@@ -305,7 +265,7 @@ export default function PacksTable() {
                                             <TableCell
                                                 align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                             {userId === row.user_id
-                                            ? <TableCell align="center">
+                                            ? <TableCell align="center" >
                                                 <IconButton aria-label="delete"
                                                             onClick={() => deleteCardsPackHandler(row.pack_id)}>
                                                     <DeleteIcon/>
