@@ -182,13 +182,13 @@ export default function PacksTable() {
     const packs = useAppSelector(state => state.packs.cardPacks);
     const userId = useAppSelector(state => state.auth._id);
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
-    const page = useAppSelector(state => state.packs.page);
     const pageCount = useAppSelector(state => state.packs.pageCount);
 
     const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
 
     const dispatch = useAppDispatch();
 
+    const [currentPage, setCurrentPage] = useState(0);
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
     const [id, setId] = useState<string>("");
@@ -232,17 +232,13 @@ export default function PacksTable() {
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        dispatch(setCurrentPageCardPacksAC(newPage));
+        setCurrentPage(newPage);
+        dispatch(setCurrentPageCardPacksAC(newPage + 1));
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPageCountAC(parseInt(event.target.value, 10)));
     };
-
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const rowsPerPage = 5;
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     const StyledTableRow = styled(TableRow)(({theme}) => ({
         "&:nth-of-type(odd)": {
@@ -271,7 +267,6 @@ export default function PacksTable() {
                                     return (
                                         <StyledTableRow
                                             hover
-                                            // onClick={(event) => handleClick(event, row.pack_id)}
                                             tabIndex={-1}
                                             key={row.pack_id}
                                         >
@@ -312,11 +307,6 @@ export default function PacksTable() {
                                         </StyledTableRow>
                                     );
                                 })}
-                            {emptyRows > 0 && (
-                                <TableRow>
-                                    <TableCell colSpan={6}/>
-                                </TableRow>
-                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -325,7 +315,7 @@ export default function PacksTable() {
                     component="div"
                     count={cardPacksTotalCount}
                     rowsPerPage={pageCount}
-                    page={page}
+                    page={currentPage}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
