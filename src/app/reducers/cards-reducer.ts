@@ -6,7 +6,8 @@ import {setLoadingPackAC} from "./packs-reducer";
 
 const initialState: InitialStateType = {
     cards: [],
-    cardsTotalCount: 5
+    cardsTotalCount: 5,
+    page: 1
 };
 
 export const cardsReducer = (state = initialState, action: ActionType) => {
@@ -60,10 +61,10 @@ export const updateCardThunk = (cardId: string, newQuestion: string, newAnswer: 
 export const getCardsAC = (cards: CardType[], cardsTotalCount: number) =>
     ({type: "cards/GET-CARDS", cards, cardsTotalCount} as const);
 
-
 type InitialStateType = {
     cards: CardType[]
     cardsTotalCount: number
+    page: number
 }
 
 type ActionType = ReturnType<typeof getCardsAC>

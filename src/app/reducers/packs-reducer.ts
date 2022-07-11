@@ -12,7 +12,7 @@ const initialState = {
         maxCardsCount: 0,
         minCardsCount: 0,
     },
-    page: 0,
+    page: 1,
     isLoading: false,
     filter: "0updated" as string,
     isMyPacks: false,

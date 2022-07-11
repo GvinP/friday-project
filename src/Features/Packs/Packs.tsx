@@ -53,7 +53,6 @@ export const Packs = () => {
     };
     const getAllPackHandler = () => {
         dispatch(setViewPacksAC(false));
-        dispatch(setCurrentFilterAC("0updated"));
     };
 
     const addNewPackHandler = () => {
