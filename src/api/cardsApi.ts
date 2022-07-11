@@ -33,6 +33,10 @@ export const cardsApi = {
                 return res.data
             })
     },
+    createCard(newCard: NewCardDataType) {
+        return instance.post("cards/card", {card: newCard})
+            .then(response => response.data);
+    },
     addCard(cardsPack_id: string, question: string, answer: string) {
         return instance.post('cards/card', {
             card: {cardsPack_id, question, answer}
@@ -47,4 +51,15 @@ export const cardsApi = {
             card: {_id: cardId, question: newQuestion, answer: newAnswer}
         })
     },
+};
+export type NewCardDataType = {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
 };

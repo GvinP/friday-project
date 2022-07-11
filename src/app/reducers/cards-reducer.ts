@@ -1,6 +1,6 @@
 import {AppThunk} from "../store";
 import {handleAppRequestError} from "../../common/utils/error-utils";
-import {cardsApi, CardType} from "../../api/cardsApi";
+import {cardsApi, CardType, NewCardDataType} from "../../api/cardsApi";
 import {setLoadingPackAC} from "./packs-reducer";
 
 
@@ -48,6 +48,19 @@ export const addCardThunk = (cardId: string, question: string, answer: string): 
             dispatch(setLoadingPackAC(false))
         })
 }
+export const addNewCardTC = (newCard: NewCardDataType): AppThunk => (dispatch) => {
+    dispatch(setLoadingPackAC(true));
+    cardsApi.createCard(newCard)
+        .then(() => {
+            dispatch(getCardsThunk());
+        })
+        .catch(error => {
+            handleAppRequestError(error, dispatch);
+        })
+        .finally(() => {
+            dispatch(setLoadingPackAC(false));
+        });
+};
 
 export const updateCardThunk = (cardId: string, newQuestion: string, newAnswer: string): AppThunk => (dispatch) => {
     dispatch(setLoadingPackAC(true))

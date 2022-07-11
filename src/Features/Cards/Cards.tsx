@@ -1,8 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate, useParams} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
-import {addCardThunk, deleteCardThunk, getCardsThunk, updateCardThunk} from "../../app/reducers/cards-reducer";
+import {
+    addCardThunk,
+    addNewCardTC,
+    deleteCardThunk,
+    getCardsThunk,
+    updateCardThunk
+} from "../../app/reducers/cards-reducer";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -18,6 +24,8 @@ import style from "./Cards.module.css"
 import {Button, IconButton} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import {NewCardDataType} from "../../api/cardsApi";
+import {EditAddModal} from "../../Modal/EditAddModal/EditAddModal";
 
 interface Data {
     _id: string;
@@ -162,6 +170,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 
 export const Cards = () => {
+    const urlParams = useParams<'cardPackID'>();
+    const cardsPack_ID = urlParams.cardPackID;
     const user_id = useAppSelector(state => state.profile.user._id);
     const cards = useAppSelector(state => state.cards.cards);
     const status = useAppSelector(state => state.app.status);
@@ -175,6 +185,8 @@ export const Cards = () => {
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [activeModal, setActiveModal] = useState<boolean>(false);
+    const [answer, setAnswer] = useState<string>("");
+    const [question, setQuestion] = useState<string>("");
 
     useEffect(() => {
         if (cardsPack_id) {
@@ -182,13 +194,16 @@ export const Cards = () => {
         }
     }, [rowsPerPage, page]);
 
-    const addCardHandler = () => {
-        if (cardsPack_id) {
-            dispatch(addCardThunk(cardsPack_id, 'question5', 'answer5'))
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page + 1))
-        }
+    const addCardHandler = useCallback(() => {
+        const newCard: NewCardDataType = {
+            cardsPack_id: cardsPack_ID as string,
+            question: question,
+            answer: answer,
+        };
+        dispatch(addNewCardTC(newCard));
 
-    }
+    }, [dispatch, cardsPack_ID, question, answer]);
+
     const deleteCard = (cardId: string) => {
         if (cardsPack_id) {
             dispatch(deleteCardThunk(cardId))
@@ -259,6 +274,9 @@ export const Cards = () => {
         <div className={style.cardsContainer}>
             <h2 className={style.pageTitle}>Cards Page</h2>
             <Button variant="outlined" type={"submit"} disabled={status} onClick={() => setActiveModal(true)} className={style.addCardsButton}>add card</Button>
+            <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
+                          setInputQuestion={setQuestion} active={activeModal}
+                          setActive={setActiveModal} setCard={addCardHandler}/>
             <Box sx={{width: "100%"}}>
                 <Paper sx={{width: "100%", mb: 2}}>
                     <TableContainer>
