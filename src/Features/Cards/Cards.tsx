@@ -138,7 +138,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? "right" : "left"}
-                        padding={headCell.disablePadding ? "none" : "normal"}
+                        padding="normal"
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -174,6 +174,7 @@ export const Cards = () => {
     const [selected, setSelected] = useState<readonly string[]>([]);
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [activeModal, setActiveModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (cardsPack_id) {
@@ -181,7 +182,7 @@ export const Cards = () => {
         }
     }, [rowsPerPage, page]);
 
-    const addCard = () => {
+    const addCardHandler = () => {
         if (cardsPack_id) {
             dispatch(addCardThunk(cardsPack_id, 'question5', 'answer5'))
             dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page + 1))
@@ -218,25 +219,25 @@ export const Cards = () => {
         }
         setSelected([]);
     };
-
-    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected: readonly string[] = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-        setSelected(newSelected);
-    };
+    //
+    // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    //     const selectedIndex = selected.indexOf(name);
+    //     let newSelected: readonly string[] = [];
+    //
+    //     if (selectedIndex === -1) {
+    //         newSelected = newSelected.concat(selected, name);
+    //     } else if (selectedIndex === 0) {
+    //         newSelected = newSelected.concat(selected.slice(1));
+    //     } else if (selectedIndex === selected.length - 1) {
+    //         newSelected = newSelected.concat(selected.slice(0, -1));
+    //     } else if (selectedIndex > 0) {
+    //         newSelected = newSelected.concat(
+    //             selected.slice(0, selectedIndex),
+    //             selected.slice(selectedIndex + 1),
+    //         );
+    //     }
+    //     setSelected(newSelected);
+    // };
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -257,7 +258,7 @@ export const Cards = () => {
     return (
         <div className={style.cardsContainer}>
             <h2 className={style.pageTitle}>Cards Page</h2>
-            <Button variant="outlined" type={"submit"} disabled={status} onClick={addCard} className={style.addCardsButton}>add card</Button>
+            <Button variant="outlined" type={"submit"} disabled={status} onClick={() => setActiveModal(true)} className={style.addCardsButton}>add card</Button>
             <Box sx={{width: "100%"}}>
                 <Paper sx={{width: "100%", mb: 2}}>
                     <TableContainer>
@@ -281,8 +282,8 @@ export const Cards = () => {
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={(event) => handleClick(event, row.question)}
-                                                role="checkbox"
+                                                // onClick={(event) => handleClick(event, row.question)}
+                                                // role="checkbox"
                                                 tabIndex={-1}
                                                 key={row._id}
                                             >
@@ -290,7 +291,7 @@ export const Cards = () => {
                                                     component="th"
                                                     id={labelId}
                                                     scope="row"
-                                                    padding="none"
+                                                    padding="normal"
                                                 >
                                                     {row.question}
                                                 </TableCell>
