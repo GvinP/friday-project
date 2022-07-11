@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import s from "./AddPackModal.module.css";
+import s from "./ChangeNamePackModal.module.css";
 import {Button} from "@mui/material";
 import {InputText} from "../../common/InputText/InputText";
 
@@ -12,10 +12,9 @@ type EditModalType = {
     setActive: (state: boolean) => void
     inputFocus: () => void
     savePack: () => void
-    makePrivate: (isPrivate: boolean) => void
 }
 
-export const AddPackModal: React.FC<EditModalType> = (
+export const ChangeNamePackModal: React.FC<EditModalType> = (
     {
         active,
         setActive,
@@ -24,7 +23,6 @@ export const AddPackModal: React.FC<EditModalType> = (
         inputFocus,
         name,
         savePack,
-        makePrivate,
     }
 ) => {
 
@@ -34,15 +32,12 @@ export const AddPackModal: React.FC<EditModalType> = (
     const saveHandler = () => {
         savePack();
     };
-    const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        makePrivate(e.currentTarget.checked);
-    };
 
     return (
         <div className={active ? `${s.mainBlock} ${s.active}` : s.mainBlock} onClick={() => setActive(false)}>
             <div className={active ? `${s.modalContent} ${s.active}` : s.modalContent}
                  onClick={e => e.stopPropagation()}>
-                <h1>Add new pack</h1>
+                <h1>Edit pack</h1>
                 <div className={s.inputBlock}>
                     <InputText
                         value={inputValue}
@@ -51,13 +46,9 @@ export const AddPackModal: React.FC<EditModalType> = (
                         placeholder={name}
                     />
                 </div>
-                <div className={s.private}>
-                    <span>Make it private?</span>
-                    <input onChange={inputHandler} type="checkbox"/>
-                </div>
                 <div>
                     <Button variant={"outlined"} onClick={cancelHandler}>Cancel</Button>
-                    <Button variant={"outlined"} onClick={saveHandler}>Add</Button>
+                    <Button variant={"outlined"} onClick={saveHandler}>Save</Button>
                 </div>
             </div>
 

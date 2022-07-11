@@ -121,8 +121,7 @@ export const deleteCardsPackThunk = (packId: string): AppThunk => (dispatch => {
         .finally(() => dispatch(setLoadingPackAC(false)));
 });
 
-export const changeCardsPackNameThunk = (packId: string): AppThunk => (dispatch => {
-    const newName = "Name changed";
+export const changeCardsPackNameThunk = (packId: string, newName: string): AppThunk => (dispatch => {
 
     dispatch(setLoadingPackAC(true));
     packsApi.changeCardsPackName(packId, newName)

@@ -21,9 +21,11 @@ import {
     setCurrentPageCardPacksAC, setPageCountAC, setSearchResultAC
 } from "../../../app/reducers/packs-reducer";
 import {IconButton} from "@mui/material";
-import { styled } from '@mui/material/styles';
+import {styled} from "@mui/material/styles";
 import {DeleteModal} from "../../../Modal/DeleteModal/DeleteModal";
 import {useState} from "react";
+import {AddPackModal} from "../../../Modal/AddPackModal/AddPackModal";
+import {ChangeNamePackModal} from "../../../Modal/ChangeNamePackModal/ChangeNamePackModal";
 
 interface Data {
     name: string;
@@ -72,8 +74,8 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key,
 ): (
-    a: { [key in Key]: number | string |Date},
-    b: { [key in Key]: number | string |Date},
+    a: { [key in Key]: number | string | Date },
+    b: { [key in Key]: number | string | Date },
 ) => number {
     return order === "desc"
         ? (a, b) => descendingComparator(a, b, orderBy)
@@ -134,7 +136,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             onRequestSort(event, property);
         };
 
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    const StyledTableCell = styled(TableCell)(({theme}) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: theme.palette.common.black,
             color: theme.palette.common.white,
@@ -146,14 +148,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
     return (
 
-        <TableHead >
+        <TableHead>
             <TableRow>
 
                 {headCells.map((headCell) => (
                     <StyledTableCell
                         key={headCell.id}
                         align={headCell.numeric ? "center" : "left"}
-                        padding='normal'
+                        padding="normal"
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -178,29 +180,47 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 export default function PacksTable() {
     const status = useAppSelector(state => state.app.status);
     const packs = useAppSelector(state => state.packs.cardPacks);
-    const userId = useAppSelector(state => state.auth._id)
-    const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+    const userId = useAppSelector(state => state.auth._id);
+    const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
     const dispatch = useAppDispatch();
     const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
-    const page = useAppSelector(state => state.packs.page)
-    const pageCount = useAppSelector(state => state.packs.pageCount)
+    const page = useAppSelector(state => state.packs.page);
+    const pageCount = useAppSelector(state => state.packs.pageCount);
 
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
-    const [id, setId] = useState<string>('');
+    const [id, setId] = useState<string>("");
     const [activeDeleteModal, setActiveDeleteModal] = useState(false);
-    const [name, setName] = useState<string>('');
+    const [name, setName] = useState<string>("");
+
+    const [activeChangeNamePackModal, setActiveChangeNamePackModal] = useState(false);
 
     const deletePack = () => {
-        dispatch(deleteCardsPackThunk(id))
+        dispatch(deleteCardsPackThunk(id));
         setActiveDeleteModal(false);
-    }
+    };
     const deletePackCardsHandler = (id: string, name: string) => {
-        dispatch(setSearchResultAC(''));
+        dispatch(setSearchResultAC(""));
         setActiveDeleteModal(true);
         setId(id);
         setName(name);
-    }
+    };
+
+    const changeCardsPackNameHandler = (packId: string, name: string) => {
+        setActiveChangeNamePackModal(true);
+        setId(packId);
+        setName(name);
+    };
+
+    const changeCardsPackName = () => {
+        dispatch(changeCardsPackNameThunk(id, name));
+        setActiveChangeNamePackModal(false);
+    };
+
+    const onFocusHandler = () => {
+        name ? setName(name) : setName("Name");
+    };
+
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         property: keyof Data,
@@ -235,20 +255,20 @@ export default function PacksTable() {
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPageCountAC(parseInt(event.target.value, 10)))
+        dispatch(setPageCountAC(parseInt(event.target.value, 10)));
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const rowsPerPage = 5
+    const rowsPerPage = 5;
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        '&:nth-of-type(odd)': {
+    const StyledTableRow = styled(TableRow)(({theme}) => ({
+        "&:nth-of-type(odd)": {
             backgroundColor: theme.palette.action.hover,
         },
         // hide last border
-        '&:last-child td, &:last-child th': {
+        "&:last-child td, &:last-child th": {
             border: 0,
         },
     }));
@@ -270,14 +290,6 @@ export default function PacksTable() {
                                 .map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    // const deleteCardsPackHandler = (packId: string) => {
-                                    //     dispatch(deleteCardsPackThunk(packId));
-                                    // };
-
-                                    const changeCardsPackNameHandler = (packId: string) => {
-                                        dispatch(changeCardsPackNameThunk(packId));
-                                    };
-
                                     return (
                                         <StyledTableRow
                                             hover
@@ -290,8 +302,8 @@ export default function PacksTable() {
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
-                                                padding='normal'
-                                                sx={{ overflowWrap: "anywhere"}}
+                                                padding="normal"
+                                                sx={{overflowWrap: "anywhere"}}
                                             >
                                                 {row.name}
                                             </TableCell>
@@ -301,21 +313,22 @@ export default function PacksTable() {
                                             <TableCell
                                                 align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                             {userId === row.user_id
-                                            ? <TableCell align="center" >
-                                                <IconButton aria-label="delete" disabled={status}
-                                                            onClick={() => deletePackCardsHandler(row.pack_id, row.name)}>
-                                                    <DeleteIcon/>
-                                                </IconButton>
-                                                <IconButton onClick={() => changeCardsPackNameHandler(row.pack_id)}>
-                                                    <EditIcon/>
-                                                </IconButton>
-                                                <NavLink to={`/cards/${row.pack_id}`}>
-                                                    <IconButton>
-                                                        <CreditCardIcon/>
+                                                ? <TableCell align="center">
+                                                    <IconButton aria-label="delete" disabled={status}
+                                                                onClick={() => deletePackCardsHandler(row.pack_id, row.name)}>
+                                                        <DeleteIcon/>
                                                     </IconButton>
-                                                </NavLink>
-                                            </TableCell>
-                                            : <TableCell align="center">
+                                                    <IconButton
+                                                        onClick={() => changeCardsPackNameHandler(row.pack_id, row.name)}>
+                                                        <EditIcon/>
+                                                    </IconButton>
+                                                    <NavLink to={`/cards/${row.pack_id}`}>
+                                                        <IconButton>
+                                                            <CreditCardIcon/>
+                                                        </IconButton>
+                                                    </NavLink>
+                                                </TableCell>
+                                                : <TableCell align="center">
                                                     <NavLink to={`/cards/${row.pack_id}`}>
                                                         <IconButton>
                                                             <CreditCardIcon/>
@@ -334,7 +347,7 @@ export default function PacksTable() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25,50]}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
                     component="div"
                     count={cardPacksTotalCount}
                     rowsPerPage={pageCount}
@@ -348,8 +361,15 @@ export default function PacksTable() {
                          name={name}
                          deletePack={deletePack}
             />
+            <ChangeNamePackModal active={activeChangeNamePackModal}
+                                 setActive={setActiveChangeNamePackModal}
+                                 name={name}
+                                 inputValue={name}
+                                 setInputValue={setName}
+                                 inputFocus={onFocusHandler}
+                                 savePack={changeCardsPackName}
+            />
         </Box>
-
     );
 }
 
