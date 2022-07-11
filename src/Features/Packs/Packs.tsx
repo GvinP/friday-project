@@ -15,7 +15,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Search2} from "./Search/Search2";
 import {Button} from "@mui/material";
-
+import {AddPackModal} from "../../Modal/AddPackModal";
 
 
 export const Packs = () => {
@@ -59,12 +59,15 @@ export const Packs = () => {
         dispatch(addNewCardsPackThunk());
         setActiveAddPackModal(true)
     };
+    const onFocusHandler = () => {
+        name ? setName(name) : setName("Name")
+    }
 
     useEffect(() => {
         if (isInitialized) {
             dispatch(getCardsPackThunk());
         }
-    }, [dispatch,isInitialized, minCards, maxCards, page, pageCount]);
+    }, [dispatch, isInitialized, minCards, maxCards, page, pageCount]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
@@ -106,7 +109,17 @@ export const Packs = () => {
                 </div>
                 <PacksTable/>
             </section>
+            <AddPackModal active={activeAddPackModal}
+                          setActive={setActiveAddPackModal}
+                          name={name}
+                          inputValue={name}
+                          setInputValue={setName}
+                          inputFocus={onFocusHandler}
+                          addPack={addPack}
+                          makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
+            />
         </div>
+
     );
 };
 
