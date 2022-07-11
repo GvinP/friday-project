@@ -15,7 +15,9 @@ import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import {visuallyHidden} from "@mui/utils";
 import style from "./Cards.module.css"
-import {Button} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface Data {
     _id: string;
@@ -297,8 +299,14 @@ export const Cards = () => {
                                                     align="right">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                                 <TableCell align="right">{row.grade}</TableCell>
                                                 <TableCell align="right">
-                                                    <button onClick={() => deleteCard(row._id)}>delete</button>
-                                                    <button onClick={() => editCard(row._id)}>edit</button>
+                                                    <IconButton aria-label="delete" disabled={status}
+                                                                onClick={() =>  deleteCard(row._id)}>
+                                                        <DeleteIcon/>
+                                                    </IconButton>
+                                                    <IconButton
+                                                        onClick={() =>  editCard(row._id)}>
+                                                        <EditIcon/>
+                                                    </IconButton>
                                                 </TableCell>
                                             </TableRow>
                                         );
