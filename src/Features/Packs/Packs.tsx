@@ -115,7 +115,7 @@ export const Packs = () => {
                           inputValue={name}
                           setInputValue={setName}
                           inputFocus={onFocusHandler}
-                          savePack={addPack}
+                          addPack={addPack}
                           makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
             />
 

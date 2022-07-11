@@ -11,7 +11,7 @@ type EditModalType = {
     active: boolean
     setActive: (state: boolean) => void
     inputFocus: () => void
-    savePack: () => void
+    addPack: () => void
     makePrivate: (isPrivate: boolean) => void
 }
 
@@ -23,8 +23,9 @@ export const AddPackModal: React.FC<EditModalType> = (
         setInputValue,
         inputFocus,
         name,
-        savePack,
+        addPack,
         makePrivate,
+
     }
 ) => {
 
@@ -32,7 +33,7 @@ export const AddPackModal: React.FC<EditModalType> = (
         setActive(false);
     };
     const saveHandler = () => {
-        savePack();
+        addPack();
     };
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         makePrivate(e.currentTarget.checked);
