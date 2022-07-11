@@ -29,6 +29,14 @@
     color: #61dafb;
 }
 
+a {
+    text-decoration: none;
+    color: #58a1d1;
+}
+a:hover {
+    text-decoration: none;
+}
+
 h1 {
     color: #0c3958;
     font-size: 26px;

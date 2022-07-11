@@ -7,7 +7,7 @@ const initialState = {
     pageCount: 5,
     cardPacksTotalCount: 5,
     min: 0,
-    max: 0,
+    max: 110,
     cardsCount: {
         maxCardsCount: 0,
         minCardsCount: 0,
@@ -42,12 +42,12 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
         case "packs/FILTER-CARDS-COUNT":
             return {...state, min: action.cardsCount.min, max: action.cardsCount.max};
         case "packsList/SET-PAGE-COUNT":
-            return {...state, pageCount: action.payload.pageCount}
+            return {...state, pageCount: action.payload.pageCount};
         default:
             return state;
     }
 };
-export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk=> (dispatch => {
+export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk => (dispatch => {
     dispatch(setLoadingPackAC(true));
     packsApi.addNewPack(name, makePrivate)
         .then(() => {
@@ -81,21 +81,6 @@ export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
         .finally(() => {
             dispatch(setLoadingPackAC(false));
         });
-};
-
-export const getMyCardsPackThunk = (): AppThunk => (dispatch, getState) => {
-    const {_id} = getState().profile.user;
-    const {pageCount} = getState().packs;
-    dispatch(setLoadingPackAC(true));
-    dispatch(setSearchResultAC(""));
-    dispatch(setCurrentFilterAC("0updated"));
-    packsApi.getCardsPack({user_id: _id, pageCount})
-        .then(res => {
-            dispatch(getCardsPackAC(res.cardPacks));
-            dispatch(setCardPacksTotalCountAC(res.cardPacksTotalCount));
-        })
-        .catch(error => handleAppRequestError(error, dispatch))
-        .finally(() => dispatch(setLoadingPackAC(false)));
 };
 
 export const addNewCardsPackThunk = (): AppThunk => (dispatch => {

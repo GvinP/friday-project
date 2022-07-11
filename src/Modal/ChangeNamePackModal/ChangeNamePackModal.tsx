@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, { KeyboardEvent } from "react";
 import s from "./ChangeNamePackModal.module.css";
 import {Button} from "@mui/material";
 import {InputText} from "../../common/InputText/InputText";
@@ -33,6 +33,16 @@ export const ChangeNamePackModal: React.FC<EditModalType> = (
         savePack();
     };
 
+
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter'){
+            saveHandler()
+        }
+        if(e.key === 'Escape'){
+            cancelHandler()
+        }
+    }
+
     return (
         <div className={active ? `${s.mainBlock} ${s.active}` : s.mainBlock} onClick={() => setActive(false)}>
             <div className={active ? `${s.modalContent} ${s.active}` : s.modalContent}
@@ -42,6 +52,7 @@ export const ChangeNamePackModal: React.FC<EditModalType> = (
                     <InputText
                         value={inputValue}
                         onChangeText={setInputValue}
+                        onKeyDown={onKeyPressHandler}
                         onFocus={inputFocus}
                         placeholder={name}
                     />
@@ -51,7 +62,6 @@ export const ChangeNamePackModal: React.FC<EditModalType> = (
                     <Button variant={"outlined"} onClick={saveHandler}>Save</Button>
                 </div>
             </div>
-
         </div>
     );
 };

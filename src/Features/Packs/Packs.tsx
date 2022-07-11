@@ -5,7 +5,7 @@ import SuperButton from "../../common/SuperButton/SuperButton";
 import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
     addNewCardsPackThunk, addNewPackThunk,
-    filterCardsCountAC, getCardsPackThunk, getMyCardsPackThunk,
+    filterCardsCountAC, getCardsPackThunk,
     setCurrentFilterAC, setSearchResultAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
@@ -19,6 +19,7 @@ import {AddPackModal} from "../../Modal/AddPackModal/AddPackModal";
 
 
 export const Packs = () => {
+
     const dispatch = useAppDispatch();
 
     const status = useAppSelector(state => state.app.status);
@@ -29,11 +30,11 @@ export const Packs = () => {
     const minCardsCount = useAppSelector(state => state.packs.cardsCount.minCardsCount);
     const isInitialized = useAppSelector((state) => state.app.isInitialized);
     const page = useAppSelector(state => state.packs.page);
-    const pageCount = useAppSelector(state => state.packs.pageCount)
+    const pageCount = useAppSelector(state => state.packs.pageCount);
 
-    const [activeAddPackModal, setActiveAddPackModal] = useState(false)
+    const [activeAddPackModal, setActiveAddPackModal] = useState(false);
 
-    const [name, setName] = useState<string>('');
+    const [name, setName] = useState<string>("");
     const [makePrivate, setMakePrivate] = useState(false);
 
 
@@ -43,34 +44,32 @@ export const Packs = () => {
     };
     const addPack = () => {
         dispatch(addNewPackThunk(name, makePrivate));
-        dispatch(setSearchResultAC(''));
+        dispatch(setSearchResultAC(""));
         setActiveAddPackModal(false);
-    }
+    };
     const getMyPackHandler = () => {
         dispatch(setViewPacksAC(true));
-        dispatch(getMyCardsPackThunk());
 
     };
     const getAllPackHandler = () => {
         dispatch(setViewPacksAC(false));
         dispatch(setCurrentFilterAC("0updated"));
-        dispatch(getCardsPackThunk());
     };
 
     const addNewPackHandler = () => {
         dispatch(addNewCardsPackThunk());
-        setActiveAddPackModal(true)
+        setActiveAddPackModal(true);
     };
     const onFocusHandler = () => {
-        name ? setName(name) : setName("Name")
-    }
+        name ? setName(name) : setName("Name");
+    };
 
 
     useEffect(() => {
         if (isInitialized) {
             dispatch(getCardsPackThunk());
         }
-    }, [dispatch, isInitialized, minCards, maxCards, page, pageCount]);
+    }, [dispatch, isInitialized, minCards, maxCards, page, pageCount, isMyPacks]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
@@ -80,7 +79,6 @@ export const Packs = () => {
         <div className={s.main}>
             <section className={s.setting}>
                 <h2>Show packs cards</h2>
-
                 <div className={s.userChooseButton}>
                     <SuperButton className={isMyPacks ? s.active : s.inactive} onClick={getMyPackHandler}>
                         MY
@@ -106,9 +104,8 @@ export const Packs = () => {
                 <div className={s.search}>
                     <Search2/>
                     <div className={s.btn}>
-                        <Button variant={'outlined'} onClick={addNewPackHandler}>Add new pack</Button>
+                        <Button variant={"outlined"} onClick={addNewPackHandler}>Add new pack</Button>
                     </div>
-
                 </div>
                 <PacksTable/>
             </section>

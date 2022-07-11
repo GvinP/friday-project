@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from "./AddPackModal.module.css";
 import {Button} from "@mui/material";
 import {InputText} from "../../common/InputText/InputText";
@@ -38,6 +38,15 @@ export const AddPackModal: React.FC<EditModalType> = (
         makePrivate(e.currentTarget.checked);
     };
 
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            saveHandler();
+        }
+        if (e.key === "Escape") {
+            cancelHandler();
+        }
+    };
+
     return (
         <div className={active ? `${s.mainBlock} ${s.active}` : s.mainBlock} onClick={() => setActive(false)}>
             <div className={active ? `${s.modalContent} ${s.active}` : s.modalContent}
@@ -47,6 +56,7 @@ export const AddPackModal: React.FC<EditModalType> = (
                     <InputText
                         value={inputValue}
                         onChangeText={setInputValue}
+                        onKeyDown={onKeyPressHandler}
                         onFocus={inputFocus}
                         placeholder={name}
                     />
@@ -60,7 +70,6 @@ export const AddPackModal: React.FC<EditModalType> = (
                     <Button variant={"outlined"} onClick={saveHandler}>Add</Button>
                 </div>
             </div>
-
         </div>
     );
 };

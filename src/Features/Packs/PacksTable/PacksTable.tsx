@@ -6,6 +6,7 @@ import TableCell, {tableCellClasses} from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
+import SchoolIcon from "@mui/icons-material/School";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
@@ -147,10 +148,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     }));
 
     return (
-
         <TableHead>
             <TableRow>
-
                 {headCells.map((headCell) => (
                     <StyledTableCell
                         key={headCell.id}
@@ -178,22 +177,24 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function PacksTable() {
+
     const status = useAppSelector(state => state.app.status);
     const packs = useAppSelector(state => state.packs.cardPacks);
     const userId = useAppSelector(state => state.auth._id);
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
-    const dispatch = useAppDispatch();
-    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
     const page = useAppSelector(state => state.packs.page);
     const pageCount = useAppSelector(state => state.packs.pageCount);
+
+    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
+
+    const dispatch = useAppDispatch();
 
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
     const [id, setId] = useState<string>("");
     const [activeDeleteModal, setActiveDeleteModal] = useState(false);
-    const [name, setName] = useState<string>("");
-
     const [activeChangeNamePackModal, setActiveChangeNamePackModal] = useState(false);
+    const [name, setName] = useState<string>("");
 
     const deletePack = () => {
         dispatch(deleteCardsPackThunk(id));
@@ -230,26 +231,6 @@ export default function PacksTable() {
         setOrderBy(property);
     };
 
-
-    // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    //     const selectedIndex = selected.indexOf(name);
-    //     let newSelected: readonly string[] = [];
-    //
-    //     if (selectedIndex === -1) {
-    //         newSelected = newSelected.concat(selected, name);
-    //     } else if (selectedIndex === 0) {
-    //         newSelected = newSelected.concat(selected.slice(1));
-    //     } else if (selectedIndex === selected.length - 1) {
-    //         newSelected = newSelected.concat(selected.slice(0, -1));
-    //     } else if (selectedIndex > 0) {
-    //         newSelected = newSelected.concat(
-    //             selected.slice(0, selectedIndex),
-    //             selected.slice(selectedIndex + 1),
-    //         );
-    //     }
-    //     setSelected(newSelected);
-    // };
-
     const handleChangePage = (event: unknown, newPage: number) => {
         dispatch(setCurrentPageCardPacksAC(newPage));
     };
@@ -276,10 +257,7 @@ export default function PacksTable() {
         <Box sx={{width: "100%"}}>
             <Paper sx={{width: "100%", mb: 2}}>
                 <TableContainer>
-                    <Table
-                        sx={{minWidth: 600}}
-                        aria-labelledby="tableTitle"
-                    >
+                    <Table sx={{minWidth: 600}} aria-labelledby="tableTitle">
                         <EnhancedTableHead
                             order={order}
                             orderBy={orderBy}
@@ -305,7 +283,7 @@ export default function PacksTable() {
                                                 padding="normal"
                                                 sx={{overflowWrap: "anywhere"}}
                                             >
-                                                {row.name}
+                                                <NavLink to={`/cards/${row.pack_id}`}>{row.name}</NavLink>
                                             </TableCell>
                                             <TableCell align="center">{row.cards}</TableCell>
                                             <TableCell
@@ -322,18 +300,14 @@ export default function PacksTable() {
                                                         onClick={() => changeCardsPackNameHandler(row.pack_id, row.name)}>
                                                         <EditIcon/>
                                                     </IconButton>
-                                                    <NavLink to={`/cards/${row.pack_id}`}>
-                                                        <IconButton>
-                                                            <CreditCardIcon/>
-                                                        </IconButton>
-                                                    </NavLink>
+                                                    <IconButton>
+                                                        <SchoolIcon/>
+                                                    </IconButton>
                                                 </TableCell>
                                                 : <TableCell align="center">
-                                                    <NavLink to={`/cards/${row.pack_id}`}>
-                                                        <IconButton>
-                                                            <CreditCardIcon/>
-                                                        </IconButton>
-                                                    </NavLink>
+                                                    <IconButton>
+                                                        <SchoolIcon/>
+                                                    </IconButton>
                                                 </TableCell>}
                                         </StyledTableRow>
                                     );
