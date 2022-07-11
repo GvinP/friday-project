@@ -15,7 +15,7 @@ import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Search2} from "./Search/Search2";
 import {Button} from "@mui/material";
-import {AddPackModal} from "../../Modal/AddPackModal";
+import {AddPackModal} from "../../Modal/AddPackModal/AddPackModal";
 
 
 export const Packs = () => {
@@ -32,8 +32,10 @@ export const Packs = () => {
     const pageCount = useAppSelector(state => state.packs.pageCount)
 
     const [activeAddPackModal, setActiveAddPackModal] = useState(false)
+
     const [name, setName] = useState<string>('');
     const [makePrivate, setMakePrivate] = useState(false);
+
 
     const filterCardsCount = (value: [number, number]) => {
         const [min, max] = value;
@@ -62,6 +64,7 @@ export const Packs = () => {
     const onFocusHandler = () => {
         name ? setName(name) : setName("Name")
     }
+
 
     useEffect(() => {
         if (isInitialized) {
@@ -118,6 +121,7 @@ export const Packs = () => {
                           addPack={addPack}
                           makePrivate={(isPrivate) => setMakePrivate(isPrivate)}
             />
+
         </div>
 
     );

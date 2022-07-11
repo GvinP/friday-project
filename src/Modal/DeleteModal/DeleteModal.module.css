@@ -24,7 +24,7 @@
 .modalContent {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 20px;
     border-radius: 12px;
     background-color: white;
@@ -36,9 +36,4 @@
 
 .modalContent.active {
     transform: scale(1);
-}
-
-.description {
-    color: #9A91C8;
-    /*padding-top: 200px;*/
 }

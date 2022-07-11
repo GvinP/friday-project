@@ -31,11 +31,11 @@ export const DeleteModal: React.FC<EditModalType> = (
             <div className={active ? `${s.modalContent} ${s.active}` : s.modalContent}
                  onClick={e => e.stopPropagation()}>
                 <h1>Delete Pack</h1>
-                <span
-                    className={s.description}>{`Do you really want to remove ${name}? All cards will be excluded from this course.`}</span>
+                <span>{`Do you really want to remove ${name}?`}</span>
+                <span> All cards will be excluded from this course.</span>
                 <div >
-                    <Button onClick={cancelHandler}>Cancel</Button>
-                    <Button onClick={deleteHandler} color={'error'}>Delete</Button>
+                    <Button variant={'outlined'} onClick={cancelHandler} >Cancel</Button>
+                    <Button variant={'outlined'} onClick={deleteHandler} color={'error'}>Delete</Button>
                 </div>
             </div>
         </div>

@@ -18,10 +18,12 @@ import {NavLink} from "react-router-dom";
 import {
     changeCardsPackNameThunk,
     deleteCardsPackThunk,
-    setCurrentPageCardPacksAC, setPageCountAC
+    setCurrentPageCardPacksAC, setPageCountAC, setSearchResultAC
 } from "../../../app/reducers/packs-reducer";
 import {IconButton} from "@mui/material";
 import { styled } from '@mui/material/styles';
+import {DeleteModal} from "../../../Modal/DeleteModal/DeleteModal";
+import {useState} from "react";
 
 interface Data {
     name: string;
@@ -174,6 +176,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 export default function PacksTable() {
+    const status = useAppSelector(state => state.app.status);
     const packs = useAppSelector(state => state.packs.cardPacks);
     const userId = useAppSelector(state => state.auth._id)
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
@@ -184,7 +187,20 @@ export default function PacksTable() {
 
     const [order, setOrder] = React.useState<Order>("asc");
     const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
+    const [id, setId] = useState<string>('');
+    const [activeDeleteModal, setActiveDeleteModal] = useState(false);
+    const [name, setName] = useState<string>('');
 
+    const deletePack = () => {
+        dispatch(deleteCardsPackThunk(id))
+        setActiveDeleteModal(false);
+    }
+    const deletePackCardsHandler = (id: string, name: string) => {
+        dispatch(setSearchResultAC(''));
+        setActiveDeleteModal(true);
+        setId(id);
+        setName(name);
+    }
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         property: keyof Data,
@@ -254,9 +270,9 @@ export default function PacksTable() {
                                 .map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    const deleteCardsPackHandler = (packId: string) => {
-                                        dispatch(deleteCardsPackThunk(packId));
-                                    };
+                                    // const deleteCardsPackHandler = (packId: string) => {
+                                    //     dispatch(deleteCardsPackThunk(packId));
+                                    // };
 
                                     const changeCardsPackNameHandler = (packId: string) => {
                                         dispatch(changeCardsPackNameThunk(packId));
@@ -286,8 +302,8 @@ export default function PacksTable() {
                                                 align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                             {userId === row.user_id
                                             ? <TableCell align="center" >
-                                                <IconButton aria-label="delete"
-                                                            onClick={() => deleteCardsPackHandler(row.pack_id)}>
+                                                <IconButton aria-label="delete" disabled={status}
+                                                            onClick={() => deletePackCardsHandler(row.pack_id, row.name)}>
                                                     <DeleteIcon/>
                                                 </IconButton>
                                                 <IconButton onClick={() => changeCardsPackNameHandler(row.pack_id)}>
@@ -327,7 +343,13 @@ export default function PacksTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            <DeleteModal active={activeDeleteModal}
+                         setActive={setActiveDeleteModal}
+                         name={name}
+                         deletePack={deletePack}
+            />
         </Box>
+
     );
 }
 

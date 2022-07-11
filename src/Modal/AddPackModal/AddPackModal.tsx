@@ -2,7 +2,7 @@
 import React, {ChangeEvent} from 'react';
 import s from './AddPackModal.module.css';
 import {Button} from "@mui/material";
-import {InputText} from "../common/InputText/InputText";
+import {InputText} from "../../common/InputText/InputText";
 
 
 type EditModalType = {
