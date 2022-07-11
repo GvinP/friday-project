@@ -1,3 +1,4 @@
+
 import React, {ChangeEvent} from 'react';
 import s from './AddPackModal.module.css';
 import {Button} from "@mui/material";
@@ -46,10 +47,10 @@ export const AddPackModal: React.FC<EditModalType> = (
                 <h1>Add new pack</h1>
                 <div className={s.inputBlock}>
                     <InputText
-                        value={inputValue}
-                        onChangeText={setInputValue}
-                        onFocus={inputFocus}
-                        placeholder={name}
+                               value={inputValue}
+                               onChangeText={setInputValue}
+                               onFocus={inputFocus}
+                               placeholder={name}
                     />
                 </div>
                 <div className={s.private}>
@@ -57,7 +58,7 @@ export const AddPackModal: React.FC<EditModalType> = (
                     <input onChange={inputHandler} type='checkbox'/>
                 </div>
                 <div>
-                    <Button variant={'outlined'} onClick={cancelHandler}>Cancel</Button>
+                    <Button variant={'outlined'}  onClick={cancelHandler}>Cancel</Button>
                     <Button variant={'outlined'} onClick={saveHandler}>Add</Button>
                 </div>
             </div>
