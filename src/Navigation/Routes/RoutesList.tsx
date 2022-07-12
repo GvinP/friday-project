@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes, Navigate} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../../Features/auth/Login/Login";
 import {Registration} from "../../Features/auth/Registration/Registration";
 import {Profile} from "../../Features/Profile/Profile";
@@ -8,9 +8,9 @@ import {NewPassword} from "../../Features/auth/NewPassword/NewPassword";
 import {About} from "../../Features/about/About";
 
 import {Packs} from "../../Features/Packs/Packs";
-import {Cards} from "../../Features/Cards/Cards";
 import {CheckEmail} from "../../Features/auth/CheckEmail/CheckEmail";
 import {Error404} from "./Error/Error404";
+import {Cards} from "../../Features/Cards/Cards";
 
 
 export const PATH = {

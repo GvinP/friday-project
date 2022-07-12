@@ -1,7 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {useParams} from "react-router-dom";
-import {addNewCardTC, deleteCardThunk, getCardsThunk, updateCardThunk} from "../../app/reducers/cards-reducer";
+import {Navigate, useParams} from "react-router-dom";
+import {
+    addNewCardTC,
+    deleteCardThunk,
+    getCardsThunk, setCurrentPageAC, setOrderAC, setOrderByAC,
+    setPackIdAC, setPageCountAC,
+    updateCardThunk
+} from "../../app/reducers/cards-reducer";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -14,12 +20,15 @@ import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import {visuallyHidden} from "@mui/utils";
 import style from "./Cards.module.css";
-import {Button} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {EditAddModal} from "../../Modal/EditAddModal/EditAddModal";
 import {NewCardDataType} from "../../api/cardsApi";
+import {PATH} from "../../Navigation/Routes/RoutesList";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 type Order = "asc" | "desc";
-const headCells = ['questions', 'answers', 'last updated', 'grade', 'actions']
+const headCells = ['question', 'answer', 'updated', 'grade', 'actions']
 
 interface EnhancedTableProps {
     onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
@@ -58,7 +67,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 
-export const CardsTable = () => {
+export const Cards = () => {
     const user_id = useAppSelector(state => state.profile.user._id);
     const cards = useAppSelector(state => state.cards.cards);
     const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount);
@@ -66,18 +75,22 @@ export const CardsTable = () => {
     const status = useAppSelector(state => state.app.status);
     const dispatch = useAppDispatch();
     const [order, setOrder] = useState<Order>("asc");
-    const [orderBy, setOrderBy] = useState<string>("questions");
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    // const [orderBy, setOrderBy] = useState<string>("questions");
+    // const order = useAppSelector(state => state.cards.order);
+    const orderBy = useAppSelector(state => state.cards.orderBy);
+    const [currentPage, setCurrentPage] = useState(0);
+    const page = useAppSelector(state => state.cards.page);
+    const rowsPerPage = useAppSelector(state => state.cards.pageCount);
     const [answer, setAnswer] = useState<string>("");
     const [question, setQuestion] = useState<string>("");
     const [activeModal, setActiveModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (cardsPack_id) {
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page + 1));
+            dispatch(setPackIdAC(cardsPack_id))
         }
-    }, [rowsPerPage, page]);
+        dispatch(getCardsThunk());
+    }, [page, rowsPerPage, currentPage, order, orderBy]);
 
     const addCardHandler = useCallback(() => {
         const newCard: NewCardDataType = {
@@ -92,32 +105,31 @@ export const CardsTable = () => {
     const deleteCard = (cardId: string) => {
         if (cardsPack_id) {
             dispatch(deleteCardThunk(cardId))
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page + 1))
         }
     }
     const editCard = (cardId: string) => {
         if (cardsPack_id) {
             dispatch(updateCardThunk(cardId, 'newQuestion', 'newAnswer'))
-            dispatch(getCardsThunk(cardsPack_id, rowsPerPage, page + 1))
         }
     }
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
         const isAsc = orderBy === property && order === "asc";
-        alert(property + '  ' + isAsc)
         setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(property);
+        dispatch(setOrderAC(isAsc ? 0 : 1))
+        dispatch(setOrderByAC(property))
     };
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setCurrentPage(newPage)
+        dispatch(setCurrentPageAC(newPage+1))
     };
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+        dispatch(setPageCountAC(parseInt(event.target.value, 10)))
+        dispatch(setCurrentPageAC(0))
     };
-    // if (!user_id) {
-    //     return <Navigate to={PATH.login}/>;
-    // }
+    if (!user_id) {
+        return <Navigate to={PATH.login}/>;
+    }
     return (
         <div className={style.cardsContainer}>
             <h2 className={style.pageTitle}>Cards Page</h2>
@@ -146,14 +158,14 @@ export const CardsTable = () => {
                                                 align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
                                             <TableCell align="center">{row.grade}</TableCell>
                                             <TableCell align="center">
-                                                {/*<button onClick={() => deleteCard(row._id)}>delete</button>*/}
-                                                <button onClick={() => {
-                                                }}>delete
-                                                </button>
-                                                {/*<button onClick={() => editCard(row._id)}>edit</button>*/}
-                                                <button onClick={() => {
-                                                }}>edit
-                                                </button>
+                                                <IconButton aria-label="delete" disabled={status}
+                                                            onClick={() => deleteCard(row._id)}>
+                                                    <DeleteIcon/>
+                                                </IconButton>
+                                                <IconButton
+                                                    onClick={() => editCard(row._id)}>
+                                                    <EditIcon/>
+                                                </IconButton>
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -166,7 +178,7 @@ export const CardsTable = () => {
                         component="div"
                         count={cardsTotalCount}
                         rowsPerPage={rowsPerPage}
-                        page={page}
+                        page={currentPage}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />

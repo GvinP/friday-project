@@ -2,21 +2,21 @@ import {instance} from "./api";
 
 export type CardType = {
     _id: string;
-    cardsPack_id: string;
-    user_id: string;
+    cardsPack_id?: string;
+    user_id?: string;
     answer: string;
     question: string;
     grade: number;
-    shots: number;
-    questionImg: string;
-    answerImg: string;
-    answerVideo: string;
-    questionVideo: string;
-    comments: string;
-    type: string;
-    rating: number;
-    more_id: string;
-    created: string;
+    shots?: number;
+    questionImg?: string;
+    answerImg?: string;
+    answerVideo?: string;
+    questionVideo?: string;
+    comments?: string;
+    type?: string;
+    rating?: number;
+    more_id?: string;
+    created?: string;
     updated: string;
 }
 
@@ -27,8 +27,8 @@ export type GetDataType = {
 }
 
 export const cardsApi = {
-    getCards(cardsPack_id: string, pageCount?: number, page?:number) {
-        return instance.get<GetDataType>(`/cards/card?cardsPack_id=${cardsPack_id}&pageCount=${pageCount}&page=${page}`)
+    getCards(cardsPack_id: string, pageCount: number, page:number, order: number, orderBy: string) {
+        return instance.get<GetDataType>(`/cards/card?cardsPack_id=${cardsPack_id}&pageCount=${pageCount}&page=${page}&sortCards=${order}${orderBy}`)
             .then(res => {
                 return res.data
             })
@@ -36,11 +36,6 @@ export const cardsApi = {
     createCard(newCard: NewCardDataType) {
         return instance.post("cards/card", {card: newCard})
             .then(response => response.data);
-    },
-    addCard(cardsPack_id: string, question: string, answer: string) {
-        return instance.post('cards/card', {
-            card: {cardsPack_id, question, answer}
-        })
     },
     deleteCard(cardId: string) {
         return instance.delete(`cards/card?id=${cardId}`)
