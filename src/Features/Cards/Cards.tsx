@@ -27,6 +27,8 @@ import {PATH} from "../../Navigation/Routes/RoutesList";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {lightBlue} from "@mui/material/colors";
+import {DeleteModal} from "../../Modal/DeleteModal/DeleteModal";
+import {DeleteCardModal} from "../../Modal/DeleteCardModal/DeleteCardModal";
 
 type Order = "asc" | "desc";
 const headCells = ['question', 'answer', 'updated', 'grade', 'actions']
@@ -76,8 +78,7 @@ export const Cards = () => {
     const status = useAppSelector(state => state.app.status);
     const dispatch = useAppDispatch();
     const [order, setOrder] = useState<Order>("asc");
-    // const [orderBy, setOrderBy] = useState<string>("questions");
-    // const order = useAppSelector(state => state.cards.order);
+    const [cardId, setCardId] = useState<string>("");
     const orderBy = useAppSelector(state => state.cards.orderBy);
     const [currentPage, setCurrentPage] = useState(0);
     const page = useAppSelector(state => state.cards.page);
@@ -85,6 +86,8 @@ export const Cards = () => {
     const [answer, setAnswer] = useState<string>("");
     const [question, setQuestion] = useState<string>("");
     const [activeModal, setActiveModal] = useState<boolean>(false);
+    const [activeEditModal, setActiveEditModal] = useState<boolean>(false);
+    const [activeDeleteModal, setActiveDeleteModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (cardsPack_id) {
@@ -103,15 +106,23 @@ export const Cards = () => {
 
     }, [dispatch, cardsPack_id, question, answer]);
 
-    const deleteCard = (cardId: string) => {
-        if (cardsPack_id) {
-            dispatch(deleteCardThunk(cardId))
-        }
+    const deleteCard = () => {
+        dispatch(deleteCardThunk(cardId))
+        setActiveDeleteModal(false)
     }
-    const editCard = (cardId: string) => {
-        if (cardsPack_id) {
-            dispatch(updateCardThunk(cardId, 'newQuestion', 'newAnswer'))
-        }
+    const deleteCardHandler = (cardId: string, question: string) => {
+        setActiveDeleteModal(true)
+        setQuestion(question)
+        setCardId(cardId)
+    }
+    const editCardNameHandler = (cardId: string, question: string, answer: string) => {
+        setActiveEditModal(true)
+        setQuestion(question)
+        setAnswer(answer)
+        setCardId(cardId)
+    }
+    const editCardName = () => {
+        dispatch(updateCardThunk(cardId, question, answer))
     }
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
@@ -122,14 +133,14 @@ export const Cards = () => {
     };
     const handleChangePage = (event: unknown, newPage: number) => {
         setCurrentPage(newPage)
-        dispatch(setCurrentPageAC(newPage+1))
+        dispatch(setCurrentPageAC(newPage + 1))
     };
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPageCountAC(parseInt(event.target.value, 10)))
         dispatch(setCurrentPageAC(0))
     };
 
-    const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+    const ColorButton = styled(Button)<ButtonProps>(({theme}) => ({
         color: theme.palette.getContrastText(lightBlue[50]),
         backgroundColor: lightBlue[50],
         '&:hover': {
@@ -146,12 +157,15 @@ export const Cards = () => {
             <h2 className={style.pageTitle}>Cards Page</h2>
             <div className={style.addCardsBtn}>
                 <ColorButton variant="contained" type={"submit"} disabled={status} onClick={() => setActiveModal(true)}
-                        className={style.addCardsButton}>Add card</ColorButton>
+                             className={style.addCardsButton}>Add card</ColorButton>
             </div>
             <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
                           setInputQuestion={setQuestion} active={activeModal}
                           setActive={setActiveModal} setCard={addCardHandler}/>
-
+            <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
+                          setInputQuestion={setQuestion} active={activeEditModal}
+                          setActive={setActiveEditModal} setCard={editCardName}/>
+            <DeleteCardModal deleteCard={deleteCard} name={question} active={activeDeleteModal} setActive={setActiveDeleteModal}/>
             <Box sx={{width: "100%"}}>
                 <Paper sx={{width: "100%", mb: 2}}>
                     <TableContainer>
@@ -172,11 +186,11 @@ export const Cards = () => {
                                             <TableCell align="center">{row.grade}</TableCell>
                                             <TableCell align="center">
                                                 <IconButton aria-label="delete" disabled={status}
-                                                            onClick={() => deleteCard(row._id)}>
+                                                            onClick={() => deleteCardHandler(row._id, row.question)}>
                                                     <DeleteIcon/>
                                                 </IconButton>
                                                 <IconButton
-                                                    onClick={() => editCard(row._id)}>
+                                                    onClick={() => editCardNameHandler(row._id, row.question, row.answer)}>
                                                     <EditIcon/>
                                                 </IconButton>
                                             </TableCell>
