@@ -20,12 +20,13 @@ import TableHead from "@mui/material/TableHead";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import {visuallyHidden} from "@mui/utils";
 import style from "./Cards.module.css";
-import {Button, IconButton} from "@mui/material";
+import {Button, ButtonProps, IconButton, styled} from "@mui/material";
 import {EditAddModal} from "../../Modal/EditAddModal/EditAddModal";
 import {NewCardDataType} from "../../api/cardsApi";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import {lightBlue} from "@mui/material/colors";
 
 type Order = "asc" | "desc";
 const headCells = ['question', 'answer', 'updated', 'grade', 'actions']
@@ -127,14 +128,26 @@ export const Cards = () => {
         dispatch(setPageCountAC(parseInt(event.target.value, 10)))
         dispatch(setCurrentPageAC(0))
     };
+
+    const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+        color: theme.palette.getContrastText(lightBlue[50]),
+        backgroundColor: lightBlue[50],
+        '&:hover': {
+            backgroundColor: lightBlue[200],
+        },
+    }));
+
+
     if (!user_id) {
         return <Navigate to={PATH.login}/>;
     }
     return (
         <div className={style.cardsContainer}>
             <h2 className={style.pageTitle}>Cards Page</h2>
-            <Button variant="outlined" type={"submit"} disabled={status} onClick={() => setActiveModal(true)}
-                    className={style.addCardsButton}>add card</Button>
+            <div className={style.addCardsBtn}>
+                <ColorButton variant="contained" type={"submit"} disabled={status} onClick={() => setActiveModal(true)}
+                        className={style.addCardsButton}>Add card</ColorButton>
+            </div>
             <EditAddModal inputAnswer={answer} setInputAnswer={setAnswer} inputQuestion={question}
                           setInputQuestion={setQuestion} active={activeModal}
                           setActive={setActiveModal} setCard={addCardHandler}/>

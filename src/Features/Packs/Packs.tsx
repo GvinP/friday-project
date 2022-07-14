@@ -14,8 +14,9 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Search2} from "./Search/Search2";
-import {Button} from "@mui/material";
+import {Button, ButtonProps, styled} from "@mui/material";
 import {AddPackModal} from "../../Modal/AddPackModal/AddPackModal";
+import {lightBlue} from "@mui/material/colors";
 
 
 export const Packs = () => {
@@ -72,6 +73,15 @@ export const Packs = () => {
         }
     }, [dispatch, isInitialized, minCards, maxCards, page, pageCount, isMyPacks, order, orderBy]);
 
+
+    const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+        color: theme.palette.getContrastText(lightBlue[50]),
+        backgroundColor: lightBlue[50],
+        '&:hover': {
+            backgroundColor: lightBlue[200],
+        },
+    }));
+
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;
     }
@@ -105,7 +115,7 @@ export const Packs = () => {
                 <div className={s.search}>
                     <Search2/>
                     <div className={s.btn}>
-                        <Button variant={"outlined"} onClick={addNewPackHandler}>Add new pack</Button>
+                        <ColorButton variant={"outlined"} color="success" onClick={addNewPackHandler}>Add new pack</ColorButton>
                     </div>
                 </div>
                 <PacksTable/>

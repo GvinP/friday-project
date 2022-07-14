@@ -44,21 +44,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         onRequestSort(event, property);
     };
 
-    const StyledTableCell = styled(TableCell)(({theme}) => ({
-        [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
-        },
-        [`&.${tableCellClasses.body}`]: {
-            fontSize: 14,
-        },
-    }));
-
     return (
         <TableHead>
             <TableRow>
                 {headCells.map((headCell) => (
-                    <StyledTableCell
+                    <TableCell
                         key={headCell}
                         align={"center"}
                         padding="normal"
@@ -76,7 +66,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                                 </Box>
                             ) : null}
                         </TableSortLabel>
-                    </StyledTableCell>
+                    </TableCell>
                 ))}
             </TableRow>
         </TableHead>
