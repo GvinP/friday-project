@@ -9,6 +9,7 @@ import {AppActions, appReducer} from "./reducers/app-reducer";
 import {ProfileActionsTypes, profileReducer} from "./reducers/profile-reducer";
 import {CardsActionType, cardsReducer} from "./reducers/cards-reducer";
 import {PacksActionTypes, packsReducer} from "./reducers/packs-reducer";
+import {LearnActionsType, learnReducer} from "./reducers/learnReducer";
 
 const rootReducer = combineReducers({
     registrationManage: combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     packs: packsReducer,
     cards: cardsReducer,
+    learn: learnReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
@@ -31,7 +33,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export type AppDispatch = ThunkDispatch<RootState, unknown, StoreActions>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 type StoreActions = AppActions | AuthActions | NewPasswordActions
-    | PasswordRecoveryActionsTypes | RegistrationActionsTypes | ProfileActionsTypes | PacksActionTypes | CardsActionType
+    | PasswordRecoveryActionsTypes | RegistrationActionsTypes | ProfileActionsTypes | PacksActionTypes | CardsActionType| LearnActionsType;
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, RootState, unknown, A>
 

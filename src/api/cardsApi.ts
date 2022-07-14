@@ -33,6 +33,12 @@ export const cardsApi = {
                 return res.data
             })
     },
+
+    getCards2(params: GetCardsQueryParams) {
+        return instance.get<GetCardsResponseDataType>("cards/card", {params})
+            .then(response => response.data);
+    },
+
     createCard(newCard: NewCardDataType) {
         return instance.post("cards/card", {card: newCard})
             .then(response => response.data);
@@ -47,6 +53,18 @@ export const cardsApi = {
         })
     },
 };
+
+export type GetCardsQueryParams = {
+    cardsPack_id: string
+    cardAnswer?: string
+    cardQuestion?: string
+    min?: number
+    max?: number
+    sortCards?: string
+    page?: number
+    pageCount?: number
+};
+
 export type NewCardDataType = {
     cardsPack_id: string
     question?: string
@@ -57,4 +75,13 @@ export type NewCardDataType = {
     questionImg?: string
     questionVideo?: string
     answerVideo?: string
+};
+export type GetCardsResponseDataType = {
+    cards: Array<CardType>
+    packUserId: string
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
 };

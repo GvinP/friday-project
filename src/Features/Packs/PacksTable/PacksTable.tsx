@@ -15,7 +15,7 @@ import {useAppDispatch, useAppSelector} from "../../../app/store";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {
     changeCardsPackNameThunk,
     deleteCardsPackThunk,
@@ -27,6 +27,8 @@ import {DeleteModal} from "../../../Modal/DeleteModal/DeleteModal";
 import {useState} from "react";
 import {AddPackModal} from "../../../Modal/AddPackModal/AddPackModal";
 import {ChangeNamePackModal} from "../../../Modal/ChangeNamePackModal/ChangeNamePackModal";
+import {PATH} from "../../../Navigation/Routes/RoutesList";
+import {setLearnPackNameAC} from "../../../app/reducers/learnReducer";
 
 interface Data {
     name: string;
@@ -187,6 +189,7 @@ export default function PacksTable() {
     const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(0);
     const [order, setOrder] = React.useState<Order>("asc");
@@ -200,6 +203,12 @@ export default function PacksTable() {
         dispatch(deleteCardsPackThunk(id));
         setActiveDeleteModal(false);
     };
+
+    const learnHandler = (id: string, name: string) => {
+        dispatch(setLearnPackNameAC(name));
+        navigate(PATH.learn + id);
+    }
+
     const deletePackCardsHandler = (id: string, name: string) => {
         dispatch(setSearchResultAC(""));
         setActiveDeleteModal(true);
@@ -295,9 +304,12 @@ export default function PacksTable() {
                                                         onClick={() => changeCardsPackNameHandler(row.pack_id, row.name)}>
                                                         <EditIcon/>
                                                     </IconButton>
-                                                    <IconButton>
+
+                                                    <IconButton
+                                                        onClick={() => learnHandler(row.pack_id, row.name)}>
                                                         <SchoolIcon/>
                                                     </IconButton>
+
                                                 </TableCell>
                                                 : <TableCell align="center">
                                                     <IconButton>

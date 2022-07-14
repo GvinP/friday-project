@@ -11,6 +11,7 @@ import {Packs} from "../../Features/Packs/Packs";
 import {CheckEmail} from "../../Features/auth/CheckEmail/CheckEmail";
 import {Error404} from "./Error/Error404";
 import {Cards} from "../../Features/Cards/Cards";
+import {LearnPageContainer} from "../../Features/learn/LearnPageContainer";
 
 
 export const PATH = {
@@ -25,7 +26,8 @@ export const PATH = {
     home: "/home",
     packs: "/packs",
     cards: "/cards/:cardsPack_id",
-    checkEmail: "/check-email"
+    checkEmail: "/check-email",
+    learn: "/learn/",
 };
 
 export const RoutesList = () => {
@@ -40,6 +42,7 @@ export const RoutesList = () => {
                 <Route path={PATH.newPassword} element={<NewPassword/>}/>
                 <Route path={PATH.packs} element={<Packs/>}/>
                 <Route path={PATH.cards} element={<Cards/>}/>
+                <Route path={PATH.learn + ":cardPackID"} element={<LearnPageContainer/>}/>
                 <Route path={PATH.about} element={<About/>}>
                     <Route path="contacts" element={<p>Our contact</p>}/>
                     <Route path="team" element={<p>Our team</p>}/>
