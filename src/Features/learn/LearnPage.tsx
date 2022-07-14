@@ -71,11 +71,11 @@ export const LearnPage: FC<LearnPagePropsType> = ({card}) => {
           </div>
           }
           <div className={s.buttonsBlock}>
-            <Button onClick={cancelHandler}>Cancel</Button>
+            <Button variant={'outlined'} onClick={cancelHandler}>Cancel</Button>
             {isAnswered ?
-              <Button onClick={nextHandler}>Next</Button>
+              <Button variant={'outlined'} onClick={nextHandler}>Next</Button>
               :
-              <Button onClick={showAnswerHandler}>Show answer</Button>
+              <Button variant={'outlined'}  onClick={showAnswerHandler}>Show answer</Button>
             }
           </div>
         </div>
