@@ -7,6 +7,7 @@ import {getRandomCard} from "../../common/utils/getRandomCard";
 import {getCardsTC, setPageCountAC} from "../../app/reducers/cards-reducer";
 import {PATH} from "../../Navigation/Routes/RoutesList";
 import {Preloader} from "../../common/Preloader/Preloader";
+import style from "./LearnPageContainer.module.css"
 
 
 export const LearnPageContainer = () => {
@@ -50,17 +51,19 @@ export const LearnPageContainer = () => {
   }
 
   return (
-    <div >
-      <h1>Learn pack: {cardPackName}</h1>
-      {isFetchingCards ?
-        <div>
-          <Preloader/>
-          <p>Just a moment, please :)</p>
-          <p>Getting random card for You...</p>
-        </div>
-        :
-        <LearnPage card={randomCard}/>
-      }
+    <div className={style.mainBlock}>
+      <div className={style.container}>
+        <h1>{`Learn pack: ${cardPackName}`}</h1>
+        {isFetchingCards ?
+            <div>
+              <Preloader/>
+              <p>Just a moment, please :)</p>
+              <p>Getting random card for You...</p>
+            </div>
+            :
+            <LearnPage card={randomCard}/>
+        }
+      </div>
     </div>
   );
 };

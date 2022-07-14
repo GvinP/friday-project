@@ -1,13 +1,35 @@
-.cardBlock h4 {
-    margin: 10px 0;
+.cardBlock {
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    padding: 20px;
 }
 
-.cardInfoBlock {
-    margin: 30px 0;
+.question {
+    display: flex;
+    margin: 20px 0;
+}
+
+.question p{
+    margin: 0 0 0 20px
+}
+
+.answer {
+    display: flex;
+    margin: 20px 0;
+}
+
+.answer p{
+    margin: 0 0 0 20px
+}
+
+.gradeAndShots {
+    display: flex;
+    justify-content: center;
 }
 
 .grade, .shots {
     display: inline-block;
+    font-weight: bold;
     margin: 10px;
 }
 
@@ -15,15 +37,21 @@
     margin-bottom: 30px;
 }
 
-.rateBlock p {
-    margin-bottom: 20px;
-}
-
 .rateBlock label {
     display: block;
     margin-bottom: 15px;
 }
 
+.rateBlock h4 {
+    margin-bottom: 15px;
+}
+
+.buttonsBlock {
+    display: flex;
+    justify-content: center;
+}
+
 .buttonsBlock button {
     padding: 7px 15px;
+    margin: 0 10px 0 10px;
 }

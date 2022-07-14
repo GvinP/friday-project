@@ -191,7 +191,7 @@ export default function PacksTable() {
                                                 </IconButton>
                                             </TableCell>
                                             : <TableCell align="center">
-                                                <IconButton>
+                                                <IconButton onClick={() => learnHandler(row._id, row.name)}>
                                                     <SchoolIcon/>
                                                 </IconButton>
                                             </TableCell>}
