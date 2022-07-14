@@ -14,9 +14,10 @@ const initialState = {
     },
     page: 1,
     isLoading: false,
-    filter: "0updated" as string,
     isMyPacks: false,
     searchResult: "",
+    order: 0,
+    orderBy: "name"
 };
 
 export type InitialStateType = typeof initialState
@@ -27,8 +28,6 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
             return {...state, cardPacks: action.payload.cardPacks};
         case "packs/SET-SEARCH-RESULT":
             return {...state, searchResult: action.payload.searchResult};
-        case  "packs/SET-CURRENT-FILTER":
-            return {...state, filter: action.payload.filter};
         case "packs/SET-VIEW-PACKS":
             return {...state, isMyPacks: action.payload.isMyPacks};
         case "packs/SET-LOADING-PACK":
@@ -43,6 +42,10 @@ export const packsReducer = (state: InitialStateType = initialState, action: Pac
             return {...state, min: action.cardsCount.min, max: action.cardsCount.max};
         case "packsList/SET-PAGE-COUNT":
             return {...state, pageCount: action.payload.pageCount};
+        case "packsList/SET-PACK-ORDER":
+            return {...state, order: action.order}
+        case "packsList/SET-PACK-ORDER-BY":
+            return {...state, orderBy: action.orderBy}
         default:
             return state;
     }
@@ -60,14 +63,14 @@ export const addNewPackThunk = (name: string, makePrivate: boolean): AppThunk =>
 });
 
 export const getCardsPackThunk = (): AppThunk => (dispatch, getState) => {
-    const {pageCount, page, filter, isMyPacks, searchResult, min, max} = getState().packs;
+    const {pageCount, page, isMyPacks, searchResult, min, max, order, orderBy} = getState().packs;
     const {_id} = getState().profile.user;
     const user_id = isMyPacks ? _id : "";
     const packName = searchResult ? searchResult : "";
 
     dispatch(setLoadingPackAC(true));
     packsApi.getCardsPack({
-        pageCount, page, sortPacks: filter, user_id, packName, min, max,
+        pageCount, page, sortPacks: order + orderBy, user_id, packName, min, max,
     })
         .then(res => {
             dispatch(getCardsPackAC(res.cardPacks));
@@ -145,14 +148,16 @@ export const filterCardsCountAC = (min: number, max: number) =>
     ({type: "packs/FILTER-CARDS-COUNT", cardsCount: {min, max}} as const);
 export const setViewPacksAC = (isMyPacks: boolean) =>
     ({type: "packs/SET-VIEW-PACKS", payload: {isMyPacks}} as const);
-export const setCurrentFilterAC = (filter: string) =>
-    ({type: "packs/SET-CURRENT-FILTER", payload: {filter}} as const);
 export const setLoadingPackAC = (value: boolean) =>
     ({type: "packs/SET-LOADING-PACK", payload: {isLoading: value}} as const);
 export const setCurrentPageCardPacksAC = (page: number) =>
     ({type: "packsList/SET-CURRENT-PAGE", payload: {page}} as const);
 export const setPageCountAC = (pageCount: number) =>
     ({type: "packsList/SET-PAGE-COUNT", payload: {pageCount}} as const);
+export const setPackOrderAC = (order: number) =>
+    ({type: "packsList/SET-PACK-ORDER", order} as const);
+export const setPackOrderByAC = (orderBy: string) =>
+    ({type: "packsList/SET-PACK-ORDER-BY", orderBy} as const);
 
 
 export type PacksActionTypes =
@@ -162,7 +167,8 @@ export type PacksActionTypes =
     | ReturnType<typeof setMaxMinCardsCountAC>
     | ReturnType<typeof filterCardsCountAC>
     | ReturnType<typeof setViewPacksAC>
-    | ReturnType<typeof setCurrentFilterAC>
     | ReturnType<typeof setLoadingPackAC>
     | ReturnType<typeof setCurrentPageCardPacksAC>
     | ReturnType<typeof setPageCountAC>
+    | ReturnType<typeof setPackOrderAC>
+    | ReturnType<typeof setPackOrderByAC>

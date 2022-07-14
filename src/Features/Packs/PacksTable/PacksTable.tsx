@@ -14,130 +14,35 @@ import {visuallyHidden} from "@mui/utils";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import {NavLink, useNavigate} from "react-router-dom";
 import {
     changeCardsPackNameThunk,
     deleteCardsPackThunk,
-    setCurrentPageCardPacksAC, setPageCountAC, setSearchResultAC
+    setCurrentPageCardPacksAC, setPackOrderAC, setPackOrderByAC, setPageCountAC, setSearchResultAC
 } from "../../../app/reducers/packs-reducer";
 import {IconButton} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {DeleteModal} from "../../../Modal/DeleteModal/DeleteModal";
 import {useState} from "react";
-import {AddPackModal} from "../../../Modal/AddPackModal/AddPackModal";
 import {ChangeNamePackModal} from "../../../Modal/ChangeNamePackModal/ChangeNamePackModal";
 import {PATH} from "../../../Navigation/Routes/RoutesList";
 import {setLearnPackNameAC} from "../../../app/reducers/learnReducer";
 
-interface Data {
-    name: string;
-    pack_id: string;
-    user_id: string;
-    cards: number;
-    created: Date;
-    updated: Date;
-    actions: number;
-}
-
-function createData(
-    name: string,
-    pack_id: string,
-    user_id: string,
-    cards: number,
-    created: Date,
-    updated: Date,
-    actions: number,
-): Data {
-    return {
-        name,
-        pack_id,
-        user_id,
-        cards,
-        created,
-        updated,
-        actions,
-    };
-}
-
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
 type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-    order: Order,
-    orderBy: Key,
-): (
-    a: { [key in Key]: number | string | Date },
-    b: { [key in Key]: number | string | Date },
-) => number {
-    return order === "desc"
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-interface HeadCell {
-    disablePadding: boolean;
-    id: keyof Data;
-    label: string;
-    numeric: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-    {
-        id: "name",
-        numeric: false,
-        disablePadding: true,
-        label: "Name",
-    },
-    {
-        id: "cards",
-        numeric: true,
-        disablePadding: false,
-        label: "Cards count",
-    },
-    {
-        id: "created",
-        numeric: true,
-        disablePadding: false,
-        label: "Created",
-    },
-    {
-        id: "updated",
-        numeric: true,
-        disablePadding: false,
-        label: "Updated",
-    },
-    {
-        id: "actions",
-        numeric: true,
-        disablePadding: false,
-        label: "Actions",
-    },
-];
+const headCells = ["name", "cardsCount", "created", "updated", "actions"];
 
 interface EnhancedTableProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
     order: Order;
     orderBy: string;
+    headCells: Array<string>;
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const {order, orderBy, onRequestSort} =
-        props;
-    const createSortHandler =
-        (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-            onRequestSort(event, property);
-        };
+    const {order, orderBy, onRequestSort, headCells} = props;
+    const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
+        onRequestSort(event, property);
+    };
 
     const StyledTableCell = styled(TableCell)(({theme}) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -154,18 +59,18 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             <TableRow>
                 {headCells.map((headCell) => (
                     <StyledTableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? "center" : "left"}
+                        key={headCell}
+                        align={"center"}
                         padding="normal"
-                        sortDirection={orderBy === headCell.id ? order : false}
+                        sortDirection={orderBy === headCell ? order : false}
                     >
                         <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : "asc"}
-                            onClick={createSortHandler(headCell.id)}
+                            active={orderBy === headCell}
+                            direction={orderBy === headCell ? order : "asc"}
+                            onClick={createSortHandler(headCell)}
                         >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
+                            {headCell}
+                            {orderBy === headCell ? (
                                 <Box component="span" sx={visuallyHidden}>
                                     {order === "desc" ? "sorted descending" : "sorted ascending"}
                                 </Box>
@@ -186,14 +91,12 @@ export default function PacksTable() {
     const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount);
     const pageCount = useAppSelector(state => state.packs.pageCount);
 
-    const rows = packs.map(el => createData(el.name, el._id, el.user_id, el.cardsCount, el.created, el.updated, el.actions));
-
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(0);
     const [order, setOrder] = React.useState<Order>("asc");
-    const [orderBy, setOrderBy] = React.useState<keyof Data>("cards");
+    const orderBy = useAppSelector(state => state.packs.orderBy);
     const [id, setId] = useState<string>("");
     const [activeDeleteModal, setActiveDeleteModal] = useState(false);
     const [activeChangeNamePackModal, setActiveChangeNamePackModal] = useState(false);
@@ -207,7 +110,7 @@ export default function PacksTable() {
     const learnHandler = (id: string, name: string) => {
         dispatch(setLearnPackNameAC(name));
         navigate(PATH.learn + id);
-    }
+    };
 
     const deletePackCardsHandler = (id: string, name: string) => {
         dispatch(setSearchResultAC(""));
@@ -231,13 +134,11 @@ export default function PacksTable() {
         name ? setName(name) : setName("Name");
     };
 
-    const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
-        property: keyof Data,
-    ) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
-        setOrderBy(property);
+        dispatch(setPackOrderAC(isAsc ? 0 : 1));
+        dispatch(setPackOrderByAC(property));
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -267,58 +168,46 @@ export default function PacksTable() {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
+                            headCells={headCells}
                         />
                         <TableBody>
-                            {rows.slice().sort(getComparator(order, orderBy))
-                                .map((row, index) => {
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                                    return (
-                                        <StyledTableRow
-                                            hover
-                                            tabIndex={-1}
-                                            key={row.pack_id}
-                                        >
-
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="normal"
-                                                sx={{overflowWrap: "anywhere"}}
-                                            >
-                                                <NavLink to={`/cards/${row.pack_id}`}>{row.name}</NavLink>
+                            {packs.map((row, index) => {
+                                return (
+                                    <StyledTableRow
+                                        hover
+                                        tabIndex={-1}
+                                        key={row._id}
+                                    >
+                                        <TableCell align="center" sx={{overflowWrap: "anywhere"}}>
+                                            <NavLink to={`/cards/${row._id}`}>{row.name}</NavLink>
+                                        </TableCell>
+                                        <TableCell align="center">{row.cardsCount}</TableCell>
+                                        <TableCell
+                                            align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
+                                        <TableCell
+                                            align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
+                                        {userId === row.user_id
+                                            ? <TableCell align="center">
+                                                <IconButton aria-label="delete" disabled={status}
+                                                            onClick={() => deletePackCardsHandler(row._id, row.name)}>
+                                                    <DeleteIcon/>
+                                                </IconButton>
+                                                <IconButton
+                                                    onClick={() => changeCardsPackNameHandler(row._id, row.name)}>
+                                                    <EditIcon/>
+                                                </IconButton>
+                                                <IconButton onClick={() => learnHandler(row._id, row.name)}>
+                                                    <SchoolIcon/>
+                                                </IconButton>
                                             </TableCell>
-                                            <TableCell align="center">{row.cards}</TableCell>
-                                            <TableCell
-                                                align="center">{(new Date(row.created)).toLocaleDateString()}</TableCell>
-                                            <TableCell
-                                                align="center">{(new Date(row.updated)).toLocaleDateString()}</TableCell>
-                                            {userId === row.user_id
-                                                ? <TableCell align="center">
-                                                    <IconButton aria-label="delete" disabled={status}
-                                                                onClick={() => deletePackCardsHandler(row.pack_id, row.name)}>
-                                                        <DeleteIcon/>
-                                                    </IconButton>
-                                                    <IconButton
-                                                        onClick={() => changeCardsPackNameHandler(row.pack_id, row.name)}>
-                                                        <EditIcon/>
-                                                    </IconButton>
-
-                                                    <IconButton
-                                                        onClick={() => learnHandler(row.pack_id, row.name)}>
-                                                        <SchoolIcon/>
-                                                    </IconButton>
-
-                                                </TableCell>
-                                                : <TableCell align="center">
-                                                    <IconButton>
-                                                        <SchoolIcon/>
-                                                    </IconButton>
-                                                </TableCell>}
-                                        </StyledTableRow>
-                                    );
-                                })}
+                                            : <TableCell align="center">
+                                                <IconButton>
+                                                    <SchoolIcon/>
+                                                </IconButton>
+                                            </TableCell>}
+                                    </StyledTableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>

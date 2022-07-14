@@ -6,7 +6,7 @@ import {DoubleRange} from "../../common/DoubleRange/DoubleRange";
 import {
     addNewCardsPackThunk, addNewPackThunk,
     filterCardsCountAC, getCardsPackThunk,
-    setCurrentFilterAC, setSearchResultAC,
+    setSearchResultAC,
     setViewPacksAC
 } from "../../app/reducers/packs-reducer";
 import PacksTable from "./PacksTable/PacksTable";
@@ -31,6 +31,8 @@ export const Packs = () => {
     const isInitialized = useAppSelector((state) => state.app.isInitialized);
     const page = useAppSelector(state => state.packs.page);
     const pageCount = useAppSelector(state => state.packs.pageCount);
+    const order = useAppSelector(state => state.packs.order);
+    const orderBy = useAppSelector(state => state.packs.orderBy);
 
     const [activeAddPackModal, setActiveAddPackModal] = useState(false);
 
@@ -68,7 +70,7 @@ export const Packs = () => {
         if (isInitialized) {
             dispatch(getCardsPackThunk());
         }
-    }, [dispatch, isInitialized, minCards, maxCards, page, pageCount, isMyPacks]);
+    }, [dispatch, isInitialized, minCards, maxCards, page, pageCount, isMyPacks, order, orderBy]);
 
     if (!isInitialized) {
         return <Navigate to={PATH.login}/>;

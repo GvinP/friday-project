@@ -31,6 +31,8 @@ export type reqDataType = {
     sortPacks?: string
     min?: number
     max?: number
+    order?: number
+    orderBy?: string
 }
 
 export const packsApi = {
@@ -39,17 +41,17 @@ export const packsApi = {
         return instance.get(`/cards/pack`,
             {params: {...requestData}})
             .then(res => {
-                return res.data
-            })
+                return res.data;
+            });
     },
     addNewPack(name: string, makePrivate: boolean) {
         return instance.post(`/cards/pack`,
-            {cardsPack: {name, private: makePrivate}})
+            {cardsPack: {name, private: makePrivate}});
     },
     deleteCardsPack(packId: string) {
-        return instance.delete(`/cards/pack?id=${packId}`)
+        return instance.delete(`/cards/pack?id=${packId}`);
     },
     changeCardsPackName(_id: string, name: string) {
-        return instance.put(`/cards/pack`, {cardsPack: {_id, name}})
+        return instance.put(`/cards/pack`, {cardsPack: {_id, name}});
     }
 };
